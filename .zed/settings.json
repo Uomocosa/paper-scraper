@@ -1,0 +1,36 @@
+{
+  "tab_size": 4,
+  "hard_tabs": false,
+  "format_on_save": "off",
+  "remove_trailing_whitespace_on_save": false,
+  "autosave": "on_focus_change",
+  "project_panel": {
+    "auto_reveal_entries": true
+  },
+  "terminal": {
+    "detect_venv": "off"
+  },
+  "file_scan_exclusions": [
+    // "**/.venv",
+    "**/build",
+    "**/target",
+    "**/node_modules",
+    "**/*.log",
+    "**/_old",
+    "**/.vscode",
+    "**/__pycache__",
+    "**/.pytest_cache",
+    "**/*.egg-info",
+    "**/.git",
+    "**/.svn",
+    "**/.hg",
+    "**/CVS",
+    "**/.DS_Store",
+    "**/Thumbs.db"
+  ],
+  "languages": {
+    "Python": {
+      "enable_language_server": false
+    }
+  }
+}

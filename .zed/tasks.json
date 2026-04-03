@@ -1,0 +1,58 @@
+[
+    // I run this directly after done the ssh login: (I didnt like creating a task for this)
+    // >>> RUN SETUP:
+    // cd $HOME/lele-py-bioinformatics; git fetch origin; git reset --hard origin/main; chmod +x setup.sh; ./setup.sh; source ~/.bashrc
+    // >>> THEN run one of the commands exposed by pixi.
+    // pixi
+    // pixi run -e cuda find_polymer_for_target_molecule "metformin"
+    // >>> FINALLY UPLOAD TO GIT:
+    // cd $HOME/lele-py-bioinformatics; chmod +x upload_to_git.sh; ./upload_to_git.sh
+    {
+        "label": "run",
+        "command": "pixi run pytest -rFP -q -s $ZED_RELATIVE_FILE -o \"addopts=\"",
+        "env": { "LOGURU_LEVEL": "DEBUG" },
+        "use_new_terminal": false,
+        "allow_concurrent_runs": false,
+        "reveal": "always",
+        "hide": "never",
+        "shell": "system",
+        "show_summary": false,
+        "show_command": true
+    },
+    {
+        "label": "RUN_ALL_TESTS",
+        "command": "pixi run pytest --durations=10 .",
+        "env": { "LOGURU_LEVEL": "CRITICAL" },
+        "use_new_terminal": false,
+        "allow_concurrent_runs": false,
+        "reveal": "always",
+        "hide": "never",
+        "shell": "system",
+        "show_summary": false,
+        "show_command": true
+    },
+    {
+        "label": "list_tests",
+        "command": "pixi run pytest --collect-only -q .",
+        "env": { "LOGURU_LEVEL": "CRITICAL" },
+        "use_new_terminal": false,
+        "allow_concurrent_runs": false,
+        "reveal": "always",
+        "hide": "never",
+        "shell": "system",
+        "show_summary": false,
+        "show_command": true
+    },
+    // {
+    // TODO!!! SWHITCHED TO PIXI!!!
+    //     "label": "EXAMPLE: install_executable_scripts",
+    //     "command": "uv tool install --editable . --python 3.11",
+    //     "use_new_terminal": false,
+    //     "allow_concurrent_runs": false,
+    //     "reveal": "always",
+    //     "hide": "never",
+    //     "shell": "system",
+    //     "show_summary": true,
+    //     "show_command": true
+    // }
+]
