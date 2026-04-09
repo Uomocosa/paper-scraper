@@ -10,5 +10,5 @@ assert REPO_DIR.exists(), f"REPO_DIR does not exist: {REPO_DIR}"
 assert SEED_DIR.exists(), f"SEED_DIR does not exist: {SEED_DIR}"
 
 
-def test_(): 
+def test_usage():
     pass
