@@ -457,3 +457,33 @@ All package and subpackage folders must follow **PascalCase** convention:
 ```
 
 **Rationale:** PascalCase improves readability and distinguishes packages from regular modules/files at a glance.
+
+### Naming Conventions Summary
+
+| Element | Convention | Example |
+|---------|------------|---------|
+| **Packages** (folders with `__init__.py`) | PascalCase | `Utils/`, `BioInformatics/` |
+| **Classes** | PascalCase | `MyClass`, `Config` |
+| **Enums** | PascalCase | `Status`, `LogLevel` |
+| **Functions** | snake_case | `my_function`, `process_data` |
+
+**Packages:** A package is any folder containing an `__init__.py` file.
+
+### `__HELPER_DIR__` Convention
+
+Each top-level package should contain a `__HELPER_DIR__` subfolder for non-code assets (data files, templates, etc.). The folder must contain a `.gitkeep` file to ensure the empty directory is tracked by git:
+
+```
+library/Package/
+├── __init__.py
+├── __HELPER_DIR__/           # Contains non-code files + .gitkeep
+│   ├── .gitkeep
+│   ├── template.txt
+│   └── data.json
+└── __globals__.py            # Import HELPER_DIR as: from library.Package.__globals__ import HELPER_DIR
+```
+
+**Import pattern:**
+```python
+from library.Package.__globals__ import HELPER_DIR
+```
