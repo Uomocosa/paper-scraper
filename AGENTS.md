@@ -1,262 +1,444 @@
-# AGENTS.md - Development Guidelines for lele-paper-scraper
+# AGENTS.md — Python Project
 
-## 1. Build, Lint, and Test Commands
+## Project Overview
 
-### Python Environment Setup
-```bash
-# Create virtual environment (recommended)
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# or: venv\Scripts\activate  # Windows
+This document describes the coding conventions for this Python project.
 
-# Install dependencies
-pip install -r requirements.txt
+---
+
+## 1. Import System: new-import-system
+
+### Installation in Top-Level `__init__.py`
+
+Every top-level package `__init__.py` must install the new-import-system:
+
+```python
+import new_import_system
+new_import_system.install(__file__)
 ```
 
-### Running the Pipeline
-```bash
-# Phase 1: Extract references using Grobid
-python extract_refs.py
-
-# Phase 2: Download PDFs via OpenAlex/Semantic Scholar
-python download_pdfs.py
-
-# Phase 3: Process PDFs with Marker and Ollama
-python batch_process.py
-
-# Run with Docker for Grobid
-docker run -t --rm -p 8070:8070 lfoppiano/grobid:latest
+**Example:** `mypackage/__init__.py`
+```python
+import new_import_system
+new_import_system.install(__file__)
 ```
 
-### Testing
-```bash
-# Run all tests
-pytest
+### Import Rules
 
-# Run a single test file
-pytest tests/test_file.py
+- **NEVER use relative imports** (e.g., `from .module import ...` is forbidden)
+- **Always use absolute imports** (e.g., `import mypackage`, `from mypackage.module import MyClassMethod`)
+- **No need to repeat module name** in function calls when the module name matches the function name:
 
-# Run a single test function
-pytest tests/test_file.py::test_function_name
+```python
+# Instead of this:
+mypackage.module.MyClassMethod.my_function(df, options)
 
-# Run tests with verbose output
-pytest -v
-
-# Run tests matching a pattern
-pytest -k "test_pattern"
+# Do this:
+mypackage.module.MyClassMethod.my_function(df, options)
+# OR if my_function is the only exported function from MyClassMethod:
+mypackage.module.MyClassMethod(df, options)
 ```
 
-### Linting and Code Quality
-```bash
-# Run ruff linter
-ruff check .
+### Empty `__init__.py` Files
 
-# Run ruff with auto-fix
-ruff check --fix .
+All `__init__.py` files EXCEPT the top-level one must be **empty**:
 
-# Format with ruff
-ruff format .
-
-# Run mypy type checker
-mypy .
 ```
-
-### Pre-commit Hooks (if configured)
-```bash
-# Install pre-commit
-pip install pre-commit
-pre-commit install
+mypackage/
+├── __init__.py          # Contains new-import-system installation
+├── module/
+│   ├── __init__.py      # EMPTY
+│   ├── MyClass.py
+│   └── MyClassMethod/
+│       ├── __init__.py  # EMPTY
+│       └── my_method.py
 ```
 
 ---
 
-## 2. Code Style Guidelines
+## 2. Code Granularity & Organization
 
-### General Principles
-- Write clean, readable, and maintainable code
-- Keep functions small and focused (single responsibility)
-- Use descriptive names for variables, functions, and classes
-- Add type hints to all function signatures
-- Document complex logic with docstrings
+### Dataclasses and Enums Only
 
-### Import Organization
-Organize imports in the following order (separate with blank lines):
-1. Standard library imports (`os`, `sys`, `json`, etc.)
-2. Third-party imports (`requests`, `pandas`, etc.)
-3. Local application imports (project modules)
+**Never use regular classes.** Use:
+- `@dataclass` for data containers with methods
+- `IntEnum` or `Enum` for enumerated values
+
+**Good:**
+```python
+from dataclasses import dataclass, field
+from enum import IntEnum
+
+@dataclass
+class Config:
+    csv_file: Path
+    max_size: int = 100
+
+class Status(IntEnum):
+    UNKNOWN = -1
+    INACTIVE = 0
+    ACTIVE = 1
+```
+
+**Bad:**
+```python
+class Config:
+    def __init__(self, csv_file, max_size=100):
+        self.csv_file = csv_file
+        self.max_size = max_size
+```
+
+### Method Subpackages: `ClassNameMethod/`
+
+When a dataclass needs methods, create a subpackage named `ClassNameMethod/` and implement methods there.
+
+**Structure:**
+```
+mypackage/module/
+├── MyClass.py              # Dataclass definition
+└── MyClassMethod/
+    ├── __init__.py         # EMPTY
+    ├── my_method.py        # Method implementation
+    ├── another_method.py
+    └── process_data.py
+```
+
+**Dataclass references methods via the subpackage:**
 
 ```python
-# Good import order
-import os
-import json
-from typing import List, Optional, Dict
+# mypackage/module/MyClass.py
+from dataclasses import dataclass
+import mypackage
 
-import requests
-from dotenv import load_dotenv
-
-from . import utils
-from .models import Paper
+@dataclass
+class MyClass:
+    data: pd.DataFrame
+    config: Config
+    
+    def my_method(self, options=MyClassMethod.my_method.Options()):
+        return MyClassMethod.my_method(self.data, options)
+    
+    def another_method(self, options=MyClassMethod.another_method.Options()):
+        return MyClassMethod.another_method(self.data, options)
 ```
 
-### Formatting
-- Maximum line length: 100 characters (configurable)
-- Use 4 spaces for indentation (no tabs)
-- Add trailing commas in multi-line imports
-- Use f-strings for string formatting (preferred over `.format()` or `%`)
-- Use `Black` or `ruff format` for automatic formatting
+### Function Organization in Method Modules
 
-### Type Hints
-- Always include return types for functions
-- Use `Optional[X]` instead of `X | None` for Python < 3.10 compatibility
-- Use `List[X]`, `Dict[K, V]` from `typing` module
-- Prefer explicit types over `Any`
+Each method file follows this pattern:
 
 ```python
-# Good
-def process_paper(paper_id: str, options: Optional[Dict[str, str]] = None) -> List[str]:
-    ...
+# mypackage/module/MyClassMethod/my_method.py
+from dataclasses import dataclass, field
+import pandas as pd
+import mypackage
 
-# Avoid
-def process_paper(paper_id, options=None):  # No types
-    ...
-```
+@dataclass
+class Options:
+    option_a: str = "default_value"
+    n_points: int = 2
 
-### Naming Conventions
-- **Variables/Functions**: `snake_case` (e.g., `download_pdf`, `paper_count`)
-- **Classes**: `PascalCase` (e.g., `PaperDownloader`, `ReferenceExtractor`)
-- **Constants**: `UPPER_SNAKE_CASE` (e.g., `MAX_RETRIES`, `DEFAULT_TIMEOUT`)
-- **Private methods**: prefix with underscore (e.g., `_parse_response`)
-- **Module names**: `snake_case` (e.g., `extract_refs.py`)
+def my_method(df: pd.DataFrame, options: Options = Options()) -> pd.DataFrame:
+    # Implementation here
+    return df
 
-### Error Handling
-- Use specific exception types rather than catching `Exception`
-- Log errors before re-raising or handling
-- Use context managers (`with`) for resource management
-- Provide meaningful error messages
-
-```python
-# Good
-try:
-    response = requests.get(url, timeout=30)
-    response.raise_for_status()
-except requests.RequestException as e:
-    logger.error(f"Failed to fetch {url}: {e}")
-    raise PaperDownloadError(f"Could not download paper: {e}") from e
-
-# Avoid bare except or catching too broad exceptions
-```
-
-### Async Code
-- Use `asyncio` for I/O-bound operations
-- Use `aiohttp` for async HTTP requests
-- Properly handle cleanup with `async with`
-- Add type hints for async functions
-
-```python
-async def fetch_paper(self, doi: str) -> Optional[bytes]:
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url) as response:
-            return await response.read()
-```
-
-### Configuration
-- Use environment variables for secrets and API keys
-- Use `.env` files for local development (add to `.gitignore`)
-- Use `python-dotenv` for loading environment variables
-- Never commit API keys or secrets to version control
-
-```python
-from dotenv import load_dotenv
-
-load_dotenv()  # Load .env file at startup
-
-API_KEY = os.getenv("OPENALEX_API_KEY")
-```
-
-### Testing Guidelines
-- Use `pytest` as the testing framework
-- Name test files `test_*.py` or `*_test.py`
-- Use descriptive test names that explain what is being tested
-- Use fixtures for reusable test data
-- Mock external API calls and file I/O
-- Aim for high test coverage on critical paths
-
-```python
-def test_download_pdf_retries_on_failure():
-    """Test that download retries on transient HTTP errors."""
-    with mock.patch("requests.get") as mock_get:
-        mock_get.side_effect = [requests.Timeout, MockResponse()]
-        result = download_pdf("10.1234/test")
-        assert result is not None
-```
-
-### Documentation
-- Use docstrings for all public classes and functions
-- Follow Google or NumPy docstring format
-- Document parameters, return values, and exceptions
-- Keep README.md updated with new features
-
-```python
-def extract_references(pdf_path: str) -> List[Reference]:
-    """Extract references from a PDF using GROBID.
-
-    Args:
-        pdf_path: Path to the PDF file.
-
-    Returns:
-        List of Reference objects extracted from the PDF.
-
-    Raises:
-        GROBIDError: If GROBID service is unavailable.
-        PDFParseError: If PDF cannot be read.
-    """
-```
-
-### File Organization
-```
-project/
-├── src/                   # Source code (optional)
-│   ├── __init__.py
-│   └── modules/
-├── tests/                 # Test files
-│   ├── __init__.py
-│   └── test_*.py
-├── scripts/               # Executable scripts
-├── config/                # Configuration files
-├── Downloaded_Papers/     # Runtime data
-├── Response_1/            # Output directory
-├── Seed_Papers/           # Input directory
-├── pyproject.toml        # Project configuration
-├── .env                   # Local environment (gitignored)
-└── AGENTS.md             # This file
+def test_my_method():
+    from mypackage.__global__ import DATA_CSV
+    mypackage.setup_loguru()
+    df = pd.read_csv(DATA_CSV)
+    df = my_method(df, Options(option_a="value"))
+    assert len(df) > 0
 ```
 
 ---
 
-## 3. Project-Specific Notes
+## 3. Testing Conventions
 
-### GROBID Integration
-- Runs locally via Docker on port 8070
-- Use `/api/processReferences` endpoint for reference extraction
-- Handle connection errors gracefully (GROBID may be slow to start)
+### `test_usage()` Function Pattern
 
-### API Rate Limiting
-- OpenAlex: 100 requests/second (public), 10/second (no auth)
-- Semantic Scholar: Lower limits, use caching
-- Implement exponential backoff for retries
+Every module (function, dataclass, enum) must have at least one `test_usage()` function with **no arguments**:
 
-### LLM Processing
-- Uses Ollama for local inference
-- Models with large context windows recommended (mistral-nemo, llama3)
-- Monitor VRAM usage when processing long documents
-- Cache parsed PDFs to avoid re-processing
+```python
+def test_usage():
+    from mypackage.__global__ import DATA_CSV
+    config = Config(csv_file=DATA_CSV)
+    instance = MyClass(config)
+    instance.my_method()
+    logger.info(f"Data shape: {instance.data.shape}")
+```
 
-### PDF Parsing
-- Primary: Marker (high fidelity for academic papers)
-- Alternative: MinerU
-- Handle multi-column layouts and mathematical equations
+### Multiple Test Functions
 
-### Version Control
-- Add `__pycache__/`, `*.pyc`, `.env`, `venv/`, `Downloaded_Papers/`, `Response_1/` to `.gitignore`
-- Commit regularly with clear, descriptive messages
-- Use feature branches for new functionality
+When testing different aspects, use descriptive names:
+
+```python
+def test_method_a():
+    pass
+
+def test_method_b():
+    pass
+
+def test_complete_workflow():
+    pass
+```
+
+### Pytest Markers
+
+Use pytest markers for test categorization:
+
+```python
+import pytest
+
+@pytest.mark.above10s
+def test_long_running():
+    """Test that requires more than 10 seconds."""
+    pass
+
+@pytest.mark.skip(reason="Needed once for specific debugging")
+def test_debug_one_time():
+    """Skip this test after one-time use."""
+    pass
+
+@pytest.mark.todo
+def test_not_yet_implemented():
+    """Test for feature not yet implemented."""
+    pass
+
+@pytest.mark.unreliable
+def test_external_dependency():
+    """Test that depends on external factors."""
+    pass
+
+@pytest.mark.verbose
+def test_with_output():
+    """Test that produces visible output."""
+    pass
+```
+
+**Running specific tests:**
+```bash
+pixi run pytest -rFP -q -s mypackage/module/MyClass.py::test_usage -o "addopts="
+```
+
+---
+
+## 4. Global Constants: `__global__.py`
+
+Use `__global__.py` files for constants and shared configuration:
+
+```python
+# mypackage/__global__.py
+from pathlib import Path
+
+REPO_DIR = Path(__file__).parent.parent.resolve()
+DATA_DIR = REPO_DIR / 'DATA'
+RESULTS_DIR = REPO_DIR / 'RESULTS'
+
+from joblib import Memory
+CACHE_MEMORY = Memory(location=".cache_dir", verbose=0)
+
+CONFIG_DICT = {
+    "key_a": "value_a",
+    "key_b": "value_b",
+}
+```
+
+Each subpackage can have its own `__global__.py`:
+
+```python
+# mypackage/module/__global__.py
+import lele
+
+THIS_FOLDER = lele.P(__file__).parent
+HELPER_DIR = THIS_FOLDER / '__HELPER_DIR__'
+```
+
+---
+
+## 5. Code Style Rules
+
+### No Comments (Unless Required)
+
+Add comments only when absolutely necessary for understanding. Code should be self-documenting.
+
+**Good:**
+```python
+def filter_data(df: pd.DataFrame, threshold: float) -> pd.DataFrame:
+    new_rows = []
+    for group_key, group in df.groupby(['category_a', 'category_b']):
+        if not (group['value'] > threshold).any():
+            new_row = group.iloc[0].copy()
+            new_row['value'] = threshold
+            new_rows.append(new_row)
+    return pd.concat([df, pd.DataFrame(new_rows)])
+```
+
+### No `if __name__ == "__main__"`
+
+Never use `if __name__ == "__main__":` blocks. Use test functions instead.
+
+### Logging with loguru
+
+Use `loguru.logger` for logging:
+
+```python
+from loguru import logger
+
+logger.debug(f"Processing {len(df)} rows")
+logger.info("Operation completed successfully")
+logger.warning("Missing data detected")
+```
+
+Setup loguru once per entry point:
+
+```python
+import mypackage
+mypackage.setup_loguru()
+```
+
+---
+
+## 6. Directory Structure
+
+```
+mypackage/
+├── __init__.py              # new-import-system installation
+├── __global__.py            # Global constants
+├── setup_loguru.py          # Logging configuration
+├── module_a/
+│   ├── __init__.py          # EMPTY
+│   ├── __global__.py        # Module-specific constants
+│   ├── Config.py            # Config dataclass
+│   ├── MyClass.py           # Main dataclass
+│   └── MyClassMethod/       # Methods for MyClass
+│       ├── __init__.py      # EMPTY
+│       ├── my_method.py
+│       ├── another_method.py
+│       └── ...
+├── module_b/
+│   ├── __init__.py          # EMPTY
+│   ├── __global__.py        # Module-specific constants
+│   ├── AnotherClass.py      # Another dataclass
+│   └── AnotherClassMethod/  # Methods for AnotherClass
+│       ├── __init__.py      # EMPTY
+│       └── ...
+└── utils/
+    ├── __init__.py          # EMPTY
+    └── helper_functions.py
+```
+
+---
+
+## 7. Complete Example
+
+### File: `mypackage/module/MyClass.py`
+
+```python
+import pandas as pd
+from dataclasses import dataclass
+import mypackage
+from mypackage.module import MyClassMethod
+from loguru import logger
+
+@dataclass
+class Config:
+    csv_file: Path
+    param_a: float = 0.6
+    param_b: float = 0.2
+    param_c: float = 0.2
+    max_size: Optional[int] = None
+    seed: int = 42
+
+@dataclass
+class MyClass:
+    data: pd.DataFrame
+    config: Config
+    
+    def __init__(self, config: Config):
+        self.data = pd.read_csv(config.csv_file)
+        self.config = config
+    
+    @staticmethod
+    def process_fn(df: pd.DataFrame) -> pd.DataFrame:
+        return MyClassMethod.process(df)
+        
+    def my_method(self, options=MyClassMethod.my_method.Options()):
+        original_len = len(self.data)
+        self.data = MyClassMethod.my_method(self.data, options)
+        logger.info(f"Processed: gained {len(self.data) - original_len} rows.")
+        
+    def another_method(self, options=MyClassMethod.another_method.Options()):
+        self.data = MyClassMethod.another_method(self.data, options)
+```
+
+### File: `mypackage/module/MyClassMethod/my_method.py`
+
+```python
+from dataclasses import dataclass
+import pandas as pd
+import numpy as np
+import mypackage
+from loguru import logger
+
+@dataclass
+class Options:
+    method: str = "method_a"
+    param: int = 2
+
+def my_method(df: pd.DataFrame, options: Options = Options()) -> pd.DataFrame:
+    METHOD_DICT = {
+        "method_a": lambda df: process_a(df),
+        "method_b": lambda df: process_b(df),
+        "method_a_then_b": lambda df: process_b(process_a(df)),
+    }
+    method = METHOD_DICT[options.method]
+    return method(df)
+
+def process_a(df: pd.DataFrame) -> pd.DataFrame:
+    # Implementation
+    return df
+
+def process_b(df: pd.DataFrame) -> pd.DataFrame:
+    # Implementation
+    return df
+
+def test_method_a():
+    from mypackage.__global__ import DATA_CSV
+    mypackage.setup_loguru()
+    df = pd.read_csv(DATA_CSV)
+    df = my_method(df, Options(method="method_a"))
+    assert len(df) > 0
+
+def test_method_b():
+    from mypackage.__global__ import DATA_CSV
+    mypackage.setup_loguru()
+    df = pd.read_csv(DATA_CSV)
+    df = my_method(df, Options(method="method_b"))
+    assert len(df) > 0
+```
+
+---
+
+## 8. Running Tests
+
+### Run All Tests
+```bash
+pixi run pytest
+```
+
+### Run Specific Test File
+```bash
+pixi run pytest mypackage/module/MyClass.py
+```
+
+### Run Specific Test Function
+```bash
+pixi run pytest mypackage/module/MyClass.py::test_usage -o "addopts="
+```
+
+### Include Verbose/Print Output
+```bash
+pixi run pytest -s -v mypackage/module/MyClass.py::test_usage
+```
+
+### Skip Slow Tests
+Tests marked with `@pytest.mark.above10s` are automatically skipped by default configuration.

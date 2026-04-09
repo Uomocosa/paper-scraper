@@ -17,7 +17,12 @@
         "hide": "never",
         "shell": "system",
         "show_summary": false,
-        "show_command": true
+        "show_command": true,
+    },
+    { // Substitute the runnables near "test_" functions
+        "label": "${ZED_FILENAME}::${ZED_SYMBOL:entire file}",
+        "command": "pixi run pytest -rFP -q -s $ZED_CUSTOM_PYTHON_TEST_TARGET -o \"addopts=\"",
+        "tags": ["python-pytest-method", "python-pytest-class"],
     },
     {
         "label": "RUN_ALL_TESTS",
@@ -29,7 +34,7 @@
         "hide": "never",
         "shell": "system",
         "show_summary": false,
-        "show_command": true
+        "show_command": true,
     },
     {
         "label": "list_tests",
@@ -41,18 +46,6 @@
         "hide": "never",
         "shell": "system",
         "show_summary": false,
-        "show_command": true
+        "show_command": true,
     },
-    // {
-    // TODO!!! SWHITCHED TO PIXI!!!
-    //     "label": "EXAMPLE: install_executable_scripts",
-    //     "command": "uv tool install --editable . --python 3.11",
-    //     "use_new_terminal": false,
-    //     "allow_concurrent_runs": false,
-    //     "reveal": "always",
-    //     "hide": "never",
-    //     "shell": "system",
-    //     "show_summary": true,
-    //     "show_command": true
-    // }
 ]

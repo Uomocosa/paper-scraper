@@ -1,0 +1,27 @@
+// This are my custom keybindings for Zed
+// Open the keymap file (Ctrl+Shift+P, then "zed: open keymap file")
+// And copy/paste them there.
+// USEFUL:  (Ctrl+Shift+P, then "dev: open key context view")
+[
+    {
+        "context": "Editor || Workspace || ProjectPanel || Terminal || Pane || Diagnostics || ImageViewer || AgentPanel",
+        "bindings": {
+            "ctrl-p": "command_palette::Toggle",
+            "ctrl-1": "project_panel::Toggle",
+            "ctrl-2": "agent::Toggle",
+            "ctrl-t": "terminal_panel::Toggle",
+            "ctrl-o": "file_finder::Toggle",
+            "ctrl-r": "editor::ToggleComments",
+            "ctrl-k": "editor::ToggleCodeActions",
+            "ctrl-s": "workspace::SaveAll",
+            "ctrl-a": "editor::SelectAll",
+            // "alt+rightclick": "workspace::goToDefinition" // this does not work on mac
+        },
+    },
+    {
+        "context": "Editor || Terminal",
+        "bindings": {
+            "ctrl-b": ["task::Spawn", { "task_name": "run" }],
+        },
+    },
+]
