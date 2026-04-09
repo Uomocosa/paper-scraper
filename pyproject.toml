@@ -1,0 +1,48 @@
+# pyproject.toml
+[project]
+name = "paper_scraper"
+version = "0.0.1"
+authors = [
+  { name="Lele", email="maggiori.samuele@gmail.com" },
+]
+description = "todo"
+readme = "README.md"
+requires-python = "==3.11"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+# [scripts]
+# cacca_train = "bio.cacca_train:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+
+[tool.pytest.ini_options]
+python_files = "*.py"
+testpaths = ["src"]
+norecursedirs = [
+  "__pycache__",
+  ".cache_dir",
+  ".pytest_cache",
+  ".git",
+  ".zed",
+  ".vscode",
+  "__HELPER_DIR__",
+]
+filterwarnings = [
+    # "ignore:'audioop' is deprecated:DeprecationWarning",
+    # "ignore:invalid escape sequence:DeprecationWarning",
+    # "ignore:.*GraphNetwork:DeprecationWarning",
+    # "ignore:.*SelfAttention Layer:DeprecationWarning",
+]
+markers = [
+    "verbose: tests that have some kind of output",
+    "todo: test yet to implement",
+    "above10s: test that require more than 10 seconds",
+    "unreliable: test that depends on external factors, in the future it will fail",
+    "infinite: test will not finish",
+]
+addopts = "-m 'not verbose and not todo and not above10s and not unreliable and not infinite'"

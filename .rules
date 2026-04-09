@@ -1,4 +1,4 @@
-# AGENTS.md — Python Project
+# Python Project Coding Conventions
 
 ## Project Overview
 
@@ -25,18 +25,18 @@ new_import_system.install(__file__)
 
 ### Import Rules
 
-- **NEVER use relative imports** (e.g., `from .module import ...` is forbidden)
-- **Always use absolute imports** (e.g., `import mypackage`, `from mypackage.module import MyClassMethod`)
+- **NEVER use relative imports** (e.g., `from .Module import ...` is forbidden)
+- **Always use absolute imports** (e.g., `import mypackage`, `from mypackage.Module import MyClassMethod`)
 - **No need to repeat module name** in function calls when the module name matches the function name:
 
 ```python
 # Instead of this:
-mypackage.module.MyClassMethod.my_function(df, options)
+mypackage.Module.MyClassMethod.my_function(df, options)
 
 # Do this:
-mypackage.module.MyClassMethod.my_function(df, options)
+mypackage.Module.MyClassMethod.my_function(df, options)
 # OR if my_function is the only exported function from MyClassMethod:
-mypackage.module.MyClassMethod(df, options)
+mypackage.Module.MyClassMethod(df, options)
 ```
 
 ### Empty `__init__.py` Files
@@ -46,7 +46,7 @@ All `__init__.py` files EXCEPT the top-level one must be **empty**:
 ```
 mypackage/
 ├── __init__.py          # Contains new-import-system installation
-├── module/
+├── Module/
 │   ├── __init__.py      # EMPTY
 │   ├── MyClass.py
 │   └── MyClassMethod/
@@ -94,7 +94,7 @@ When a dataclass needs methods, create a subpackage named `ClassNameMethod/` and
 
 **Structure:**
 ```
-mypackage/module/
+mypackage/Module/
 ├── MyClass.py              # Dataclass definition
 └── MyClassMethod/
     ├── __init__.py         # EMPTY
@@ -106,7 +106,7 @@ mypackage/module/
 **Dataclass references methods via the subpackage:**
 
 ```python
-# mypackage/module/MyClass.py
+# mypackage/Module/MyClass.py
 from dataclasses import dataclass
 import mypackage
 
@@ -127,7 +127,7 @@ class MyClass:
 Each method file follows this pattern:
 
 ```python
-# mypackage/module/MyClassMethod/my_method.py
+# mypackage/Module/MyClassMethod/my_method.py
 from dataclasses import dataclass, field
 import pandas as pd
 import mypackage
@@ -216,7 +216,7 @@ def test_with_output():
 
 **Running specific tests:**
 ```bash
-pixi run pytest -rFP -q -s mypackage/module/MyClass.py::test_usage -o "addopts="
+pixi run pytest -rFP -q -s mypackage/Module/MyClass.py::test_usage -o "addopts="
 ```
 
 ---
@@ -245,7 +245,7 @@ CONFIG_DICT = {
 Each subpackage can have its own `__global__.py`:
 
 ```python
-# mypackage/module/__global__.py
+# mypackage/Module/__global__.py
 import lele
 
 THIS_FOLDER = lele.P(__file__).parent
@@ -304,7 +304,7 @@ mypackage/
 ├── __init__.py              # new-import-system installation
 ├── __global__.py            # Global constants
 ├── setup_loguru.py          # Logging configuration
-├── module_a/
+├── ModuleA/
 │   ├── __init__.py          # EMPTY
 │   ├── __global__.py        # Module-specific constants
 │   ├── Config.py            # Config dataclass
@@ -314,14 +314,14 @@ mypackage/
 │       ├── my_method.py
 │       ├── another_method.py
 │       └── ...
-├── module_b/
+├── ModuleB/
 │   ├── __init__.py          # EMPTY
 │   ├── __global__.py        # Module-specific constants
 │   ├── AnotherClass.py      # Another dataclass
 │   └── AnotherClassMethod/  # Methods for AnotherClass
 │       ├── __init__.py      # EMPTY
 │       └── ...
-└── utils/
+└── Utils/
     ├── __init__.py          # EMPTY
     └── helper_functions.py
 ```
@@ -330,13 +330,13 @@ mypackage/
 
 ## 7. Complete Example
 
-### File: `mypackage/module/MyClass.py`
+### File: `mypackage/Module/MyClass.py`
 
 ```python
 import pandas as pd
 from dataclasses import dataclass
 import mypackage
-from mypackage.module import MyClassMethod
+from mypackage.Module import MyClassMethod
 from loguru import logger
 
 @dataclass
@@ -370,7 +370,7 @@ class MyClass:
         self.data = MyClassMethod.another_method(self.data, options)
 ```
 
-### File: `mypackage/module/MyClassMethod/my_method.py`
+### File: `mypackage/Module/MyClassMethod/my_method.py`
 
 ```python
 from dataclasses import dataclass
@@ -427,18 +427,33 @@ pixi run pytest
 
 ### Run Specific Test File
 ```bash
-pixi run pytest mypackage/module/MyClass.py
+pixi run pytest mypackage/Module/MyClass.py
 ```
 
 ### Run Specific Test Function
 ```bash
-pixi run pytest mypackage/module/MyClass.py::test_usage -o "addopts="
+pixi run pytest mypackage/Module/MyClass.py::test_usage -o "addopts="
 ```
 
 ### Include Verbose/Print Output
 ```bash
-pixi run pytest -s -v mypackage/module/MyClass.py::test_usage
+pixi run pytest -s -v mypackage/Module/MyClass.py::test_usage
 ```
 
 ### Skip Slow Tests
 Tests marked with `@pytest.mark.above10s` are automatically skipped by default configuration.
+
+---
+
+## 9. Naming Conventions
+
+### Package and Subpackage Naming
+
+All package and subpackage folders must follow **PascalCase** convention:
+
+```
+✅ MyPackage/, ModuleA/, BioInformatics/, Utils/, SubPackage /
+❌ my_package/, module_a/, bio_informatics/, utils/, subpackage /
+```
+
+**Rationale:** PascalCase improves readability and distinguishes packages from regular modules/files at a glance.

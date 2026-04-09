@@ -1,4 +1,19 @@
-# Local AI Scientific Paper Pipeline 🤖📄
+# Installation
+1. Install podman.
+2. Install grobid.
+    1. `podman machine init`
+    2. `podman machine start`
+    3. (CPU version) `podman run --rm --init --ulimit core=0 -p 8070:8070 grobid/grobid:0.8.2-crf`
+    4. (Full - GPU version) `podman run --rm --init --ulimit core=0 -p 8070:8070 grobid/grobid:0.8.2-full`
+5. 
+
+
+
+
+
+
+
+# SUMMANY - Local AI Scientific Paper Pipeline 🤖📄
 
 This repository contains a local, automated "snowballing" literature review agent. The pipeline is designed to take a set of seed scientific papers, extract their references, legally download the PDFs of those references, parse them into machine-readable text, and run a local Large Language Model (LLM) to extract answers to specific research questions.
 

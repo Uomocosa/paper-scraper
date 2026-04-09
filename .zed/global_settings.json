@@ -1,0 +1,47 @@
+// This are my custom global settings for Zed
+// Open the settings file (Ctrl+Shift+P, then "zed: open settings file")
+// And copy/paste them there.
+{
+    "autosave": "on_focus_change",
+    "tab_size": 4,
+    "hard_tabs": false,
+    "remove_trailing_whitespace_on_save": false,
+    "disable_ai": false,
+    "agent": {
+        "default_model": {
+            "provider": "opencode",
+            "model": "opencode",
+        },
+        "favorite_models": [],
+        "play_sound_when_agent_done": true,
+        "model_parameters": [],
+    },
+    "agent_servers": {
+        "opencode": {
+            "default_config_options": {
+                "mode": "plan"
+            },
+            "favorite_config_option_values": {
+                "mode": [
+                    "plan"
+                ]
+            },
+            "default_mode": "plan",
+            "type": "registry",
+        },
+        "corust-agent": {
+            "type": "registry",
+        },
+    },
+    "base_keymap": "SublimeText",
+    "ui_font_size": 16,
+    "buffer_font_size": 15,
+    "theme": {
+        "mode": "system",
+        "light": "One Light",
+        "dark": "One Dark",
+    },
+    "project_panel": {
+        "auto_reveal_entries": true,
+    },
+}
