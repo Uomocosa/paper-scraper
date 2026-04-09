@@ -7,7 +7,7 @@ authors = [
 ]
 description = "todo"
 readme = "README.md"
-requires-python = "==3.11"
+requires-python = ">=3.11"
 
 [build-system]
 requires = ["setuptools>=61.0"]
