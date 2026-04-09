@@ -17,7 +17,7 @@ import new_import_system
 new_import_system.install(__file__)
 ```
 
-**Example:** `mypackage/__init__.py`
+**Example:** `my_package/__init__.py`
 ```python
 import new_import_system
 new_import_system.install(__file__)
@@ -26,17 +26,17 @@ new_import_system.install(__file__)
 ### Import Rules
 
 - **NEVER use relative imports** (e.g., `from .Module import ...` is forbidden)
-- **Always use absolute imports** (e.g., `import mypackage`, `from mypackage.Module import MyClassMethod`)
+- **Always use absolute imports** (e.g., `import my_package`, `from my_package.Module import MyClassMethod`)
 - **No need to repeat module name** in function calls when the module name matches the function name:
 
 ```python
 # Instead of this:
-mypackage.Module.MyClassMethod.my_function(df, options)
+my_package.Module.MyClassMethod.my_function(df, options)
 
 # Do this:
-mypackage.Module.MyClassMethod.my_function(df, options)
+my_package.Module.MyClassMethod.my_function(df, options)
 # OR if my_function is the only exported function from MyClassMethod:
-mypackage.Module.MyClassMethod(df, options)
+my_package.Module.MyClassMethod(df, options)
 ```
 
 ### Empty `__init__.py` Files
@@ -44,7 +44,7 @@ mypackage.Module.MyClassMethod(df, options)
 All `__init__.py` files EXCEPT the top-level one must be **empty**:
 
 ```
-mypackage/
+my_package/
 ├── __init__.py          # Contains new-import-system installation
 ├── Module/
 │   ├── __init__.py      # EMPTY
@@ -58,11 +58,9 @@ mypackage/
 
 ## 2. Code Granularity & Organization
 
-### Dataclasses and Enums Only
+### Dataclasses, Enums, and Functions
 
-**Never use regular classes.** Use:
-- `@dataclass` for data containers with methods
-- `IntEnum` or `Enum` for enumerated values
+**Prefer dataclasses and enums for structured data**, but regular functions are also welcome at the package level. Not everything needs to be a class or enum — use functions for stateless operations or when they provide better clarity.
 
 **Good:**
 ```python
@@ -78,6 +76,9 @@ class Status(IntEnum):
     UNKNOWN = -1
     INACTIVE = 0
     ACTIVE = 1
+
+def process_data(df: pd.DataFrame) -> pd.DataFrame:
+    return df[df['value'] > 0]
 ```
 
 **Bad:**
@@ -94,7 +95,7 @@ When a dataclass needs methods, create a subpackage named `ClassNameMethod/` and
 
 **Structure:**
 ```
-mypackage/Module/
+my_package/Module/
 ├── MyClass.py              # Dataclass definition
 └── MyClassMethod/
     ├── __init__.py         # EMPTY
@@ -106,9 +107,9 @@ mypackage/Module/
 **Dataclass references methods via the subpackage:**
 
 ```python
-# mypackage/Module/MyClass.py
+# my_package/Module/MyClass.py
 from dataclasses import dataclass
-import mypackage
+import my_package
 
 @dataclass
 class MyClass:
@@ -127,10 +128,10 @@ class MyClass:
 Each method file follows this pattern:
 
 ```python
-# mypackage/Module/MyClassMethod/my_method.py
+# my_package/Module/MyClassMethod/my_method.py
 from dataclasses import dataclass, field
 import pandas as pd
-import mypackage
+import my_package
 
 @dataclass
 class Options:
@@ -142,8 +143,8 @@ def my_method(df: pd.DataFrame, options: Options = Options()) -> pd.DataFrame:
     return df
 
 def test_my_method():
-    from mypackage.__global__ import DATA_CSV
-    mypackage.setup_loguru()
+    from my_package.__global__ import DATA_CSV
+    my_package.setup_loguru()
     df = pd.read_csv(DATA_CSV)
     df = my_method(df, Options(option_a="value"))
     assert len(df) > 0
@@ -159,7 +160,7 @@ Every module (function, dataclass, enum) must have at least one `test_usage()` f
 
 ```python
 def test_usage():
-    from mypackage.__global__ import DATA_CSV
+    from my_package.__global__ import DATA_CSV
     config = Config(csv_file=DATA_CSV)
     instance = MyClass(config)
     instance.my_method()
@@ -216,7 +217,7 @@ def test_with_output():
 
 **Running specific tests:**
 ```bash
-pixi run pytest -rFP -q -s mypackage/Module/MyClass.py::test_usage -o "addopts="
+pixi run pytest -rFP -q -s my_package/Module/MyClass.py::test_usage -o "addopts="
 ```
 
 ---
@@ -226,7 +227,7 @@ pixi run pytest -rFP -q -s mypackage/Module/MyClass.py::test_usage -o "addopts="
 Use `__global__.py` files for constants and shared configuration:
 
 ```python
-# mypackage/__global__.py
+# my_package/__global__.py
 from pathlib import Path
 
 REPO_DIR = Path(__file__).parent.parent.resolve()
@@ -245,7 +246,7 @@ CONFIG_DICT = {
 Each subpackage can have its own `__global__.py`:
 
 ```python
-# mypackage/Module/__global__.py
+# my_package/Module/__global__.py
 import lele
 
 THIS_FOLDER = lele.P(__file__).parent
@@ -291,8 +292,8 @@ logger.warning("Missing data detected")
 Setup loguru once per entry point:
 
 ```python
-import mypackage
-mypackage.setup_loguru()
+import my_package
+my_package.setup_loguru()
 ```
 
 ---
@@ -300,7 +301,7 @@ mypackage.setup_loguru()
 ## 6. Directory Structure
 
 ```
-mypackage/
+my_package/
 ├── __init__.py              # new-import-system installation
 ├── __global__.py            # Global constants
 ├── setup_loguru.py          # Logging configuration
@@ -326,17 +327,32 @@ mypackage/
     └── helper_functions.py
 ```
 
+### Top-Level Package Naming
+
+The top-level package folder must be named in `snake_case` and **must match the name defined in `pyproject.toml`** under `[project].name`.
+
+```
+# pyproject.toml
+[project]
+name = "my_package"
+
+# Directory structure
+my_package/           # snake_case, matches pyproject.toml
+├── __init__.py
+└── ...
+```
+
 ---
 
 ## 7. Complete Example
 
-### File: `mypackage/Module/MyClass.py`
+### File: `my_package/Module/MyClass.py`
 
 ```python
 import pandas as pd
 from dataclasses import dataclass
-import mypackage
-from mypackage.Module import MyClassMethod
+import my_package
+from my_package.Module import MyClassMethod
 from loguru import logger
 
 @dataclass
@@ -370,13 +386,13 @@ class MyClass:
         self.data = MyClassMethod.another_method(self.data, options)
 ```
 
-### File: `mypackage/Module/MyClassMethod/my_method.py`
+### File: `my_package/Module/MyClassMethod/my_method.py`
 
 ```python
 from dataclasses import dataclass
 import pandas as pd
 import numpy as np
-import mypackage
+import my_package
 from loguru import logger
 
 @dataclass
@@ -402,15 +418,15 @@ def process_b(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 def test_method_a():
-    from mypackage.__global__ import DATA_CSV
-    mypackage.setup_loguru()
+    from my_package.__global__ import DATA_CSV
+    my_package.setup_loguru()
     df = pd.read_csv(DATA_CSV)
     df = my_method(df, Options(method="method_a"))
     assert len(df) > 0
 
 def test_method_b():
-    from mypackage.__global__ import DATA_CSV
-    mypackage.setup_loguru()
+    from my_package.__global__ import DATA_CSV
+    my_package.setup_loguru()
     df = pd.read_csv(DATA_CSV)
     df = my_method(df, Options(method="method_b"))
     assert len(df) > 0
@@ -427,17 +443,17 @@ pixi run pytest
 
 ### Run Specific Test File
 ```bash
-pixi run pytest mypackage/Module/MyClass.py
+pixi run pytest my_package/Module/MyClass.py
 ```
 
 ### Run Specific Test Function
 ```bash
-pixi run pytest mypackage/Module/MyClass.py::test_usage -o "addopts="
+pixi run pytest my_package/Module/MyClass.py::test_usage -o "addopts="
 ```
 
 ### Include Verbose/Print Output
 ```bash
-pixi run pytest -s -v mypackage/Module/MyClass.py::test_usage
+pixi run pytest -s -v my_package/Module/MyClass.py::test_usage
 ```
 
 ### Skip Slow Tests
@@ -456,13 +472,16 @@ All package and subpackage folders must follow **PascalCase** convention:
 ❌ my_package/, module_a/, bio_informatics/, utils/, subpackage /
 ```
 
+**Note:** The top-level package is the exception — it must be named in `snake_case` to match `pyproject.toml`.
+
 **Rationale:** PascalCase improves readability and distinguishes packages from regular modules/files at a glance.
 
 ### Naming Conventions Summary
 
 | Element | Convention | Example |
 |---------|------------|---------|
-| **Packages** (folders with `__init__.py`) | PascalCase | `Utils/`, `BioInformatics/` |
+| **Top-level package** | snake_case | `my_package/` |
+| **Subpackages** | PascalCase | `Utils/`, `BioInformatics/` |
 | **Classes** | PascalCase | `MyClass`, `Config` |
 | **Enums** | PascalCase | `Status`, `LogLevel` |
 | **Functions** | snake_case | `my_function`, `process_data` |
