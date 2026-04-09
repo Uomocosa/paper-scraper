@@ -1,1 +1,367 @@
-[]
+[
+    {
+        "title": "The Maximum Reservoir Capacity of Soils for Persistent Organic Pollutants: Implications for Global Cycling",
+        "doi": "10.1016/j.envpol.2004.07.011"
+    },
+    {
+        "title": "Pharmaceutical Wastewater as Emerging Contaminants (EC): Treatment Technologies, Impact on Environment and Human Health",
+        "doi": "10.1016/j.nexus.2022.100076"
+    },
+    {
+        "title": "Fate of Estrogenic Hormones in Wastewater and Sludge Treatment: A Review of Properties and Analytical Detection Techniques in Sludge Matrix",
+        "doi": "10.1016/j.watres.2012.08.002"
+    },
+    {
+        "title": "Occurrence Patterns of Pharmaceuticals in Water and Wastewater Environments",
+        "doi": "10.1007/s00216-006-1035-8"
+    },
+    {
+        "title": "Illicit Drug Consumption Estimations Derived From Wastewater Analysis: A Critical Review",
+        "doi": "10.1016/j.scitotenv.2010.05.030"
+    },
+    {
+        "title": "Analytical Methods for Tracing Pharmaceutical Residues in Water and Wastewater",
+        "doi": "10.1016/j.trac.2007.02.001"
+    },
+    {
+        "title": "Microbial Community Dynamics Associated With Veterinary Antibiotics Removal in Constructed Wetlands Microcosms",
+        "doi": "10.1016/j.biortech.2015.01.096"
+    },
+    {
+        "title": "Review on Fate and Mechanism of Removal of Pharmaceutical Pollutants From Wastewater Using Biological Approach",
+        "doi": "10.1016/j.biortech.2016.11.042"
+    },
+    {
+        "title": "Theoretical and Experimental Design of Heavy Metal-Mopping Magnetic Nanoparticles",
+        "doi": "10.1021/acsami.0c17759"
+    },
+    {
+        "title": "Poly(2-Oxazoline) s: A Comprehensive Overview of Polymer Structures and Their Physical Properties: Poly(2-Oxazoline)s",
+        "doi": "10.1002/pi.5457"
+    },
+    {
+        "title": "Poly(2-Oxazoline)s as Polymer Therapeutics",
+        "doi": "10.1002/marc.201200354"
+    },
+    {
+        "title": "Poly(2-Oxazoline)s as Materials for Biomedical Applications",
+        "doi": "10.1007/s10856-013-5034-y"
+    },
+    {
+        "title": "Poly(2-Oxazoline)s: A Polymer Class With Numerous Potential Applications",
+        "doi": "10.1002/anie.200901607"
+    },
+    {
+        "title": "Polymerization of Cyclic Imino Ethers. II. Oxazines",
+        "doi": "10.1002/pol.1967.110050928"
+    },
+    {
+        "title": "Main-Chain Chiral Poly(2-Oxazoline)s: Influence of Alkyl Side-Chain on Secondary Structure Formation in Solution",
+        "doi": "10.1002/pola.24712"
+    },
+    {
+        "title": "Polymerization of Cyclic Imino Ethers: From Its Discovery to the Present State of the Art",
+        "doi": "10.1002/pola.10090"
+    },
+    {
+        "title": "Synthesis and Characterization of a Series of Diverse Poly(2-Oxazoline)s",
+        "doi": "10.1002/pola.23448"
+    },
+    {
+        "title": "Recent Advances and Prospects in Nano Drug Delivery Systems Using Lipopolyoxazolines",
+        "doi": "10.1016/j.ijpharm.2020.119536"
+    },
+    {
+        "title": "Polyoxazoline: A Review Article From Polymerization to Smart Behaviors and Biomedical Applications",
+        "doi": "10.1016/j.eurpolymj.2022.111484"
+    },
+    {
+        "title": "Systematic Investigation of Alkyl Sulfonate Initiators for the Cationic Ring-Opening Polymerization of 2-Oxazolines Revealing Optimal Combinations of Monomers and Initiators",
+        "doi": "10.1016/j.eurpolymj.2015.01.019"
+    },
+    {
+        "title": "Thermo-Responsive Polyoxazolines With Widely Tuneable LCST: Thermo-Responsive Polyoxazolines With Widely Tuneable LCST",
+        "doi": "10.1002/mabi.200800213"
+    },
+    {
+        "title": "Precise Control of Lower Critical Solution Temperature of Thermosensitive Poly(2-Isopropyl-2-Oxazoline) via Gradient Copolymerization With 2-Ethyl-2-Oxazoline as a Hydrophilic Comonomer",
+        "doi": "10.1021/ma0605548"
+    },
+    {
+        "title": "Determination of Pharmaceuticals Discharged in Wastewater From a Public Hospital Using LC-MS/MS Technique",
+        "doi": "10.29356/jmcs.v65i1.1439"
+    },
+    {
+        "title": "Pharmaceutical Chemicals and Endocrine Disrupters in Municipal Wastewater Tokyo and Their Removal During Activated Treatment",
+        "doi": "10.1016/j.watres.2006.06.039"
+    },
+    {
+        "title": "Estrogen Pollution of the European Aquatic Environment: A Critical Review",
+        "doi": "10.1016/j.watres.2022.119413"
+    },
+    {
+        "title": "Impact of Estrogens Present in Environment on Health and Welfare of Animals",
+        "doi": "10.3390/ani11072152"
+    },
+    {
+        "title": "Desorption Strategies and Reusability of Biopolymeric Adsorbents and Semisynthetic Derivatives in Hydrogel and Hydrogel Composites Used in Adsorption Processes",
+        "doi": "10.1021/acsengineeringau.3c00022"
+    },
+    {
+        "title": "Tailor-Made Computational Protocols for Precise Characterization of Small Biological Building Blocks Using QM and MM Approaches",
+        "doi": "10.1002/bip.23109"
+    },
+    {
+        "title": "Occurrence, Sources, and Fate of Pharmaceuticals in Aquatic Environment and Soil",
+        "doi": "10.1016/j.envpol.2014.01.015"
+    },
+    {
+        "title": "Partition and Removal of Pharmaceuticals in Sewage Water and Sludge during Wastewater Treatment",
+        "doi": "10.1016/j.watres.2010.11.010"
+    },
+    {
+        "title": "Occurrence and Fate of Antibiotic, Analgesic/Anti-Inflammatory, and Antifungal Compounds in Five Wastewater Treatment Processes",
+        "doi": "10.1016/j.scitotenv.2013.12.008"
+    },
+    {
+        "title": "",
+        "doi": "10.2166/9781780402086"
+    },
+    {
+        "title": "Emerging Contaminants in Soil and Water"
+    },
+    {
+        "title": "Pharmaceuticals of Emerging Concern in Aquatic Systems: Chemistry, Occurrence, Effects, and Removal Methods",
+        "doi": "10.1021/acs.chemrev.8b00299"
+    },
+    {
+        "title": "Removal of Contaminants of Emerging Concern by Membranes in Water and Wastewater: A Review",
+        "doi": "10.1016/j.cej.2017.11.044"
+    },
+    {
+        "title": "Metal-Organic Frameworks for the Removal of Emerging Organic Contaminants in Water",
+        "doi": "10.1021/acs.chemrev.9b00797"
+    },
+    {
+        "title": "Advances in Technologies for Pharmaceuticals and Personal Care Products Removal",
+        "doi": "10.1039/C7TA03698A"
+    },
+    {
+        "title": "Molecularly Imprinted Polymer for Selective Adsorption of Diclofenac from Contaminated Water",
+        "doi": "10.1016/j.cej.2019.02.146"
+    },
+    {
+        "title": "A Review on Effective Removal of Emerging Contaminants from Aquatic Systems: Current Trends and Scope for Further Research",
+        "doi": "10.1016/j.jhazmat.2020.124413"
+    },
+    {
+        "title": "Remediation of Emerging Pollutants in Contaminated Wastewater and Aquatic Environments: Biomass-Based Technologies",
+        "doi": "10.1002/clen.201700101"
+    },
+    {
+        "title": "Efficient and Selective Adsorption of Methylene Blue and Methyl Violet Dyes by Yellow Passion Fruit Peel",
+        "doi": "10.1080/09593330.2021.1924288"
+    },
+    {
+        "title": "Occurrence and Removal of Pharmaceuticals in Wastewater Treatment Plants",
+        "doi": "10.1016/j.psep.2021.04.045"
+    },
+    {
+        "title": "Dye Wastewater Treatment Enabled by Piezo-Enhanced Photocatalysis of Single-Component ZnO Nanoparticles",
+        "doi": "10.1039/D0RA04746E"
+    },
+    {
+        "title": "Conventional and Emerging Technologies for Removal of Antibiotics from Wastewater",
+        "doi": "10.1016/j.jhazmat.2020.122961"
+    },
+    {
+        "title": "Fluoroquinolones (FQs) in the Environment: A Review on Their Abundance, Sorption and Toxicity in Soil",
+        "doi": "10.1016/j.chemosphere.2017.10.092"
+    },
+    {
+        "title": "Quinolones and Tetracyclines in Aquaculture Fish by a Simple and Rapid LC-MS/ MS Method",
+        "doi": "10.1016/j.foodchem.2017.11.094"
+    },
+    {
+        "title": "Treatment of Ampicillin-Loaded Wastewater by Combined Adsorption and Biodegradation",
+        "doi": "10.1002/jctb.2369"
+    },
+    {
+        "title": "Adsorption of Doxycycline from Aqueous Media: A Review",
+        "doi": "10.1016/j.molliq.2021.116124"
+    },
+    {
+        "title": "Effects of the Antiparasitic Drug Moxidectin in Cattle Dung on Zooplankton and Benthic Invertebrates and Its Accumulation in a Water-Sediment System",
+        "doi": "10.1007/s00244-018-0539-5"
+    },
+    {
+        "title": "Moxidectin Toxicity to Zebrafish Embryos: Bioaccumulation and Biomarker Responses",
+        "doi": "10.1016/j.envpol.2021.117096"
+    },
+    {
+        "title": "Degradation of the Nonsteroidal Anti-Inflammatory Drug Piroxicam by Iron Activated Persulfate: The Role of Water Matrix and Ultrasound Synergy",
+        "doi": "10.3390/ijerph15112600"
+    },
+    {
+        "title": "Coupling Persulfate-Based AOPs: A Novel Approach for Piroxicam Degradation in Aqueous Matrices",
+        "doi": "10.3390/w12061530"
+    },
+    {
+        "title": "Influence of Moisture on the Availability and Persistence of Clotrimazole and Fluconazole in Sludge-Amended Soil",
+        "doi": "10.1002/etc.1711"
+    },
+    {
+        "title": "Dichlorophenoxyacetic Acid (2,4-D) Micropollutant Herbicide Removing from Water Using Granular and Powdered Activated Carbons: A Comparison Applied for Water Treatment and Health Safety",
+        "doi": "10.1080/03601234.2019.1705113"
+    },
+    {
+        "title": "",
+        "doi": "10.5772/22670"
+    },
+    {
+        "title": "Designing Hydrogels for Controlled Drug Delivery",
+        "doi": "10.1038/natrevmats.2016.71"
+    },
+    {
+        "title": "Recent Advances in Injectable Hydrogels for Controlled and Local Drug Delivery",
+        "doi": "10.1002/adhm.202001341"
+    },
+    {
+        "title": "Review on Magnetic Natural Polymer Constructed Hydrogels as Vehicles for Drug Delivery",
+        "doi": "10.1021/acs.biomac.0c00566"
+    },
+    {
+        "title": "",
+        "doi": "10.3390/molecules24091815"
+    },
+    {
+        "title": "Porous Aerogels and Adsorption of Pollutants from Water and Air: A Review",
+        "doi": "10.3390/molecules26154440"
+    },
+    {
+        "title": "Emerging Trends in Polymer Aerogel Nanoarchitectures, Surfaces, Interfaces and Applications",
+        "doi": "10.1016/j.surfin.2021.101258"
+    },
+    {
+        "title": "Cryogel for the Removal of Heparins and Heparinoids from Aqueous Solutions, Physiological Solutions and Biological Fluids, Preparation Process and Uses Thereof. WO2017137919A1"
+    },
+    {
+        "title": "Advances in Polymer Science",
+        "doi": "10.1007/978-3-319-05846-7"
+    },
+    {
+        "title": "Innovative Polymeric Hybrid Nanocomposites for Application in Photocatalysis",
+        "doi": "10.3390/polym13081184"
+    },
+    {
+        "title": "Complexation of Macroporous Amphoteric Cryogels Based on N, N-Dimethylaminoethyl Methacrylate and Methacrylic Acid with Dyes, Surfactant, and Protein",
+        "doi": "10.1002/app.43784"
+    },
+    {
+        "title": "Preparation and Characterization of Composite Cryogels Containing Imidazole Group and Use in Heavy Metal Removal",
+        "doi": "10.1016/j.reactfunctpolym.2011.06.005"
+    },
+    {
+        "title": "",
+        "doi": "10.1016/j.cej.2020.125753"
+    },
+    {
+        "title": "Heavy Metal Ions Removal From Wastewater Using Cryogels: A Review",
+        "doi": "10.3389/frsus.2022.765592"
+    },
+    {
+        "title": "",
+        "doi": "10.1021/acsami.8b13029"
+    },
+    {
+        "title": "Chemically Modified Poly(2-Hydroxyethyl Methacrylate) Cryogel for the Adsorption of Heparin",
+        "doi": "10.1002/jbm.b.33104"
+    },
+    {
+        "title": "The Use of Superporous p(AAc (Acrylic Acid)) Cryogels as Support for Co and Ni Nanoparticle Preparation and as Reactor in H2 Production from Sodium Borohydride Hydrolysis",
+        "doi": "10.1016/j.energy.2014.04.031"
+    },
+    {
+        "title": "Bioaccumulation of Trace Elements in the Sandhopper Talitrus Saltator (Montagu) from the Ionian Sandy Coasts of Sicily",
+        "doi": "10.1016/j.ecoenv.2016.03.008"
+    },
+    {
+        "title": "Preparation of a Poly(Acrylic Acid) Based Hydrogel with Fast Adsorption Rate and High Adsorption Capacity for the Removal of Cationic Dyes",
+        "doi": "10.1039/C9RA03077H"
+    },
+    {
+        "title": "Determination of Polyelectrolyte PKa Values Using Surface-to-Air Tension Measurements",
+        "doi": "10.1016/j.colsurfa.2015.10.015"
+    },
+    {
+        "title": "An\u00edbal S\u00e1nchez-Hern\u00e1ndez, Determination of PKa Values for Acrylic, Methacrylic and Itaconic Acids by 1H and 13C NMR in Deuterated Water",
+        "doi": "10.6000/1929-5030.2015.04.01.2"
+    },
+    {
+        "title": "Investigation of Swelling Behavior and Mechanical Properties of a PH-Sensitive Superporous Hydrogel Composite",
+        "doi": "10.22037/ijpr.2012.1097"
+    },
+    {
+        "title": "FT-IR and FT-Raman Spectra of 2-Hydroxyethyl Methacrylate-A Conformational and Vibrational Analysis",
+        "doi": "10.1016/j.saa.2015.03.101"
+    },
+    {
+        "title": "Impact of Amino-Acid Coating on the Synthesis and Characteristics of Iron-Oxide Nanoparticles (IONs)",
+        "doi": "10.5012/bkcs.2012.33.12.3957"
+    },
+    {
+        "title": "Equilibrium and Kinetic Study of Chromium Sorption on Resins with Quaternary Ammonium and N-Methyl-d-Glucamine Groups",
+        "doi": "10.1016/j.cej.2015.09.018"
+    },
+    {
+        "title": "Superparamagnetic Iron Oxide Nanoparticle Nanodevices Based on Fe3O4 Coated by Megluminic Ligands for the Adsorption of Metal Anions from Water",
+        "doi": "10.1021/acsomega.2c00558"
+    },
+    {
+        "title": "Determination of the Physicochemical Properties of Piroxicam, Turk",
+        "doi": "10.4274/tjps.galenos.2019.82335"
+    },
+    {
+        "title": "Determination of PH Dependent Structures of Thymol Blue Revealed by Cooperative Analytical Method of Quantum Chemistry and Multivariate Analysis of Electronic Absorption Spectra",
+        "doi": "10.1246/bcsj.20190118"
+    },
+    {
+        "title": "Equilibrium Isotherms, Kinetics, and Thermodynamics of the Adsorption of 2,4-Dichlorophenoxyacetic Acid to Chitosan-Based Hydrogels",
+        "doi": "10.1007/s11270-021-05021-6"
+    },
+    {
+        "title": "Tuning the Selectivity of Molecularly Imprinted Polymer Extraction of Arylcyclohexylamines: From Class-Selective to Specific",
+        "doi": "10.1016/j.aca.2020.05.035"
+    },
+    {
+        "title": ""
+    },
+    {
+        "title": "Exploring the Reusability of Synthetically Contaminated Wastewater Containing Crystal Violet Dye Using Tectona Grandis Sawdust as a Very Low-Cost Adsorbent",
+        "doi": "10.1038/s41598-018-26655-3"
+    },
+    {
+        "title": "Preparation and Properties of Cryogel Based on Poly(2-Hydroxyethyl Methacrylate-Co-Glycidyl Methacrylate",
+        "doi": "10.1021/acs.langmuir.8b04021"
+    },
+    {
+        "title": "Development of Polymer Based Cryogel Matrix for Transportation and Storage of Mammalian Cells",
+        "doi": "10.1038/srep41551"
+    },
+    {
+        "title": "Pseudo-Second Order Model for Sorption Processes",
+        "doi": "10.1016/S0032-9592(98)00112-5"
+    },
+    {
+        "title": "Beyond the Synthesis of Novel Solid Phases: Review on Modelling of Sorption Phenomena",
+        "doi": "10.1016/j.ccr.2011.08.022"
+    },
+    {
+        "title": "Pseudo-Second-Order Kinetic Equations for Modeling Adsorption Systems for Removal of Lead Ions Using Multi-Walled Carbon Nanotube",
+        "doi": "10.1186/2193-8865-3-55"
+    },
+    {
+        "title": "Zinc Chloride Activated Carbon from Pleurotus Floridanus Biomass for Piroxicam Adsorption",
+        "doi": "10.1002/jctb.6957"
+    }
+]

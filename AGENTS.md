@@ -47,16 +47,25 @@ All `__init__.py` files EXCEPT the top-level one must be **empty**:
 my_package/
 ├── __init__.py          # Contains new-import-system installation
 ├── Module/
-│   ├── __init__.py      # EMPTY
+│   ├── __init__.py      # EMPTY - NEVER re-export anything here
 │   ├── MyClass.py
 │   └── MyClassMethod/
-│       ├── __init__.py  # EMPTY
+│       ├── __init__.py  # EMPTY - NEVER re-export anything here
 │       └── my_method.py
 ```
+
+**Never re-export functions or classes in subpackage `__init__.py`** — new-import-system handles this automatically. Adding re-exports creates redundant import paths and breaks consistency.
 
 ---
 
 ## 2. Code Granularity & Organization
+
+### Functions vs Dataclasses/Enums
+
+- **Functions represent actions** — they perform operations, transformations, or computations (e.g., `filter_data`, `download_file`, `calculate_score`)
+- **Dataclasses and enums represent data** — they hold structured information or define fixed sets of values (e.g., `Config`, `User`, `Status`)
+
+This is the default paradigm. Use functions for stateless operations; use dataclasses/enums when you need to group related data fields.
 
 ### Dataclasses, Enums, and Functions
 
@@ -144,11 +153,48 @@ def my_method(df: pd.DataFrame, options: Options = Options()) -> pd.DataFrame:
 
 def test_my_method():
     from my_package.__global__ import DATA_CSV
-    my_package.setup_loguru()
     df = pd.read_csv(DATA_CSV)
     df = my_method(df, Options(option_a="value"))
     assert len(df) > 0
 ```
+
+### Single Class/Function Per File
+
+Each file should contain **one main element** (class, function, or enum) plus one or more test functions.
+
+**Good:**
+```python
+# my_package/Module/MyClass.py
+@dataclass
+class MyClass:
+    data: pd.DataFrame
+    config: Config
+
+def test_usage():
+    # Test MyClass functionality
+    pass
+
+def test_edge_cases():
+    # Additional test for edge cases
+    pass
+```
+
+**Bad (multiple classes in one file):**
+```python
+# my_package/Module/BadExample.py
+@dataclass
+class ClassA:
+    pass
+
+@dataclass
+class ClassB:
+    pass
+```
+
+**Special cases permitted:**
+- Small helper functions used more than once within the same file
+- Lambda functions
+- Useless or duplicate tests should be avoided and removed
 
 ---
 
@@ -288,14 +334,6 @@ logger.debug(f"Processing {len(df)} rows")
 logger.info("Operation completed successfully")
 logger.warning("Missing data detected")
 ```
-
-Setup loguru once per entry point:
-
-```python
-import my_package
-my_package.setup_loguru()
-```
-
 ---
 
 ## 6. Directory Structure
@@ -304,7 +342,6 @@ my_package.setup_loguru()
 my_package/
 ├── __init__.py              # new-import-system installation
 ├── __global__.py            # Global constants
-├── setup_loguru.py          # Logging configuration
 ├── ModuleA/
 │   ├── __init__.py          # EMPTY
 │   ├── __global__.py        # Module-specific constants
@@ -419,14 +456,12 @@ def process_b(df: pd.DataFrame) -> pd.DataFrame:
 
 def test_method_a():
     from my_package.__global__ import DATA_CSV
-    my_package.setup_loguru()
     df = pd.read_csv(DATA_CSV)
     df = my_method(df, Options(method="method_a"))
     assert len(df) > 0
 
 def test_method_b():
     from my_package.__global__ import DATA_CSV
-    my_package.setup_loguru()
     df = pd.read_csv(DATA_CSV)
     df = my_method(df, Options(method="method_b"))
     assert len(df) > 0
@@ -485,6 +520,16 @@ All package and subpackage folders must follow **PascalCase** convention:
 | **Classes** | PascalCase | `MyClass`, `Config` |
 | **Enums** | PascalCase | `Status`, `LogLevel` |
 | **Functions** | snake_case | `my_function`, `process_data` |
+| **Function files** | snake_case (matches function name) | `my_function.py` contains `def my_function()` |
+
+**File naming for functions:** The filename must match the function name in snake_case. Do NOT use different naming patterns (e.g., file `MyFunction.py` with function `def my_function()`).
+
+```
+✅ utils/
+│   └── process_data.py     # Contains: def process_data()
+❌ utils/
+│   └── ProcessData.py     # Contains: def process_data()
+```
 
 **Packages:** A package is any folder containing an `__init__.py` file.
 
