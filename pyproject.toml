@@ -34,10 +34,8 @@ norecursedirs = [
   "__HELPER_DIR__",
 ]
 filterwarnings = [
-    # "ignore:'audioop' is deprecated:DeprecationWarning",
-    # "ignore:invalid escape sequence:DeprecationWarning",
-    # "ignore:.*GraphNetwork:DeprecationWarning",
-    # "ignore:.*SelfAttention Layer:DeprecationWarning",
+    "ignore:Concepts is deprecated:DeprecationWarning",
+    "ignore:Concept is deprecated:DeprecationWarning",
 ]
 markers = [
     "verbose: tests that have some kind of output",
