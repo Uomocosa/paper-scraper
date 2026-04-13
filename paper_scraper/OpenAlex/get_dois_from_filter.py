@@ -18,21 +18,15 @@ class Filter:
     max_papers: int = 100
 
 
-def download_papers_with_filter(
-    filter: Filter,
-    options: OpenAlexOptions = OpenAlexOptions(),
-) -> None:
-    dois = get_dois_from_filter(filter)
-    OpenAlex.download_papers_from_dois(dois, options)
-
-
 def get_dois_from_filter(filter: Filter) -> list[str]:
     assert filter.topics, "Topics must be provided to search for papers"
     concept_ids, topic_ids = get_concept_and_topic_ids(filter)
-    
+
     query = Works()
-    if topic_ids: query = query.filter(topics={"id": topic_ids})
-    if concept_ids: query = query.filter(concepts={"id": concept_ids})
+    if topic_ids:
+        query = query.filter(topics={"id": topic_ids})
+    if concept_ids:
+        query = query.filter(concepts={"id": concept_ids})
 
     if filter.year_min and filter.year_max:
         query = query.filter(
@@ -55,7 +49,7 @@ def get_dois_from_filter(filter: Filter) -> list[str]:
         if doi:
             dois.append(doi)
 
-    logger.info(f"Found {len(dois)} papers matching filters")
+    logger.info(f"Found {len(dois)} DOIs from filter")
     return dois
 
 
@@ -87,7 +81,7 @@ def get_concept_and_topic_ids(filter: Filter) -> tuple[list[str], list[str]]:
 
 def test_usage():
     f = Filter(topics=["T11948"], max_papers=10)
-    dois = download_papers_with_filter(f)
+    dois = get_dois_from_filter(f)
     logger.info(f"Found {len(dois)} DOIs: {dois}")
 
 
