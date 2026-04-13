@@ -1,19 +1,17 @@
-import json
-import tomllib
-from dataclasses import dataclass
-from pathlib import Path
-
 import tyro
 from loguru import logger
-from pyalex import Works
 
 import paper_scraper
-from paper_scraper import OpenAlex
 from paper_scraper.OpenAlex.download_papers_from_dois import Options as OpenAlexOptions
-from paper_scraper.OpenAlex.Options import SearchOptions
-from paper_scraper.Utils.extract_dois_from_json import extract_dois_from_json
-from paper_scraper.__global__ import EXTRACTED_REFERENCES, DOWNLOADED_DIR, PAPERS_DIR
+from paper_scraper.OpenAlex.download_papers_with_filter import (
+    Filter,
+    download_papers_with_filter,
+    load_config,
+    apply_cli_overrides,
+)
 from paper_scraper.OpenAlex.download_papers_from_dois import download_papers_from_dois
+from paper_scraper.Utils.extract_dois_from_json import extract_dois_from_json
+from paper_scraper.__global__ import EXTRACTED_REFERENCES
 
 
 def main(
@@ -36,88 +34,17 @@ def main(
         max_papers: Maximum papers to download (search mode).
         depth: Recursion depth (recursive mode).
     """
-    config = load_config()
-    apply_cli_overrides(
-        config, concepts, year_min, year_max, open_access_only, max_papers
-    )
-
     if mode == "search":
-        dois = search_and_filter(config)
+        filter = load_config()
+        apply_cli_overrides(
+            filter, concepts, year_min, year_max, open_access_only, max_papers
+        )
+        download_papers_with_filter(filter, depth)
     else:
         dois = load_extracted_references()
-
-    logger.info(f"Found {len(dois)} DOIs to download")
-    opts = OpenAlexOptions(depth=depth)
-    download_papers_from_dois(dois, opts)
-
-
-def load_config() -> SearchOptions:
-    config_file = PAPERS_DIR / "download_config.toml"
-    if not config_file.exists():
-        return SearchOptions()
-
-    try:
-        with open(config_file, "rb") as f:
-            data = tomllib.load(f)
-    except Exception:
-        return SearchOptions()
-
-    search = data.get("search", {}) or {}
-    return SearchOptions(
-        concepts=search.get("concepts"),
-        year_min=search.get("year_min"),
-        year_max=search.get("year_max"),
-        open_access_only=search.get("open_access_only", True),
-        max_papers=search.get("max_papers", 100),
-    )
-
-
-def apply_cli_overrides(
-    config: SearchOptions,
-    concepts: list[str] | None,
-    year_min: int | None,
-    year_max: int | None,
-    open_access_only: bool | None,
-    max_papers: int,
-):
-    if concepts is not None:
-        config.concepts = concepts
-    if year_min is not None:
-        config.year_min = year_min
-    if year_max is not None:
-        config.year_max = year_max
-    if open_access_only is not None:
-        config.open_access_only = open_access_only
-    config.max_papers = max_papers
-
-
-def search_and_filter(options: SearchOptions) -> list[str]:
-    query = Works()
-
-    if options.concepts:
-        query = query.filter(concepts=options.concepts)
-
-    if options.year_min or options.year_max:
-        year_filter = {}
-        if options.year_min:
-            year_filter[">="] = str(options.year_min)
-        if options.year_max:
-            year_filter["<="] = str(options.year_max)
-        query = query.filter(publication_year=year_filter)
-
-    if options.open_access_only:
-        query = query.filter(is_oa=True)
-
-    results = query.get(per_page=options.max_papers)
-
-    dois = []
-    for work in results:
-        doi = work.get("doi")
-        if doi:
-            dois.append(doi)
-
-    logger.info(f"Found {len(dois)} papers matching filters")
-    return dois
+        logger.info(f"Found {len(dois)} DOIs to download")
+        opts = OpenAlexOptions(depth=depth)
+        download_papers_from_dois(dois, opts)
 
 
 def load_extracted_references() -> list[str]:

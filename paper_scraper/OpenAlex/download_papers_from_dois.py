@@ -19,16 +19,16 @@ Result = OpenAlex.Result
 Status = OpenAlex.Result.Status
 OpenAlexOptions = OpenAlex.Options.Options
 
-
 @dataclass
-class Options(OpenAlexOptions):
-    depth: int = 0
-
+class Options:
+    depth: int = 1
 
 def download_papers_from_dois(
-    dois: list[str], options: Options = Options()
+    dois: list[str], 
+    openalex_options: OpenAlexOptions = OpenAlexOptions(),
+    options: Options = Options(),
 ) -> dict[str, int]:
-    options.setup_pyalex_key()
+    openalex_options.setup_pyalex_key()
 
     results = {"SUCCESS": 0, "NOT_OPEN_ACCESS": 0, "ERROR": 0}
     current_depth = 0
@@ -67,9 +67,11 @@ def download_papers_from_dois(
 
 
 def download_paper_from_doi(
-    doi: str, options: OpenAlex.Options = OpenAlex.Options()
+    doi: str, 
+    options: Options = Options(),
+    openalex_options: OpenAlex.Options = OpenAlex.Options(),
 ) -> OpenAlex.Result:
-    options.setup_pyalex_key()
+    openalex_options.setup_pyalex_key()
 
     if not doi or not isinstance(doi, str):
         logger.warning(f"Skipping invalid DOI: {doi}")

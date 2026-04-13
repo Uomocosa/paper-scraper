@@ -16,12 +16,3 @@ class Options:
             pyalex.api_key = self.api_key
         else:
             pyalex.api_key = None
-
-
-@dataclass
-class SearchOptions:
-    concepts: list[str] | None = None
-    year_min: int | None = None
-    year_max: int | None = None
-    open_access_only: bool = True
-    max_papers: int = 100
