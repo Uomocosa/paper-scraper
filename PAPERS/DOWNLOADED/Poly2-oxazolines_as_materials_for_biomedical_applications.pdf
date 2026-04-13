@@ -425,8 +425,8 @@
             var bodyScripts = [
                 
                     
-                    {'src': '/oscar-static/js/global-article-es5-bundle-4d034880a2.js', 'async': false, 'module': false},
-                    {'src': '/oscar-static/js/global-article-es6-bundle-36727126e9.js', 'async': false, 'module': true}
+                    {'src': '/oscar-static/js/global-article-es5-bundle-f22b56a80a.js', 'async': false, 'module': false},
+                    {'src': '/oscar-static/js/global-article-es6-bundle-06474638b7.js', 'async': false, 'module': true}
                     
                 
                 
@@ -878,7 +878,7 @@ exports.headerWidgetClientInit = headerWidgetClientInit;
                             
                                 <div class="app-article-masthead__save-article">
                                         
-                                            <a class="app-article-masthead__action-link" href="/article/10.1007/s10856-013-5034-y/save-research?_csrf=WfdZLo1-XOjhujgmckRzLnrTW5STd2z8" data-track="form_saved_research" data-track-context="masthead" data-track-value="save" id="save_article">
+                                            <a class="app-article-masthead__action-link" href="/article/10.1007/s10856-013-5034-y/save-research?_csrf=LLmKmkc-XpzTW3NHSOeR6Jus_ssfhZQQ" data-track="form_saved_research" data-track-context="masthead" data-track-value="save" id="save_article">
                                             <svg class="app-article-masthead__icon" width="24" height="24" aria-hidden="true" focusable="false">
                                                 <use xlink:href="#icon-eds-i-marker-unfilled"></use>
                                             </svg><span>Save article</span>
@@ -1065,7 +1065,7 @@ exports.headerWidgetClientInit = headerWidgetClientInit;
                                         
                                             <div data-test="buy-box-mobile" class="c-article-buy-box">
                                                 <div class="sprcom-buybox-articleDarwin" id="sprcom-buybox-articleDarwin">
- <!-- rendered: 2026-04-11T10:59:50.838146831 -->
+ <!-- rendered: 2026-04-13T17:02:04.986675236 -->
  <!-- Darwin version -->
  <div class="buying-option" data-test-id="buy-article-darwin">
   <div>
@@ -1313,7 +1313,7 @@ exports.headerWidgetClientInit = headerWidgetClientInit;
                         recommender: 'semantic',
                         model: 'e5',
                         policy_id: null,
-                        timestamp: 1775901813,
+                        timestamp: 1776096305,
                         embedded_user: 'null'
                     }
                 });
@@ -1883,7 +1883,7 @@ exports.headerWidgetClientInit = headerWidgetClientInit;
                                     
                                     <div data-test="buy-box-desktop" class="c-article-buy-box">
                                         <div class="sprcom-buybox-articleDarwin" id="sprcom-buybox-articleDarwin">
- <!-- rendered: 2026-04-11T10:59:50.838146831 -->
+ <!-- rendered: 2026-04-13T17:02:04.986675236 -->
  <!-- Darwin version -->
  <div class="buying-option" data-test-id="buy-article-darwin">
   <div>
