@@ -1,11 +1,9 @@
-from dataclasses import dataclass
-from abc import ABC, abstractmethod
 from loguru import logger
 
-
-@dataclass
-class GrobidConnectionRefused(ABC, Exception):
-    url: str
+class GrobidConnectionRefused(Exception):
+    def __init__(self, url: str):
+        self.url = url
+        super().__init__(f"Cannot connect to Grobid at {url}")
 
     def __str__(self) -> str:
         return (

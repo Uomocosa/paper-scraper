@@ -8,6 +8,7 @@ authors = [
 description = "todo"
 readme = "README.md"
 requires-python = ">=3.11"
+dependencies = ["python-dotenv"]
 
 [build-system]
 requires = ["setuptools>=61.0"]
@@ -22,7 +23,7 @@ include = ["src*"]
 
 [tool.pytest.ini_options]
 python_files = "*.py"
-testpaths = ["src"]
+testpaths = ["paper_scraper"]
 norecursedirs = [
   "__pycache__",
   ".cache_dir",

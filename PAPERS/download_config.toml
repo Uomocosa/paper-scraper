@@ -1,0 +1,9 @@
+# Example configuration for download_papers --mode search
+# Uncomment and customize
+
+# [search]
+# concepts = []  # list of OpenAlex concept IDs, e.g. ["C1264102"]
+# year_min = 2020
+# year_max = 2024
+# open_access_only = true
+# max_papers = 100
