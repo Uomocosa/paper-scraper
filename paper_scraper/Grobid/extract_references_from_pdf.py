@@ -16,7 +16,10 @@ class Options:
     pass
     
 
-def extract_references_from_pdf(pdf_path, options: Options = Options()):
+def extract_references_from_pdf(
+    pdf_path, 
+    options: Options = Options()
+) -> list[dict]:
     pdf_path = Path(pdf_path)
     from loguru import logger
 

@@ -1,12 +1,10 @@
-from dataclasses import dataclass
-from abc import ABC, abstractmethod
 from loguru import logger
 
-
-@dataclass
-class GrobidConnectionTimeout(ABC, Exception):
-    url: str
-    timeout_s: float
+class GrobidConnectionTimeout(Exception):
+    def __init__(self, url: str, timeout_s: float):
+        self.url = url
+        self.timeout_s = timeout_s
+        super().__init__(f"Connection to Grobid timed out after {timeout_s}s")
 
     def __str__(self) -> str:
         return (

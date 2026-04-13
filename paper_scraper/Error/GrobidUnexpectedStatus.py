@@ -1,12 +1,10 @@
-from dataclasses import dataclass
-from abc import ABC, abstractmethod
 from loguru import logger
 
-
-@dataclass
-class GrobidUnexpectedStatus(ABC, Exception):
-    url: str
-    status_code: int
+class GrobidUnexpectedStatus(Exception):
+    def __init__(self, url: str, status_code: int):
+        self.url = url
+        self.status_code = status_code
+        super().__init__(f"Server returned status {status_code} for {url}")
 
     def __str__(self) -> str:
         return (

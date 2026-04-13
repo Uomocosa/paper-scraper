@@ -1,8 +1,23 @@
-# Python Project Coding Conventions
+# AGENTS.md - Paper Scraper Project
 
-## Project Overview
+## Overview
 
-This document describes the coding conventions for this Python project.
+This repo contains a local scientific paper scraping pipeline. It extracts references from seed PDFs, downloads papers via OpenAlex API, and outputs to local directories.
+
+---
+
+## Setup Requirements
+
+1. **Grobid** must be running locally on port 8070:
+   ```
+   podman run --rm --init --ulimit core=0 -p 8070:8070 grobid/grobid:0.8.2-crf
+   ```
+
+2. **API key**: Create `.env` file in **parent directory** of repo with:
+   ```
+   PYALEX_API_KEY=<your_openalex_key>
+   ```
+   Get key at https://openalex.org/settings/api
 
 ---
 
@@ -10,14 +25,12 @@ This document describes the coding conventions for this Python project.
 
 ### Installation in Top-Level `__init__.py`
 
-Every top-level package `__init__.py` must install the new-import-system:
-
 ```python
 import new_import_system
 new_import_system.install(__file__)
 ```
 
-**Example:** `my_package/__init__.py`
+**Example:** `paper_scraper/__init__.py`
 ```python
 import new_import_system
 new_import_system.install(__file__)
@@ -26,35 +39,26 @@ new_import_system.install(__file__)
 ### Import Rules
 
 - **NEVER use relative imports** (e.g., `from .Module import ...` is forbidden)
-- **Always use absolute imports** (e.g., `import my_package`, `from my_package.Module import MyClassMethod`)
-- **No need to repeat module name** in function calls when the module name matches the function name:
-
-```python
-# Instead of this:
-my_package.Module.MyClassMethod.my_function(df, options)
-
-# Do this:
-my_package.Module.MyClassMethod.my_function(df, options)
-# OR if my_function is the only exported function from MyClassMethod:
-my_package.Module.MyClassMethod(df, options)
-```
+- **Always use absolute imports** (e.g., `import paper_scraper`, `from paper_scraper.OpenAlex import download_papers_from_dois`)
 
 ### Empty `__init__.py` Files
 
 All `__init__.py` files EXCEPT the top-level one must be **empty**:
 
 ```
-my_package/
+paper_scraper/
 ├── __init__.py          # Contains new-import-system installation
-├── Module/
-│   ├── __init__.py      # EMPTY - NEVER re-export anything here
-│   ├── MyClass.py
-│   └── MyClassMethod/
-│       ├── __init__.py  # EMPTY - NEVER re-export anything here
-│       └── my_method.py
+├── OpenAlex/
+│   ├── __init__.py      # EMPTY
+│   ├── download_papers_from_dois.py
+│   └── Result.py
+├── Grobid/
+│   ├── __init__.py      # EMPTY
+│   └── extract_references_from_pdf.py
+└── Utils/
+    ├── __init__.py      # EMPTY
+    └── extract_dois_from_json.py
 ```
-
-**Never re-export functions or classes in subpackage `__init__.py`** — new-import-system handles this automatically. Adding re-exports creates redundant import paths and breaks consistency.
 
 ---
 
@@ -98,13 +102,22 @@ class Config:
         self.max_size = max_size
 ```
 
+### Subpackage Naming: PascalCase
+
+All subpackage folders must follow **PascalCase** convention:
+
+```
+✅ OpenAlex/, Grobid/, Utils/, Error/
+❌ openalex/, grobid/, utils/, error/
+```
+
 ### Method Subpackages: `ClassNameMethod/`
 
 When a dataclass needs methods, create a subpackage named `ClassNameMethod/` and implement methods there.
 
 **Structure:**
 ```
-my_package/Module/
+paper_scraper/Module/
 ├── MyClass.py              # Dataclass definition
 └── MyClassMethod/
     ├── __init__.py         # EMPTY
@@ -116,9 +129,9 @@ my_package/Module/
 **Dataclass references methods via the subpackage:**
 
 ```python
-# my_package/Module/MyClass.py
+# paper_scraper/Module/MyClass.py
 from dataclasses import dataclass
-import my_package
+import paper_scraper
 
 @dataclass
 class MyClass:
@@ -137,10 +150,10 @@ class MyClass:
 Each method file follows this pattern:
 
 ```python
-# my_package/Module/MyClassMethod/my_method.py
+# paper_scraper/Module/MyClassMethod/my_method.py
 from dataclasses import dataclass, field
 import pandas as pd
-import my_package
+import paper_scraper
 
 @dataclass
 class Options:
@@ -152,49 +165,16 @@ def my_method(df: pd.DataFrame, options: Options = Options()) -> pd.DataFrame:
     return df
 
 def test_my_method():
-    from my_package.__global__ import DATA_CSV
+    from paper_scraper.__global__ import SEED_DIR
     df = pd.read_csv(DATA_CSV)
     df = my_method(df, Options(option_a="value"))
     assert len(df) > 0
+
+def test_method_b():
+    from paper_scraper.__global__ import SEED_DIR
+    df = my_method(df, Options(method="method_b"))
+    assert len(df) > 0
 ```
-
-### Single Class/Function Per File
-
-Each file should contain **one main element** (class, function, or enum) plus one or more test functions.
-
-**Good:**
-```python
-# my_package/Module/MyClass.py
-@dataclass
-class MyClass:
-    data: pd.DataFrame
-    config: Config
-
-def test_usage():
-    # Test MyClass functionality
-    pass
-
-def test_edge_cases():
-    # Additional test for edge cases
-    pass
-```
-
-**Bad (multiple classes in one file):**
-```python
-# my_package/Module/BadExample.py
-@dataclass
-class ClassA:
-    pass
-
-@dataclass
-class ClassB:
-    pass
-```
-
-**Special cases permitted:**
-- Small helper functions used more than once within the same file
-- Lambda functions
-- Useless or duplicate tests should be avoided and removed
 
 ---
 
@@ -206,8 +186,8 @@ Every module (function, dataclass, enum) must have at least one `test_usage()` f
 
 ```python
 def test_usage():
-    from my_package.__global__ import DATA_CSV
-    config = Config(csv_file=DATA_CSV)
+    from paper_scraper.__global__ import SEED_DIR
+    config = Config(csv_file=SEED_DIR)
     instance = MyClass(config)
     instance.my_method()
     logger.info(f"Data shape: {instance.data.shape}")
@@ -263,7 +243,7 @@ def test_with_output():
 
 **Running specific tests:**
 ```bash
-pixi run pytest -rFP -q -s my_package/Module/MyClass.py::test_usage -o "addopts="
+pixi run pytest -rFP -q -s paper_scraper/Module/MyClass.py::test_usage -o "addopts="
 ```
 
 ---
@@ -273,29 +253,26 @@ pixi run pytest -rFP -q -s my_package/Module/MyClass.py::test_usage -o "addopts=
 Use `__global__.py` files for constants and shared configuration:
 
 ```python
-# my_package/__global__.py
+# paper_scraper/__global__.py
 from pathlib import Path
 
-REPO_DIR = Path(__file__).parent.parent.resolve()
-DATA_DIR = REPO_DIR / 'DATA'
-RESULTS_DIR = REPO_DIR / 'RESULTS'
+THIS_FOLDER = Path(__file__).parent
+HELPER_DIR = THIS_FOLDER / '__HELPER_DIR__'
+PAPERS_DIR = REPO_DIR / 'PAPERS'
+SEED_DIR = PAPERS_DIR / 'SEED'
+DOWNLOADED_DIR = PAPERS_DIR / 'DOWNLOADED'
 
 from joblib import Memory
 CACHE_MEMORY = Memory(location=".cache_dir", verbose=0)
-
-CONFIG_DICT = {
-    "key_a": "value_a",
-    "key_b": "value_b",
-}
 ```
 
 Each subpackage can have its own `__global__.py`:
 
 ```python
-# my_package/Module/__global__.py
-import lele
+# paper_scraper/OpenAlex/__global__.py
+from pathlib import Path
 
-THIS_FOLDER = lele.P(__file__).parent
+THIS_FOLDER = Path(__file__).parent
 HELPER_DIR = THIS_FOLDER / '__HELPER_DIR__'
 ```
 
@@ -306,18 +283,6 @@ HELPER_DIR = THIS_FOLDER / '__HELPER_DIR__'
 ### No Comments (Unless Required)
 
 Add comments only when absolutely necessary for understanding. Code should be self-documenting.
-
-**Good:**
-```python
-def filter_data(df: pd.DataFrame, threshold: float) -> pd.DataFrame:
-    new_rows = []
-    for group_key, group in df.groupby(['category_a', 'category_b']):
-        if not (group['value'] > threshold).any():
-            new_row = group.iloc[0].copy()
-            new_row['value'] = threshold
-            new_rows.append(new_row)
-    return pd.concat([df, pd.DataFrame(new_rows)])
-```
 
 ### No `if __name__ == "__main__"`
 
@@ -334,34 +299,35 @@ logger.debug(f"Processing {len(df)} rows")
 logger.info("Operation completed successfully")
 logger.warning("Missing data detected")
 ```
+
 ---
 
 ## 6. Directory Structure
 
 ```
-my_package/
+paper_scraper/
 ├── __init__.py              # new-import-system installation
 ├── __global__.py            # Global constants
-├── ModuleA/
+├── OpenAlex/
 │   ├── __init__.py          # EMPTY
 │   ├── __global__.py        # Module-specific constants
-│   ├── Config.py            # Config dataclass
-│   ├── MyClass.py           # Main dataclass
-│   └── MyClassMethod/       # Methods for MyClass
-│       ├── __init__.py      # EMPTY
-│       ├── my_method.py
-│       ├── another_method.py
-│       └── ...
-├── ModuleB/
+│   ├── download_papers_from_dois.py
+│   └── Options.py
+├── Grobid/
 │   ├── __init__.py          # EMPTY
-│   ├── __global__.py        # Module-specific constants
-│   ├── AnotherClass.py      # Another dataclass
-│   └── AnotherClassMethod/  # Methods for AnotherClass
-│       ├── __init__.py      # EMPTY
-│       └── ...
-└── Utils/
+│   ├── extract_references_from_pdf.py
+│   └── check_connection.py
+├── Utils/
+│   ├── __init__.py          # EMPTY
+│   └── extract_dois_from_json.py
+├── Error/
+│   ├── __init__.py          # EMPTY
+│   ├── GrobidConnectionTimeout.py
+│   ├── GrobidConnectionRefused.py
+│   └── GrobidUnexpectedStatus.py
+└── Secrets/
     ├── __init__.py          # EMPTY
-    └── helper_functions.py
+    └── get_pyalex_api_key.py
 ```
 
 ### Top-Level Package Naming
@@ -371,100 +337,26 @@ The top-level package folder must be named in `snake_case` and **must match the 
 ```
 # pyproject.toml
 [project]
-name = "my_package"
+name = "paper_scraper"
 
 # Directory structure
-my_package/           # snake_case, matches pyproject.toml
+paper_scraper/           # snake_case, matches pyproject.toml
 ├── __init__.py
 └── ...
 ```
 
 ---
 
-## 7. Complete Example
+## 7. Pixi Tasks
 
-### File: `my_package/Module/MyClass.py`
+Run the pipeline with these commands:
 
-```python
-import pandas as pd
-from dataclasses import dataclass
-import my_package
-from my_package.Module import MyClassMethod
-from loguru import logger
+```bash
+# Extract references from seed PDFs using Grobid
+pixi run extract_refs
 
-@dataclass
-class Config:
-    csv_file: Path
-    param_a: float = 0.6
-    param_b: float = 0.2
-    param_c: float = 0.2
-    max_size: Optional[int] = None
-    seed: int = 42
-
-@dataclass
-class MyClass:
-    data: pd.DataFrame
-    config: Config
-    
-    def __init__(self, config: Config):
-        self.data = pd.read_csv(config.csv_file)
-        self.config = config
-    
-    @staticmethod
-    def process_fn(df: pd.DataFrame) -> pd.DataFrame:
-        return MyClassMethod.process(df)
-        
-    def my_method(self, options=MyClassMethod.my_method.Options()):
-        original_len = len(self.data)
-        self.data = MyClassMethod.my_method(self.data, options)
-        logger.info(f"Processed: gained {len(self.data) - original_len} rows.")
-        
-    def another_method(self, options=MyClassMethod.another_method.Options()):
-        self.data = MyClassMethod.another_method(self.data, options)
-```
-
-### File: `my_package/Module/MyClassMethod/my_method.py`
-
-```python
-from dataclasses import dataclass
-import pandas as pd
-import numpy as np
-import my_package
-from loguru import logger
-
-@dataclass
-class Options:
-    method: str = "method_a"
-    param: int = 2
-
-def my_method(df: pd.DataFrame, options: Options = Options()) -> pd.DataFrame:
-    METHOD_DICT = {
-        "method_a": lambda df: process_a(df),
-        "method_b": lambda df: process_b(df),
-        "method_a_then_b": lambda df: process_b(process_a(df)),
-    }
-    method = METHOD_DICT[options.method]
-    return method(df)
-
-def process_a(df: pd.DataFrame) -> pd.DataFrame:
-    # Implementation
-    return df
-
-def process_b(df: pd.DataFrame) -> pd.DataFrame:
-    # Implementation
-    return df
-
-def test_method_a():
-    from my_package.__global__ import DATA_CSV
-    df = pd.read_csv(DATA_CSV)
-    df = my_method(df, Options(method="method_a"))
-    assert len(df) > 0
-
-def test_method_b():
-    from my_package.__global__ import DATA_CSV
-    df = pd.read_csv(DATA_CSV)
-    df = my_method(df, Options(method="method_b"))
-    assert len(df) > 0
+# Download papers from OpenAlex using extracted DOIs
+pixi run download_papers
 ```
 
 ---
@@ -478,17 +370,17 @@ pixi run pytest
 
 ### Run Specific Test File
 ```bash
-pixi run pytest my_package/Module/MyClass.py
+pixi run pytest paper_scraper/Module/MyClass.py
 ```
 
 ### Run Specific Test Function
 ```bash
-pixi run pytest my_package/Module/MyClass.py::test_usage -o "addopts="
+pixi run pytest paper_scraper/Module/MyClass.py::test_usage -o "addopts="
 ```
 
 ### Include Verbose/Print Output
 ```bash
-pixi run pytest -s -v my_package/Module/MyClass.py::test_usage
+pixi run pytest -s -v paper_scraper/Module/MyClass.py::test_usage
 ```
 
 ### Skip Slow Tests
@@ -504,7 +396,7 @@ All package and subpackage folders must follow **PascalCase** convention:
 
 ```
 ✅ MyPackage/, ModuleA/, BioInformatics/, Utils/, SubPackage /
-❌ my_package/, module_a/, bio_informatics/, utils/, subpackage /
+❌ paper_scraper/, module_a/, bio_informatics/, utils/, subpackage /
 ```
 
 **Note:** The top-level package is the exception — it must be named in `snake_case` to match `pyproject.toml`.
@@ -515,7 +407,7 @@ All package and subpackage folders must follow **PascalCase** convention:
 
 | Element | Convention | Example |
 |---------|------------|---------|
-| **Top-level package** | snake_case | `my_package/` |
+| **Top-level package** | snake_case | `paper_scraper/` |
 | **Subpackages** | PascalCase | `Utils/`, `BioInformatics/` |
 | **Classes** | PascalCase | `MyClass`, `Config` |
 | **Enums** | PascalCase | `Status`, `LogLevel` |

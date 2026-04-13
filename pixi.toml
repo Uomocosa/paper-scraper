@@ -5,12 +5,14 @@ platforms = ["win-64", "linux-64"]
 
 [tasks]
 extract_refs = "python -c 'from paper_scraper.extract_refs import extract_refs; extract_refs()'"
+download_papers = "python -c 'import tyro; from paper_scraper.download_papers import main; tyro.cli(main)'"
 
 [dependencies]
 python = ">=3.11"
 requests = ">=2.33.1,<3"
 beautifulsoup4 = ">=4.14.3,<5"
 lxml = ">=6.0.2,<7"
+python-dotenv = ">=1.2.2,<2"
 
 [pypi-dependencies]
 new-import-system = { git = "https://github.com/Uomocosa/new-python-import-system" }
