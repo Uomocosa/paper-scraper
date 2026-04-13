@@ -1,5 +1,6 @@
 from pathlib import Path
 from typing import Iterator
+from dataclasses import dataclass
 
 from loguru import logger
 
@@ -15,11 +16,14 @@ from paper_scraper.OpenAlex.Result import Status
 
 OpenAlexOptions = OpenAlex.Options.Options
 
+@dataclass
+class Options:
+    depth: int = 1
 
 def from_dois(
     dois: list[str],
+    options: Options = Options(),
     openalex_options: OpenAlexOptions = OpenAlexOptions(),
-    depth: int = 1,
 ) -> list[str]:
     openalex_options.setup_pyalex_key()
 
@@ -27,7 +31,7 @@ def from_dois(
     current_dois = dois
     current_depth = 0
 
-    while current_depth < depth:
+    while current_depth < options.depth:
         next_dois = []
         results = OpenAlex.download_papers_from_dois(current_dois, openalex_options)
 
@@ -56,13 +60,13 @@ def from_dois(
 
 def from_papers(
     paper_paths: list[Path],
-    depth: int = 1,
+    options: Options = Options(),
 ) -> list[str]:
     all_dois = []
     current_paths = paper_paths
     current_depth = 0
 
-    while current_depth < depth:
+    while current_depth < options.depth:
         next_dois = []
         for paper_path in current_paths:
             try:
@@ -94,5 +98,5 @@ def download_paper_result(doi: str) -> OpenAlex.Result:
 
 def test_usage():
     dois = ["10.3390/w12061530"]
-    result_dois = from_dois(dois, depth=1)
+    result_dois = from_dois(dois, Options(depth=1))
     logger.info(f"Found {len(result_dois)} reference DOIs: {result_dois}")
