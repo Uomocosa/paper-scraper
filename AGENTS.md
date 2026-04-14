@@ -6,21 +6,6 @@ This repo contains a local scientific paper scraping pipeline. It extracts refer
 
 ---
 
-## Setup Requirements
-
-1. **Grobid** must be running locally on port 8070:
-   ```
-   podman run --rm --init --ulimit core=0 -p 8070:8070 grobid/grobid:0.8.2-crf
-   ```
-
-2. **API key**: Create `.env` file in **parent directory** of repo with:
-   ```
-   PYALEX_API_KEY=<your_openalex_key>
-   ```
-   Get key at https://openalex.org/settings/api
-
----
-
 ## 1. Import System: new-import-system
 
 ### Installation in Top-Level `__init__.py`
