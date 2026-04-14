@@ -14,7 +14,8 @@ Result = OpenAlex.Result
 Status = OpenAlex.Result.Status
 OpenAlexOptions = OpenAlex.Options.Options
 
-
+from bio.__global__ import CACHE_MEMORY
+@CACHE_MEMORY.cache
 def download_paper_from_doi(
     doi: str,
     openalex_options: OpenAlexOptions = OpenAlexOptions(),
