@@ -9,6 +9,9 @@ GROBID_URL = "http://localhost:8070/api/processReferences"
 EXTRACTED_REFERENCES = REPO_DIR / "PAPERS" / "SEED" / "extracted_references.json"
 ENV_FILE = REPO_DIR.parent / ".env"
 
+from joblib import Memory
+CACHE_MEMORY = Memory(location=".cache_dir", verbose=0)
+
 assert SRC_DIR.exists(), f"SRC_DIR does not exist: {SRC_DIR}"
 assert REPO_DIR.exists(), f"REPO_DIR does not exist: {REPO_DIR}"
 assert SEED_DIR.exists(), f"SEED_DIR does not exist: {SEED_DIR}"
