@@ -1,9 +1,12 @@
 from dataclasses import dataclass
 import requests
 
-import paper_scraper
 from paper_scraper.__global__ import GROBID_URL
-from paper_scraper import Error
+from paper_scraper.Grobid.Error import (
+    ConnectionRefused,
+    ConnectionTimeout,
+    UnexpectedStatus,
+)
 
 
 @dataclass
@@ -19,13 +22,11 @@ def check_connection(options: Options = Options()) -> None:
             timeout=options.timeout,
         )
         if response.status_code != 200:
-            raise Error.GrobidUnexpectedStatus(
-                url=base_url, status_code=response.status_code
-            )
+            raise UnexpectedStatus(url=base_url, status_code=response.status_code)
     except requests.exceptions.ConnectionError as e:
-        raise Error.GrobidConnectionRefused(url=base_url) from e
+        raise ConnectionRefused(url=base_url) from e
     except requests.exceptions.Timeout:
-        raise Error.GrobidConnectionTimeout(url=base_url, timeout_s=options.timeout)
+        raise ConnectionTimeout(url=base_url, timeout_s=options.timeout)
 
 
 def test_usage():

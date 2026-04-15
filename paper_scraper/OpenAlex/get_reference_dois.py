@@ -1,24 +1,25 @@
 from pathlib import Path
 from typing import Iterator
 from dataclasses import dataclass
-
 from loguru import logger
-
 import paper_scraper
 from paper_scraper import OpenAlex
 from paper_scraper import Grobid
-from paper_scraper.Error.GrobidError import GrobidError
-from paper_scraper.Error.GrobidUnexpectedStatus import GrobidUnexpectedStatus
-from paper_scraper.Error.GrobidConnectionRefused import GrobidConnectionRefused
-from paper_scraper.Error.GrobidConnectionTimeout import GrobidConnectionTimeout
+from paper_scraper.Grobid.Error import (
+    ConnectionRefused,
+    ConnectionTimeout,
+    UnexpectedStatus,
+)
 from paper_scraper.OpenAlex.download_papers_from_dois import download_papers_from_dois
 from paper_scraper.OpenAlex.Result import Status
 
 OpenAlexOptions = OpenAlex.Options.Options
 
+
 @dataclass
 class Options:
     depth: int = 1
+
 
 def from_dois(
     dois: list[str],
@@ -41,10 +42,10 @@ def from_dois(
                 continue
             try:
                 references = Grobid.extract_references_from_pdf(result.path)
-            except GrobidUnexpectedStatus:
+            except UnexpectedStatus:
                 logger.warning(f"Skipping {doi}: Grobid failed to parse PDF")
                 continue
-            except (GrobidConnectionRefused, GrobidConnectionTimeout):
+            except (ConnectionRefused, ConnectionTimeout):
                 logger.error(f"Grobid connection error")
                 raise
 
@@ -71,12 +72,12 @@ def from_papers(
         for paper_path in current_paths:
             try:
                 references = Grobid.extract_references_from_pdf(paper_path)
-            except GrobidUnexpectedStatus:
+            except UnexpectedStatus:
                 logger.warning(
                     f"Skipping {paper_path.name}: Grobid failed to parse PDF"
                 )
                 continue
-            except (GrobidConnectionRefused, GrobidConnectionTimeout):
+            except (ConnectionRefused, ConnectionTimeout):
                 logger.error(f"Grobid connection error")
                 raise
 

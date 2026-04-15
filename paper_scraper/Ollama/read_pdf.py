@@ -1,7 +1,5 @@
 from pathlib import Path
-
 from pypdf import PdfReader
-
 from loguru import logger
 
 

@@ -1,27 +1,19 @@
 from dataclasses import dataclass
 from pathlib import Path
-
 import requests
 from bs4 import BeautifulSoup
-
-import paper_scraper
 from paper_scraper.__global__ import GROBID_URL, SEED_DIR
-from paper_scraper import Error
-
+from paper_scraper.Grobid.Error import ConnectionRefused, UnexpectedStatus
 from loguru import logger
 
 
 @dataclass
 class Options:
     pass
-    
 
-def extract_references_from_pdf(
-    pdf_path, 
-    options: Options = Options()
-) -> list[dict]:
+
+def extract_references_from_pdf(pdf_path, options: Options = Options()) -> list[dict]:
     pdf_path = Path(pdf_path)
-    from loguru import logger
 
     logger.info(f"Sending {pdf_path.name} to Grobid...")
 
@@ -30,12 +22,10 @@ def extract_references_from_pdf(
             files = {"input": (pdf_path.name, f, "application/pdf")}
             response = requests.post(GROBID_URL, files=files)
     except requests.exceptions.ConnectionError as e:
-        raise Error.GrobidConnectionRefused(url=GROBID_URL) from e
+        raise ConnectionRefused(url=GROBID_URL) from e
 
     if response.status_code != 200:
-        raise Error.GrobidUnexpectedStatus(
-            url=GROBID_URL, status_code=response.status_code
-        )
+        raise UnexpectedStatus(url=GROBID_URL, status_code=response.status_code)
 
     soup = BeautifulSoup(response.text, "xml")
     extracted_refs = []
@@ -58,6 +48,9 @@ def extract_references_from_pdf(
 
 
 def test_usage():
-    pdf_path = SEED_DIR / "2‐Oxazoline‐Based Polymer for Pharmaceutical Products Adsorption in Aqueous (1).pdf"
+    pdf_path = (
+        SEED_DIR
+        / "2‐Oxazoline‐Based Polymer for Pharmaceutical Products Adsorption in Aqueous (1).pdf"
+    )
     extracted_refs = extract_references_from_pdf(pdf_path)
     logger.info("extracted_refs:\n" + "\n".join(str(ref) for ref in extracted_refs))

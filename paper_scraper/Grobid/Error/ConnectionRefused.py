@@ -1,13 +1,14 @@
 from loguru import logger
 
-class GrobidConnectionRefused(Exception):
+
+class ConnectionRefused(Exception):
     def __init__(self, url: str):
         self.url = url
         super().__init__(f"Cannot connect to Grobid at {url}")
 
     def __str__(self) -> str:
         return (
-            f"Error: GrobidConnectionRefused\n"
+            f"Error: ConnectionRefused\n"
             f"  x Cannot connect to Grobid at {self.url}\n"
             f"  help: Ensure Grobid is running:\n"
             f"          podman machine init\n"
@@ -17,6 +18,6 @@ class GrobidConnectionRefused(Exception):
 
 
 def test_usage():
-    logger.info("Testing GrobidConnectionRefused:")
-    err = GrobidConnectionRefused(url="http://localhost:8070/api")
+    logger.info("Testing ConnectionRefused:")
+    err = ConnectionRefused(url="http://localhost:8070/api")
     logger.info(str(err))

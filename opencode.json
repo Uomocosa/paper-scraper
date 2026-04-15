@@ -20,7 +20,7 @@
             "permission": {
                 "bash": {
                     "*": "ask",
-                    "rm *": "deny",
+                    "rm *": "ask",
                     "git *": "allow",
                     "git commit *": "ask",
                     "git push *": "deny",

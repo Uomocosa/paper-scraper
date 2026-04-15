@@ -40,8 +40,14 @@ pixi run pytest
 | Element | Convention | Example |
 |---------|------------|---------|
 | Top-level package | snake_case | `paper_scraper/` |
-| Subpackages | PascalCase | `OpenAlex/`, `Grobid/` |
-| Modules/Functions | snake_case | `extract_refs.py`, `my_function()` |
+| Subpackages | PascalCase | `OpenAlex/`, `Grobid/`, `Ollama/` |
+| Modules/Functions | snake_case | `extract_refs.py`, `complete()` |
+
+## Error Classes
+
+Each subpackage has its own `Error/` directory:
+- `Ollama/Error/` - ConnectionRefused, ConnectionTimeout
+- `Grobid/Error/` - ConnectionRefused, ConnectionTimeout, UnexpectedStatus, Error enum
 
 ## Testing
 
