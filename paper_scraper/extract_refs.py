@@ -7,14 +7,15 @@ from paper_scraper import Grobid
 
 from loguru import logger
 
-def extract_refs():
+
+def extract_refs(papers: list[Path]):
     logger.info("Checking Grobid connection...")
     Grobid.check_connection()
     logger.info("Grobid connection OK.")
 
     all_references = []
 
-    for pdf_file in SEED_DIR.iterdir():
+    for pdf_file in papers:
         if pdf_file.suffix.lower() == ".pdf":
             refs = Grobid.extract_references_from_pdf(pdf_file)
 
@@ -30,4 +31,5 @@ def extract_refs():
 
 
 def test_usage():
-    extract_refs()
+    papers = list(SEED_DIR.iterdir())
+    extract_refs(papers)

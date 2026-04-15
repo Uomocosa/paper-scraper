@@ -8,6 +8,7 @@ DOWNLOADED_DIR = PAPERS_DIR / "DOWNLOADED"
 GROBID_URL = "http://localhost:8070/api/processReferences"
 EXTRACTED_REFERENCES = REPO_DIR / "PAPERS" / "SEED" / "extracted_references.json"
 ENV_FILE = REPO_DIR.parent / ".env"
+POLYPHOX_PAPER = SEED_DIR / '2‐Oxazoline‐Based Polymer for Pharmaceutical Products Adsorption in Aqueous.pdf'
 
 from joblib import Memory
 CACHE_MEMORY = Memory(location=".cache_dir", verbose=0)

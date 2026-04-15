@@ -7,21 +7,21 @@ from pyalex import Works
 
 import paper_scraper
 from paper_scraper import OpenAlex
-from paper_scraper.__global__ import DOWNLOADED_DIR
 from loguru import logger
 
 Result = OpenAlex.Result
 Status = OpenAlex.Result.Status
 OpenAlexOptions = OpenAlex.Options.Options
 
-from bio.__global__ import CACHE_MEMORY
-@CACHE_MEMORY.cache
+
 def download_paper_from_doi(
     doi: str,
+    output_dir: Path,
     openalex_options: OpenAlexOptions = OpenAlexOptions(),
 ) -> OpenAlex.Result:
     openalex_options.setup_pyalex_key()
-    
+    output_dir.mkdir(parents=True, exist_ok=True)
+
     if not doi or not isinstance(doi, str):
         logger.warning(f"Skipping invalid DOI: {doi}")
         return Result(Status.ERROR)
@@ -53,7 +53,7 @@ def download_paper_from_doi(
         title = work.get("title", "unknown")
         safe_title = sanitize_filename(title)
         filename = f"{safe_title}.pdf"
-        filepath = DOWNLOADED_DIR / filename
+        filepath = output_dir / filename
 
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
@@ -81,4 +81,6 @@ def sanitize_filename(text: str) -> str:
 
 
 def test_usage():
-    download_paper_from_doi("10.3390/w12061530")
+    from paper_scraper.__global__ import DOWNLOADED_DIR
+
+    download_paper_from_doi("10.3390/w12061530", DOWNLOADED_DIR)
