@@ -5,8 +5,12 @@
     2. `podman machine start`
     3. (CPU version) `podman run --rm --init --ulimit core=0 -p 8070:8070 grobid/grobid:0.8.2-crf`
     4. (Full - GPU version) `podman run --rm --init --ulimit core=0 -p 8070:8070 grobid/grobid:0.8.2-full`
-3. Clone this repo
-4. In the parent folder of the repo create a `.env` file with `PYALEX_API_KEY=<your_openalex_key>`. To get a key:
+3. Install ollama.
+    1. `ollama run tinyllama` (THIS IS REALLY SMALL, it will produce wrong responese)
+    2. `ollama run gemma4:32b` (This is the standard, requires 4090 GPU or more)
+    3. `ollama serve`
+4. Clone this repo
+5. In the parent folder of the repo create a `.env` file with `PYALEX_API_KEY=<your_openalex_key>`. To get a key:
     1. Create a free account at [openalex.org](https://openalex.org/)
     2. Go to [openalex.org/settings/api](https://openalex.org/login?redirect=/settings/api-key) to get your API key
 
