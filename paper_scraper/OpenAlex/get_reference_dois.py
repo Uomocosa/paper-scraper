@@ -5,11 +5,10 @@ from loguru import logger
 import paper_scraper
 from paper_scraper import OpenAlex
 from paper_scraper import Grobid
-from paper_scraper.Grobid.Error import (
-    ConnectionRefused,
-    ConnectionTimeout,
-    UnexpectedStatus,
-)
+from paper_scraper.__global__ import DOWNLOADED_DIR
+from paper_scraper.Grobid.Error.UnexpectedStatus import UnexpectedStatus
+from paper_scraper.Grobid.Error.ConnectionTimeout import ConnectionTimeout
+from paper_scraper.Grobid.Error.ConnectionRefused import ConnectionRefused
 from paper_scraper.OpenAlex.download_papers_from_dois import download_papers_from_dois
 from paper_scraper.OpenAlex.Result import Status
 
@@ -23,6 +22,7 @@ class Options:
 
 def from_dois(
     dois: list[str],
+    output_dir: Path,
     options: Options = Options(),
     openalex_options: OpenAlexOptions = OpenAlexOptions(),
 ) -> list[str]:
@@ -34,10 +34,12 @@ def from_dois(
 
     while current_depth < options.depth:
         next_dois = []
-        results = OpenAlex.download_papers_from_dois(current_dois, openalex_options)
+        results = OpenAlex.download_papers_from_dois(
+            current_dois, output_dir, openalex_options
+        )
 
         for doi in current_dois:
-            result = OpenAlex.download_paper_from_doi(doi, openalex_options)
+            result = OpenAlex.download_paper_from_doi(doi, output_dir, openalex_options)
             if result.status != Status.SUCCESS:
                 continue
             try:
@@ -99,5 +101,5 @@ def download_paper_result(doi: str) -> OpenAlex.Result:
 
 def test_usage():
     dois = ["10.3390/w12061530"]
-    result_dois = from_dois(dois, Options(depth=1))
+    result_dois = from_dois(dois, DOWNLOADED_DIR, Options(depth=1))
     logger.info(f"Found {len(result_dois)} reference DOIs: {result_dois}")

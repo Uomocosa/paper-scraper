@@ -4,9 +4,9 @@ channels = ["pytorch", "nvidia", "conda-forge", "anaconda"]
 platforms = ["win-64", "linux-64"]
 
 [tasks]
-# extract_refs = "python -c 'from paper_scraper.extract_refs import extract_refs; extract_refs()'"
-# download_papers = "python -c 'import tyro; from paper_scraper.download_papers import main; tyro.cli(main)'"
-# delete_downloaded = "python -c 'from paper_scraper.Utils.delete_all_downloaded_papers import delete_all_downloaded_papers; delete_all_downloaded_papers()'"
+extract_refs = "python -c 'from paper_scraper.main import main, Config; main(Config(extract_refs_from_seed=True, extract_refs_from_output=False))'"
+download_papers = "python -c 'from paper_scraper.main import main, Config; main(Config(extract_refs_from_seed=False, extract_refs_from_output=True))'"
+analyze = "python -c 'from paper_scraper.main import main, Config; main(Config(questions=[\"What is this paper about?\"], extract_refs_from_seed=False))'"
 
 [dependencies]
 python = ">=3.11"
