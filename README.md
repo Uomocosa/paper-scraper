@@ -7,14 +7,23 @@
 | 3.13 | ![3.13](https://github.com/Uomocosa/paper-scraper/actions/workflows/test-3.13.yml/badge.svg) |
 | 3.14 | ![3.14](https://github.com/Uomocosa/paper-scraper/actions/workflows/test-3.14.yml/badge.svg) |
 
-# Installation
+# Installation (using podman)
 
 1. [Install podman](https://podman.io/docs/installation).
-2. [Install grobid]().
+2. Install grobid, following these steps:
     1. `podman machine init`
     2. `podman machine start`
     3. (CPU version) `podman run --rm --init --ulimit core=0 -p 8070:8070 grobid/grobid:0.8.2-crf`
     4. (Full - GPU version) `podman run --rm --init --ulimit core=0 -p 8070:8070 grobid/grobid:0.8.2-full`
+
+# Installation (using docker)
+1. [Install Docker](https://docs.docker.com/get-docker/).
+2. Install grobid, following these steps:
+    1. Make sure Docker Desktop is open and running in the background.
+    2. (CPU version) `docker run --rm --init --ulimit core=0 -p 8070:8070 grobid/grobid:0.8.2-crf`
+    3. (Full - GPU version) `docker run --rm --init --gpus all --ulimit core=0 -p 8070:8070 grobid/grobid:0.8.2-full`
+
+# Continue Installation
 3. [Install ollama](https://ollama.com/download).
     1. `ollama run tinyllama` (THIS IS REALLY SMALL, it will produce wrong responese)
     2. `ollama run gemma4:e4b` (This is the standard, requires 4090 GPU or more)
