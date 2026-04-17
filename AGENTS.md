@@ -82,7 +82,7 @@ config = Config(
 # Analyze with Ollama (requires Ollama running on localhost:11434)
 config = Config(
     questions=["What are the main findings?", "What methods were used?"],  # list[str] or Path to .txt
-    ollama_opts=OllamaOptions(model="gemma4:32b"),
+    ollama_opts=OllamaOptions(model="gemma4:e4b"),
     max_chunks=1,  # Testing mode: only first chunk. Set higher for full analysis.
 )
 

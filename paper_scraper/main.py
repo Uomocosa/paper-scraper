@@ -31,11 +31,16 @@ class Config:
         default_factory=DownloadReferenceOptions
     )
 
-    ollama_opts: OllamaOptions = field(default_factory=OllamaOptions)
+    ollama_opts: OllamaOptions = field(
+        default_factory=lambda: OllamaOptions(
+            model="gemma4:e4b",
+            max_context_tokens=32768,
+        )
+    )
     questions: list[str] | Path | None = None
-    max_chunks: int = 1
+    max_chunks: int = 10
 
-    batch_size: int = 1
+    batch_size: int = 4
     extract_refs_from_seed: bool = True
     extract_refs_from_output: bool = False
 
@@ -89,6 +94,20 @@ class Config:
         if isinstance(self.questions, list):
             return self.questions
         return []
+
+
+@dataclass
+class LocalConfig(Config):
+    """Config for testing on laptop/CPU - minimal resources."""
+
+    def __post_init__(self):
+        self.ollama_opts = OllamaOptions(
+            model="tinyllama",
+            max_context_tokens=256,
+        )
+        self.batch_size = 1
+        self.max_chunks = 1
+        super().__post_init__()
 
 
 def _extract_refs_sequential(papers: list[Path]) -> list[dict]:
@@ -300,7 +319,7 @@ def test_extract_refs_only():
     with tempfile.TemporaryDirectory() as tmpdir:
         custom_dir = Path(tmpdir) / "output"
         main(
-            Config(
+            LocalConfig(
                 seed_papers=[TEST_SEED_PAPER_1],
                 extract_refs_from_seed=True,
                 extract_refs_from_output=False,
@@ -316,13 +335,12 @@ def test_analyze_existing_pdfs():
     """Analyze a local seed paper with Ollama (1 call)."""
 
     main(
-        Config(
+        LocalConfig(
             seed_papers=[TEST_SEED_PAPER_1],
             extract_refs_from_seed=False,
             extract_refs_from_output=False,
             output_dir=TEMP_OUTPUT_DIR,
             questions=["What is this paper about?"],
-            max_chunks=1,
         )
     )
 
@@ -348,7 +366,7 @@ def test_custom_output_dir():
 
     with tempfile.TemporaryDirectory() as tmpdir:
         custom_dir = Path(tmpdir) / "custom_output"
-        config = Config(
+        config = LocalConfig(
             seed_papers=[TEST_SEED_PAPER_1],
             extract_refs_from_seed=False,
             output_dir=custom_dir,
@@ -369,12 +387,14 @@ def test_resolved_seed_papers():
     with tempfile.TemporaryDirectory() as tmpdir:
         custom_dir = Path(tmpdir) / "output"
 
-        config = Config(seed_papers=[TEST_SEED_PAPER_1], output_dir=custom_dir)
+        config = LocalConfig(seed_papers=[TEST_SEED_PAPER_1], output_dir=custom_dir)
         assert len(config.resolved_seed_papers) == 1
         assert config.resolved_seed_papers[0] == TEST_SEED_PAPER_1
 
-        config_single = Config(seed_papers=TEST_SEED_PAPER_1, output_dir=custom_dir)
+        config_single = LocalConfig(
+            seed_papers=TEST_SEED_PAPER_1, output_dir=custom_dir
+        )
         assert len(config_single.resolved_seed_papers) == 1
 
-        config_non_pdf = Config(seed_papers=Path(__file__), output_dir=custom_dir)
+        config_non_pdf = LocalConfig(seed_papers=Path(__file__), output_dir=custom_dir)
         assert len(config_non_pdf.resolved_seed_papers) == 0
