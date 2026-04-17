@@ -32,7 +32,7 @@ def download_papers_from_dois(
 
 
 def test_usage():
-    from paper_scraper.__global__ import DOWNLOADED_DIR
+    from paper_scraper.__global__ import TEMP_DOWLOADED_PAPERS_DIR
     dois = [
         "10.1016/j.envpol.2004.07.011",
         "10.1016/j.nexus.2022.100076",
@@ -40,5 +40,5 @@ def test_usage():
     ]
     download_papers_from_dois(
         dois, 
-        output_dir = DOWNLOADED_DIR,
+        output_dir = TEMP_DOWLOADED_PAPERS_DIR,
     )

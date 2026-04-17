@@ -86,6 +86,6 @@ def sanitize_filename(text: str) -> str:
 
 
 def test_usage():
-    from paper_scraper.__global__ import DOWNLOADED_DIR
+    from paper_scraper.__global__ import TEMP_DOWLOADED_PAPERS_DIR
 
-    download_paper_from_doi("10.3390/w12061530", DOWNLOADED_DIR)
+    download_paper_from_doi("10.3390/w12061530", TEMP_DOWLOADED_PAPERS_DIR)

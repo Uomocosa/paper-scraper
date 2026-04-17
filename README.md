@@ -1,4 +1,14 @@
+## CI Status
+
+| Python | Status |
+|--------|--------|
+| 3.11 | ![3.11](https://github.com/Uomocosa/lele-paper-scraper/actions/workflows/test-3.11.yml/badge.svg) |
+| 3.12 | ![3.12](https://github.com/Uomocosa/lele-paper-scraper/actions/workflows/test-3.12.yml/badge.svg) |
+| 3.13 | ![3.13](https://github.com/Uomocosa/lele-paper-scraper/actions/workflows/test-3.13.yml/badge.svg) |
+| 3.14 | ![3.14](https://github.com/Uomocosa/lele-paper-scraper/actions/workflows/test-3.14.yml/badge.svg) |
+
 # Installation
+
 1. Install podman.
 2. Install grobid.
     1. `podman machine init`
@@ -71,7 +81,7 @@ The system operates strictly locally (with the exception of API calls to open sc
 
 To run this pipeline, you will need the following installed:
 
-1. **Python 3.10+**
+1. **Python 3.11+**
 2. **Docker:** Required to run the Grobid image locally.
     ```bash
     docker pull lfoppiano/grobid:latest

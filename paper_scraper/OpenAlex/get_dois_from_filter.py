@@ -4,7 +4,6 @@ from dataclasses import dataclass
 from loguru import logger
 from pyalex import Works, Concepts, Topics
 from paper_scraper import OpenAlex
-from paper_scraper.__global__ import PAPERS_DIR
 
 OpenAlexOptions = OpenAlex.Options.Options
 

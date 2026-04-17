@@ -43,7 +43,7 @@ pixi run pytest paper_scraper/SomeModule.py::test_usage -o "addopts="
 | `paper_scraper/main.py` | Unified pipeline (extract + download + analyze) |
 | `paper_scraper/extract_refs.py` | Standalone reference extraction |
 | `paper_scraper/download_papers.py` | Standalone paper downloader |
-| `paper_scraper/__global__.py` | Constants (SEED_DIR, OUTPUT_DIR, GROBID_URL) |
+| `paper_scraper/__global__.py` | Constants (SEED_PAPERS_DIR, OUTPUT_DIR, GROBID_URL) |
 
 ## Main Pipeline (`main.py`)
 

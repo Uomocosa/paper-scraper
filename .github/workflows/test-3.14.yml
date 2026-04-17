@@ -1,0 +1,25 @@
+name: CI (Python 3.14)
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  test:
+    name: Run Tests (Python 3.14)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install pixi
+        uses: astral-sh/setup-pixi@v4
+
+      - name: Set up Python
+        run: pixi python install 3.14
+
+      - name: Run Tests
+        run: pixi run pytest

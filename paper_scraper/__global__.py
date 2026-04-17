@@ -2,26 +2,31 @@ from pathlib import Path
 
 SRC_DIR = Path(__file__).parent
 REPO_DIR = SRC_DIR.parent
-PAPERS_DIR = REPO_DIR / "PAPERS"
-SEED_DIR = PAPERS_DIR / "SEED"
-DOWNLOADED_DIR = PAPERS_DIR / "DOWNLOADED"
+SEED_PAPERS_DIR = REPO_DIR / "SEED_PAPERS"
 OUTPUT_DIR = REPO_DIR / "OUTPUT_DIR"
 GROBID_URL = "http://localhost:8070/api/processReferences"
-EXTRACTED_REFERENCES = REPO_DIR / "PAPERS" / "SEED" / "extracted_references.json"
 ENV_FILE = REPO_DIR.parent / ".env"
-POLYPHOX_PAPER = (
-    SEED_DIR
-    / "2‐Oxazoline‐Based Polymer for Pharmaceutical Products Adsorption in Aqueous.pdf"
-)
 
 from joblib import Memory
 
 CACHE_MEMORY = Memory(location=".cache_dir", verbose=0)
 
+HELPER_DIR = SRC_DIR / "__HELPER_DIR__"
+HELPER_DIR.mkdir(parents=True, exist_ok=True)
+TEMP_OUTPUT_DIR = HELPER_DIR / "TEMP_OUTPUT_DIR"
+TEMP_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+TEMP_DOWLOADED_PAPERS_DIR = REPO_DIR / "DOWNLOADED_PAPERS"
+TEMP_DOWLOADED_PAPERS_DIR.mkdir(parents=True, exist_ok=True)
+
+FIXTURES_DIR = HELPER_DIR / "fixtures"
+TEST_SEED_PAPER_1 = FIXTURES_DIR / "attention_is_all_you_need.pdf"
+TEST_SEED_PAPER_2 = FIXTURES_DIR / "bert_pre-training.pdf"
+POLYPHOX_PAPER = TEST_SEED_PAPER_1  # Legacy alias
+
 assert SRC_DIR.exists(), f"SRC_DIR does not exist: {SRC_DIR}"
 assert REPO_DIR.exists(), f"REPO_DIR does not exist: {REPO_DIR}"
-assert SEED_DIR.exists(), f"SEED_DIR does not exist: {SEED_DIR}"
-DOWNLOADED_DIR.mkdir(parents=True, exist_ok=True)
+assert SEED_PAPERS_DIR.exists(), f"SEED_PAPERS_DIR does not exist: {SEED_PAPERS_DIR}"
+TEMP_DOWLOADED_PAPERS_DIR.mkdir(parents=True, exist_ok=True)
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 

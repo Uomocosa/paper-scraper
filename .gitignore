@@ -1,10 +1,12 @@
 # Ignore everything in these folders
 PAPERS/DOWNLOADED/*
 PAPERS/SEED/*
+SEED_PAPERS/*
 
 # But don't ignore the .gitkeep files
 !PAPERS/DOWNLOADED/.gitkeep
 !PAPERS/SEED/.gitkeep
+!SEED_PAPERS/.gitkeep
 
 __my_variables__.py
 

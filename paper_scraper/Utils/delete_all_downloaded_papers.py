@@ -1,13 +1,13 @@
 from pathlib import Path
 
 import paper_scraper
-from paper_scraper.__global__ import DOWNLOADED_DIR
+from paper_scraper.__global__ import TEMP_DOWLOADED_PAPERS_DIR
 from loguru import logger
 
 
 def delete_all_downloaded_papers() -> int:
     deleted = 0
-    for pdf_file in DOWNLOADED_DIR.glob("*.pdf"):
+    for pdf_file in TEMP_DOWLOADED_PAPERS_DIR.glob("*.pdf"):
         pdf_file.unlink()
         logger.info(f"Deleted: {pdf_file.name}")
         deleted += 1

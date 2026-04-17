@@ -7,7 +7,12 @@ import pytest
 from paper_scraper import Grobid
 from paper_scraper import OpenAlex
 from paper_scraper import Ollama
-from paper_scraper.__global__ import SEED_DIR, OUTPUT_DIR
+from paper_scraper.__global__ import (
+    SEED_PAPERS_DIR,
+    OUTPUT_DIR,
+    TEST_SEED_PAPER_1,
+    TEMP_OUTPUT_DIR,
+)
 
 OpenAlexOptions = OpenAlex.Options.Options
 DownloadFilter = OpenAlex.get_dois_from_filter.Filter
@@ -36,8 +41,8 @@ class Config:
 
     def __post_init__(self):
         if self.seed_papers is None:
-            self.seed_papers = list(SEED_DIR.glob("*.pdf"))
-            logger.debug(f"Auto-discovered {len(self.seed_papers)} PDFs in SEED_DIR")
+            self.seed_papers = list(SEED_PAPERS_DIR.glob("*.pdf"))
+            logger.debug(f"Auto-discovered {len(self.seed_papers)} PDFs in SEED_PAPERS_DIR")
         elif isinstance(self.seed_papers, Path) and self.seed_papers.suffix == ".txt":
             self._load_from_txt(
                 self.seed_papers, lambda paths: setattr(self, "seed_papers", paths)
@@ -275,77 +280,53 @@ def main(config: Config) -> None:
     logger.info("Pipeline complete.")
 
 
-# IMPORTANT! 
-# Each test has to use a temporary directory to avoid polluting the test environment.
-# I propose: 
+# IMPORTANT!
+# Each test MUST use a temporary directory to avoid polluting the test environment.
+# It cannot use the global OUTPUT_DIR
+# I propose:
 # 1. For test that we dont care to see the output: use tempfile.TemporaryDirectory()
 # 2. To see the output of functions: use a fixed directory.
 #   -> paper_scraper/__HELPER_DIR__/OUTPUT_DIR (needs to be added to __global__ as TEMP_OUTPUT_DIR)
 
+
 @pytest.mark.above10s
 def test_extract_refs_only():
     """Extract references from seed papers only."""
-    from paper_scraper.__global__ import POLYPHOX_PAPER
+    import tempfile
 
-    main(
-        Config(
-            seed_papers=[POLYPHOX_PAPER],
-            extract_refs_from_seed=True,
-            extract_refs_from_output=False,
-            questions=None,
+    with tempfile.TemporaryDirectory() as tmpdir:
+        custom_dir = Path(tmpdir) / "output"
+        main(
+            Config(
+                seed_papers=[TEST_SEED_PAPER_1],
+                extract_refs_from_seed=True,
+                extract_refs_from_output=False,
+                questions=None,
+                output_dir=custom_dir,
+            )
         )
-    )
 
 
 @pytest.mark.above10s
 def test_analyze_existing_pdfs():
-    # Needs to first clean up the RESPONSE_DIR
-    # At the moment: 
-    # 2026-04-17 09:09:22.018 | DEBUG    | paper_scraper.main:_analyze_with_ollama:180 - Skipping q1.md (already exists)
     """Analyze a local seed paper with Ollama (1 call)."""
-    import shutil
-    from paper_scraper.__global__ import POLYPHOX_PAPER
-
-    papers_dir = OUTPUT_DIR / "DOWNLOADED_PAPERS"
-    papers_dir.mkdir(parents=True, exist_ok=True)
-    dest = papers_dir / POLYPHOX_PAPER.name
-    shutil.copy(POLYPHOX_PAPER, dest)
-
+    
     main(
         Config(
+            seed_papers=[TEST_SEED_PAPER_1],
             extract_refs_from_seed=False,
             extract_refs_from_output=False,
+            output_dir=TEMP_OUTPUT_DIR,
             questions=["What is this paper about?"],
             max_chunks=1,
         )
     )
 
 
-# HARMUL. IT CREATES DIRECTORIES. 
-#   If necessary directory creation should be done by the function.
-#   Not by the test.
-# def test_empty_config():
-#     """Test Config with minimal settings - creates directories, skips all steps."""
-#     import tempfile
-#     with tempfile.TemporaryDirectory() as tmpdir:
-#         config = Config(
-#             seed_papers=[],  # Explicitly empty list to avoid auto-discovery
-#             extract_refs_from_seed=False,
-#             output_dir=Path(tmpdir),
-#         )
-#         config.output_dir.mkdir(parents=True, exist_ok=True)
-#         config.papers_dir.mkdir(parents=True, exist_ok=True)
-#         config.openalex_opts.setup_pyalex_key()
-
-#         assert config.resolved_seed_papers == []
-#         assert config.resolved_questions == []
-#         assert config.output_dir.exists()
-#         assert config.papers_dir.exists()
-
-
 def test_questions_dir_creation():
     """Test that questions are saved to correct directory."""
     import tempfile
+
     with tempfile.TemporaryDirectory() as tmpdir:
         questions_dir = Path(tmpdir) / "QUESTIONS"
         questions = ["Question 1?", "Question 2?"]
@@ -360,9 +341,11 @@ def test_questions_dir_creation():
 def test_custom_output_dir():
     """Test Config with custom output directory."""
     import tempfile
+
     with tempfile.TemporaryDirectory() as tmpdir:
         custom_dir = Path(tmpdir) / "custom_output"
         config = Config(
+            seed_papers=[TEST_SEED_PAPER_1],
             extract_refs_from_seed=False,
             output_dir=custom_dir,
         )
@@ -370,29 +353,24 @@ def test_custom_output_dir():
         assert config.papers_dir == custom_dir / "DOWNLOADED_PAPERS"
         assert config.questions_dir == custom_dir / "QUESTIONS"
         assert config.responses_dir == custom_dir / "RESPONSES"
-        assert config.extracted_references_path == custom_dir / "extracted_references.json"
+        assert (
+            config.extracted_references_path == custom_dir / "extracted_references.json"
+        )
 
 
 def test_resolved_seed_papers():
     """Test seed_papers resolution logic."""
-    from paper_scraper.__global__ import POLYPHOX_PAPER
+    import tempfile
 
-    config = Config(seed_papers=[POLYPHOX_PAPER])
-    assert len(config.resolved_seed_papers) == 1
-    assert config.resolved_seed_papers[0] == POLYPHOX_PAPER
+    with tempfile.TemporaryDirectory() as tmpdir:
+        custom_dir = Path(tmpdir) / "output"
 
-    config_single = Config(seed_papers=POLYPHOX_PAPER)
-    assert len(config_single.resolved_seed_papers) == 1
+        config = Config(seed_papers=[TEST_SEED_PAPER_1], output_dir=custom_dir)
+        assert len(config.resolved_seed_papers) == 1
+        assert config.resolved_seed_papers[0] == TEST_SEED_PAPER_1
 
-    config_non_pdf = Config(seed_papers=Path(__file__))
-    assert len(config_non_pdf.resolved_seed_papers) == 0
+        config_single = Config(seed_papers=TEST_SEED_PAPER_1, output_dir=custom_dir)
+        assert len(config_single.resolved_seed_papers) == 1
 
-
-# USELESS
-# def test_download_filter_no_topics():
-#     """Test that download filter with no topics skips download."""
-#     config = Config(
-#         extract_refs_from_seed=False,
-#         download_filter=DownloadFilter(),  # No topics
-#     )
-#     assert bool(config.download_filter.topics) is False
+        config_non_pdf = Config(seed_papers=Path(__file__), output_dir=custom_dir)
+        assert len(config_non_pdf.resolved_seed_papers) == 0

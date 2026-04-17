@@ -5,7 +5,7 @@ from loguru import logger
 import paper_scraper
 from paper_scraper import OpenAlex
 from paper_scraper import Grobid
-from paper_scraper.__global__ import DOWNLOADED_DIR
+from paper_scraper.__global__ import TEMP_DOWLOADED_PAPERS_DIR
 from paper_scraper.Grobid.Error.UnexpectedStatus import UnexpectedStatus
 from paper_scraper.Grobid.Error.ConnectionTimeout import ConnectionTimeout
 from paper_scraper.Grobid.Error.ConnectionRefused import ConnectionRefused
@@ -101,5 +101,5 @@ def download_paper_result(doi: str) -> OpenAlex.Result:
 
 def test_usage():
     dois = ["10.3390/w12061530"]
-    result_dois = from_dois(dois, DOWNLOADED_DIR, Options(depth=1))
+    result_dois = from_dois(dois, TEMP_DOWLOADED_PAPERS_DIR, Options(depth=1))
     logger.info(f"Found {len(result_dois)} reference DOIs: {result_dois}")

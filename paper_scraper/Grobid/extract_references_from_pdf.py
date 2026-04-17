@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from pathlib import Path
 import requests
 from bs4 import BeautifulSoup
-from paper_scraper.__global__ import GROBID_URL, SEED_DIR
+from paper_scraper.__global__ import GROBID_URL, SEED_PAPERS_DIR
 from paper_scraper.Grobid.Error import ConnectionRefused, UnexpectedStatus
 from loguru import logger
 
@@ -48,6 +48,6 @@ def extract_references_from_pdf(pdf_path, options: Options = Options()) -> list[
 
 
 def test_usage():
-    from paper_scraper.__global__ import POLYPHOX_PAPER
-    extracted_refs = extract_references_from_pdf(POLYPHOX_PAPER)
+    from paper_scraper.__global__ import TEST_SEED_PAPER_1
+    extracted_refs = extract_references_from_pdf(TEST_SEED_PAPER_1)
     logger.info("extracted_refs:\n" + "\n".join(str(ref) for ref in extracted_refs))

@@ -3,10 +3,7 @@ from pathlib import Path
 
 from loguru import logger
 
-import paper_scraper
-from paper_scraper import OpenAlex
-from paper_scraper import Utils
-from paper_scraper.__global__ import EXTRACTED_REFERENCES
+from paper_scraper import OpenAlex, Utils
 
 OpenAlexOptions = OpenAlex.Options.Options
 DownloadFilter = OpenAlex.get_dois_from_filter.Filter
@@ -17,6 +14,7 @@ DownloadReferenceOptions = OpenAlex.get_reference_dois.Options
 class Config:
     papers_dir: Path
     output_dir: Path
+    extracted_references_path: Path | None = None
     openalex_opts: OpenAlexOptions = field(default_factory=OpenAlexOptions)
     download_filter: DownloadFilter = field(default_factory=DownloadFilter)
     download_reference_opts: DownloadReferenceOptions = field(
@@ -32,11 +30,11 @@ def download_papers(config: Config) -> None:
     logger.info(f"Found {len(dois)} DOIs from filter")
     OpenAlex.download_papers_from_dois(dois, config.output_dir, config.openalex_opts)
 
-    if EXTRACTED_REFERENCES.exists():
-        with open(EXTRACTED_REFERENCES, "r") as f:
+    if config.extracted_references_path and config.extracted_references_path.exists():
+        with open(config.extracted_references_path, "r") as f:
             papers_json = f.read()
         seed_dois = Utils.extract_dois_from_json(papers_json)
-        logger.info(f"Found {len(seed_dois)} DOIs from SEED/")
+        logger.info(f"Found {len(seed_dois)} DOIs from extracted references")
         OpenAlex.get_reference_dois.from_dois(
             seed_dois,
             config.output_dir,
@@ -60,14 +58,14 @@ def download_papers(config: Config) -> None:
 
 
 import pytest
-from paper_scraper.__global__ import DOWNLOADED_DIR, SEED_DIR
+from paper_scraper.__global__ import TEMP_DOWLOADED_PAPERS_DIR, SEED_PAPERS_DIR
 
 
 @pytest.mark.above10s
 def test_usage():
     config = Config(
-        papers_dir=SEED_DIR,
-        output_dir=DOWNLOADED_DIR,
+        papers_dir=SEED_PAPERS_DIR,
+        output_dir=TEMP_DOWLOADED_PAPERS_DIR,
         openalex_opts=OpenAlexOptions(),
         download_filter=DownloadFilter(
             topics=["T11948"],
