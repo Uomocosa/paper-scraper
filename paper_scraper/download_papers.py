@@ -39,6 +39,7 @@ def download_papers(config: Config) -> None:
         logger.info(f"Found {len(seed_dois)} DOIs from SEED/")
         OpenAlex.get_reference_dois.from_dois(
             seed_dois,
+            config.output_dir,
             DownloadReferenceOptions(depth=1),
             config.openalex_opts,
         )

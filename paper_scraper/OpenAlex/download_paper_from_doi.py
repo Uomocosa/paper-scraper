@@ -60,6 +60,11 @@ def download_paper_from_doi(
         }
         response = requests.get(pdf_url, timeout=30, headers=headers)
         if response.status_code == 200:
+            if not response.content.startswith(b"%PDF"):
+                logger.warning(
+                    f"Downloaded content is not a PDF for {doi}: HTML page returned"
+                )
+                return Result(Status.ERROR)
             filepath.write_bytes(response.content)
             logger.info(f"Downloaded: {filename}")
             return Result(Status.SUCCESS, filepath)

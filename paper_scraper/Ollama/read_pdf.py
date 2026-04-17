@@ -6,6 +6,9 @@ from loguru import logger
 def read_pdf(pdf_path: Path) -> str:
     """Extract text from a PDF file."""
     logger.info(f"Reading PDF: {pdf_path.name}")
+    content = pdf_path.read_bytes()
+    if not content.startswith(b"%PDF"):
+        raise ValueError(f"File is not a valid PDF: {pdf_path}")
     reader = PdfReader(str(pdf_path))
     text_parts = []
     for i, page in enumerate(reader.pages):

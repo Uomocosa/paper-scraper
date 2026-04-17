@@ -48,9 +48,6 @@ def extract_references_from_pdf(pdf_path, options: Options = Options()) -> list[
 
 
 def test_usage():
-    pdf_path = (
-        SEED_DIR
-        / "2‐Oxazoline‐Based Polymer for Pharmaceutical Products Adsorption in Aqueous (1).pdf"
-    )
-    extracted_refs = extract_references_from_pdf(pdf_path)
+    from paper_scraper.__global__ import POLYPHOX_PAPER
+    extracted_refs = extract_references_from_pdf(POLYPHOX_PAPER)
     logger.info("extracted_refs:\n" + "\n".join(str(ref) for ref in extracted_refs))
