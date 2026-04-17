@@ -2,10 +2,10 @@
 
 | Python | Status |
 |--------|--------|
-| 3.11 | ![3.11](https://github.com/Uomocosa/lele-paper-scraper/actions/workflows/test-3.11.yml/badge.svg) |
-| 3.12 | ![3.12](https://github.com/Uomocosa/lele-paper-scraper/actions/workflows/test-3.12.yml/badge.svg) |
-| 3.13 | ![3.13](https://github.com/Uomocosa/lele-paper-scraper/actions/workflows/test-3.13.yml/badge.svg) |
-| 3.14 | ![3.14](https://github.com/Uomocosa/lele-paper-scraper/actions/workflows/test-3.14.yml/badge.svg) |
+| 3.11 | ![3.11](https://github.com/Uomocosa/paper-scraper/actions/workflows/test-3.11.yml/badge.svg) |
+| 3.12 | ![3.12](https://github.com/Uomocosa/paper-scraper/actions/workflows/test-3.12.yml/badge.svg) |
+| 3.13 | ![3.13](https://github.com/Uomocosa/paper-scraper/actions/workflows/test-3.13.yml/badge.svg) |
+| 3.14 | ![3.14](https://github.com/Uomocosa/paper-scraper/actions/workflows/test-3.14.yml/badge.svg) |
 
 # Installation
 
