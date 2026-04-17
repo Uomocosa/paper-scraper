@@ -15,11 +15,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
       - name: Install pixi
         uses: prefix-dev/setup-pixi@v0.9.5
-
-      - name: Set up Python
-        run: pixi python install 3.11
 
       - name: Run Tests
         run: pixi run pytest
