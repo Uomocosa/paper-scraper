@@ -1,7 +1,0 @@
-The paper discusses several adsorpation mechanisms for heterogeneous polymerization, including a combination of ionic and hydrogen bond interactions, van der Waals forces, and steric hindrance. These mechanisms are described in more detail for two specific types of polymers: block copolymers and ionomers.
-
-For block copolymers, the main mechanism is likely through anionic surface active aggregates (SAs) which provide both electrostatic and hydrogen bonding interactions with the monomer. The SAs can help stabilize the block structure of the polymer by reducing the potential for polymer aggregation. 
-
-For ionomers, the main mechanism involves ionic interactions between charged components. Ionomers are often synthesized using a heterogeneous solvent system and the anionic (cationic) component is separated from the cationic component by an interface. The cationic species (the anion) can form electrostatic interactions with the polymer backbone, while the ionic species can interact via steric hindrance. 
-
-Overall, both block copolymers and ionomers show promise in applications such as textile production, adhesives, coatings, and drug delivery due to their ability to improve stability, reduce toxic emissions, and provide efficient control of surface morphology and pH at high temperatures.
