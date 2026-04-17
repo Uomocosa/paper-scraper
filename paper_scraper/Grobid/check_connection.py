@@ -1,4 +1,6 @@
 from dataclasses import dataclass
+
+import pytest
 import requests
 
 from paper_scraper.__global__ import GROBID_URL
@@ -29,5 +31,6 @@ def check_connection(options: Options = Options()) -> None:
         raise ConnectionTimeout(url=base_url, timeout_s=options.timeout)
 
 
+@pytest.mark.requires_grobid
 def test_usage():
     check_connection()

@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 
+import pytest
 from paper_scraper.__global__ import SEED_PAPERS_DIR
 from paper_scraper import Grobid
 
@@ -32,6 +33,7 @@ def extract_refs(papers: list[Path], extracted_references_path: Path):
     )
 
 
+@pytest.mark.requires_grobid
 def test_usage():
     papers = list(SEED_PAPERS_DIR.iterdir())
     extracted_path = TEMP_OUTPUT_DIR / "extracted_references.json"

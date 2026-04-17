@@ -1,12 +1,4 @@
 [
-    // I run this directly after done the ssh login: (I didnt like creating a task for this)
-    // >>> RUN SETUP:
-    // cd $HOME/lele-py-bioinformatics; git fetch origin; git reset --hard origin/main; chmod +x setup.sh; ./setup.sh; source ~/.bashrc
-    // >>> THEN run one of the commands exposed by pixi.
-    // pixi
-    // pixi run -e cuda find_polymer_for_target_molecule "metformin"
-    // >>> FINALLY UPLOAD TO GIT:
-    // cd $HOME/lele-py-bioinformatics; chmod +x upload_to_git.sh; ./upload_to_git.sh
     {
         "label": "run",
         "command": "pixi run pytest -rFP -q -s $ZED_RELATIVE_FILE -o \"addopts=\"",
@@ -26,7 +18,8 @@
     },
     {
         "label": "RUN_ALL_TESTS",
-        "command": "pixi run pytest --durations=10 .",
+        "command": "pixi run pytest -m 'not verbose and not todo and not above10s and not unreliable and not infinite' --durations=10 .",
+        // "command": "pixi run pytest --durations=10 .",
         "env": { "LOGURU_LEVEL": "CRITICAL" },
         "use_new_terminal": false,
         "allow_concurrent_runs": false,

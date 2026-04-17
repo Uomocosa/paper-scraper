@@ -43,5 +43,7 @@ markers = [
     "above10s: test that require more than 10 seconds",
     "unreliable: test that depends on external factors, in the future it will fail",
     "infinite: test will not finish",
+    "requires_grobid: test requires Grobid running on localhost:8070",
+    "requires_ollama: test requires Ollama running on localhost:11434",
 ]
-addopts = "-m 'not verbose and not todo and not above10s and not unreliable and not infinite'"
+addopts = "-m 'not verbose and not todo and not above10s and not unreliable and not infinite and not requires_grobid and not requires_ollama'"

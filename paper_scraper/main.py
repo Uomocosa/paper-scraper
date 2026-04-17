@@ -42,7 +42,9 @@ class Config:
     def __post_init__(self):
         if self.seed_papers is None:
             self.seed_papers = list(SEED_PAPERS_DIR.glob("*.pdf"))
-            logger.debug(f"Auto-discovered {len(self.seed_papers)} PDFs in SEED_PAPERS_DIR")
+            logger.debug(
+                f"Auto-discovered {len(self.seed_papers)} PDFs in SEED_PAPERS_DIR"
+            )
         elif isinstance(self.seed_papers, Path) and self.seed_papers.suffix == ".txt":
             self._load_from_txt(
                 self.seed_papers, lambda paths: setattr(self, "seed_papers", paths)
@@ -289,6 +291,7 @@ def main(config: Config) -> None:
 #   -> paper_scraper/__HELPER_DIR__/OUTPUT_DIR (needs to be added to __global__ as TEMP_OUTPUT_DIR)
 
 
+@pytest.mark.requires_grobid
 @pytest.mark.above10s
 def test_extract_refs_only():
     """Extract references from seed papers only."""
@@ -307,10 +310,11 @@ def test_extract_refs_only():
         )
 
 
+@pytest.mark.requires_ollama
 @pytest.mark.above10s
 def test_analyze_existing_pdfs():
     """Analyze a local seed paper with Ollama (1 call)."""
-    
+
     main(
         Config(
             seed_papers=[TEST_SEED_PAPER_1],
