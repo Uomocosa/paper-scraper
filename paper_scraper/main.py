@@ -1,3 +1,11 @@
+# Pipeline:
+# 1. Use Grobid to extract references from seed papers
+# 2. Extract DOIs from the references
+# 3. If search_opts.topics is set: query OpenAlex and download papers matching the filter
+# 4. Download papers referencing the seed DOIs (recursively, based on download_reference_opts.depth)
+# 5. If extract_refs_from_output: extract references from downloaded papers and download them
+# 6. If questions provided: analyze papers with Ollama
+
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -26,7 +34,7 @@ class Config:
     output_dir: Path = field(default_factory=lambda: OUTPUT_DIR)
 
     openalex_opts: OpenAlexOptions = field(default_factory=OpenAlexOptions)
-    download_filter: DownloadFilter = field(default_factory=DownloadFilter)
+    search_opts: DownloadFilter = field(default_factory=DownloadFilter)
     download_reference_opts: DownloadReferenceOptions = field(
         default_factory=DownloadReferenceOptions
     )
@@ -251,10 +259,10 @@ def main(config: Config) -> None:
         seed_dois = [ref.get("doi") for ref in all_references if ref.get("doi")]
         logger.info(f"Found {len(seed_dois)} DOIs from seed papers")
 
-    has_filter = bool(config.download_filter.topics)
+    has_filter = bool(config.search_opts.topics)
 
     if has_filter:
-        dois = OpenAlex.get_dois_from_filter(config.download_filter)
+        dois = OpenAlex.get_dois_from_filter(config.search_opts)
         logger.info(f"Found {len(dois)} DOIs from filter")
         if config.batch_size > 1:
             _download_parallel(

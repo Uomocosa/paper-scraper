@@ -33,8 +33,29 @@
     1. Create a free account at [openalex.org](https://openalex.org/)
     2. Go to [openalex.org/settings/api](https://openalex.org/login?redirect=/settings/api-key) to get your API key
 
+# Example run (Complete):
+```bash
+pixi run scrape |
+    --topics ["", ""] |
+    --questions "" |
+    --ollama-opts.system-prompt ""
+```
 
+# Example run (Gurobid search + Download from OpenAlex):
+```bash
+pixi run scrape |
+    --topics ["", ""] |
+    --questions "" |
+    --ollama-opts.system-prompt ""
+```
 
+# Example run (Ollama response):
+```bash
+pixi run scrape |
+    --topics ["", ""] |
+    --questions "" |
+    --ollama-opts.system-prompt ""
+```
 
 
 
