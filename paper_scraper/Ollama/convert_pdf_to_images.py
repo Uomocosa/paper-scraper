@@ -1,5 +1,4 @@
 import base64
-from io import BytesIO
 from pathlib import Path
 
 import pytest
@@ -16,7 +15,7 @@ def convert_pdf_to_images(pdf_path: Path, output_dir: Path | None = None) -> lis
     Returns:
         List of paths to generated PNG images (one per page, in order)
     """
-    from pdf2image import convert_from_path
+    import fitz
 
     logger.info(f"Converting PDF to images: {pdf_path.name}")
     content = pdf_path.read_bytes()
@@ -29,14 +28,17 @@ def convert_pdf_to_images(pdf_path: Path, output_dir: Path | None = None) -> lis
         output_dir = Path(tempfile.gettempdir()) / f"paper_scraper_{pdf_path.stem}"
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    images = convert_from_path(str(pdf_path), fmt="png")
+    doc = fitz.open(str(pdf_path))
     image_paths = []
-    for i, image in enumerate(images):
-        image_path = output_dir / f"page_{i + 1:03d}.png"
-        image.save(image_path, "PNG")
+    for page_num in range(len(doc)):
+        page = doc[page_num]
+        pix = page.get_pixmap()
+        image_path = output_dir / f"page_{page_num + 1:03d}.png"
+        pix.save(str(image_path))
         image_paths.append(image_path)
-        logger.debug(f"Saved page {i + 1} to {image_path}")
+        logger.debug(f"Saved page {page_num + 1} to {image_path}")
 
+    doc.close()
     logger.info(f"Converted {len(image_paths)} pages to images")
     return image_paths
 
@@ -45,15 +47,6 @@ def encode_image_to_base64(image_path: Path) -> str:
     """Encode an image file to base64 string for Ollama vision API."""
     with open(image_path, "rb") as f:
         return base64.b64encode(f.read()).decode("utf-8")
-
-
-def image_to_base64(image) -> str:
-    """Encode a PIL Image to base64 string for Ollama vision API."""
-    from PIL import Image
-
-    buffer = BytesIO()
-    image.save(buffer, format="PNG")
-    return base64.b64encode(buffer.getvalue()).decode("utf-8")
 
 
 @pytest.mark.requires_grobid
