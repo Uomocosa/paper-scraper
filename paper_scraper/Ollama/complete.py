@@ -10,7 +10,7 @@ def _estimate_tokens(text: str) -> int:
 
 
 def complete(
-    messages: list[dict[str, str]],
+    messages: list[dict[str, str | list[str]]],
     options: Options,
 ) -> str:
     url = f"{options.base_url}/api/chat"

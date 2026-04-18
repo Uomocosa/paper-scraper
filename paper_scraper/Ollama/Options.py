@@ -9,3 +9,4 @@ class Options:
     system_prompt: str = "You are a helpful scientific research assistant."
     max_context_tokens: int = 256
     batch: int = 1
+    handle_pdfs: str = "pdf2text"

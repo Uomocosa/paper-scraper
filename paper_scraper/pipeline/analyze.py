@@ -18,6 +18,7 @@ class Config:
         default_factory=lambda: OllamaOptions(model="tinyllama")
     )
     max_chunks: int = 1
+    handle_pdfs: str = "pdf2text"
 
     @property
     def questions_list(self) -> list[str]:
@@ -71,10 +72,15 @@ def analyze(config: Config) -> None:
         paper_responses_dir.mkdir(parents=True, exist_ok=True)
 
         logger.info(f"Analyzing {paper_name}")
-        full_text = Ollama.read_pdf(pdf_path)
-        chunks = Ollama.chunk_text(
-            full_text, config.ollama_opts.max_context_tokens, config.max_chunks
-        )
+
+        if config.handle_pdfs == "pdf2image":
+            full_text = ""
+            chunks = []
+        else:
+            full_text = Ollama.read_pdf(pdf_path)
+            chunks = Ollama.chunk_text(
+                full_text, config.ollama_opts.max_context_tokens, config.max_chunks
+            )
         logger.debug(f"Created {len(chunks)} chunk(s) for {paper_name}")
 
         for q_idx, question in enumerate(questions, start=1):
@@ -84,9 +90,17 @@ def analyze(config: Config) -> None:
                 logger.debug(f"Skipping {response_file.name} (already exists)")
                 continue
 
-            chunk_texts = "\n\n---\n\n".join(chunks)
+            if config.handle_pdfs == "pdf2image":
+                chunk_texts = ""
+            else:
+                chunk_texts = "\n\n---\n\n".join(chunks)
+
             result = Ollama.answer_question_for_paper(
-                chunk_texts, question, config.ollama_opts
+                chunk_texts,
+                question,
+                config.ollama_opts,
+                pdf_path=pdf_path,
+                handle_pdfs=config.handle_pdfs,
             )
 
             content = f"# Question {q_idx}\n\n{question}\n\n---\n\n# Response\n\n{result.response}"
@@ -94,7 +108,6 @@ def analyze(config: Config) -> None:
             logger.info(f"Saved {response_file}")
 
     logger.info("Ollama analysis complete")
-
 
 
 import pytest

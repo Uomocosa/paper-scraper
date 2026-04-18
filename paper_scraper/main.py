@@ -49,6 +49,7 @@ class Config:
     )
     questions: list[str] | Path | None = None
     max_chunks: int = 10
+    handle_pdfs: str = "pdf2text"
 
     extract_refs_from_seed: bool = True
     extract_refs_from_output: bool = False
@@ -141,6 +142,7 @@ def main(config: Config) -> None:
             output_dir=config.output_dir,
             ollama_opts=config.ollama_opts,
             max_chunks=config.max_chunks,
+            handle_pdfs=config.handle_pdfs,
         )
     )
 
