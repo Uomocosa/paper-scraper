@@ -65,16 +65,16 @@ pixi run get_openalex_topics_codes --search-term "Wastewater Polymer"
 
 1. On my low-end laptop PC I runned this command to only download the papers.
 ```bash
-pixi run scrape |
-    --topics ["T10016", "T11781", "T14252"] |
-    --keywords ["poly or polymer or polymers"]
-    --extract_refs_from_seed
-    --no-extract_refs_from_output |
+pixi run scrape `
+    --search-opts.topics "T10016 && T11781 && T14252" `
+    --search-opts.keyword "poly || polymer || polymers" `
+    --extract-refs-from-seed `
+    --no-extract-refs-from-output `
     --questions None
 ```
 2. On the university server with a 4090 GPU. I runned to only respond to question with ollama.
 ```bash
-pixi run scrape |
+pixi run scrape \
     --ollama-opts.system-prompt ""
 ```
 

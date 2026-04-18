@@ -1,0 +1,20 @@
+Extract adsorption data from the following scientific text. 
+
+Schema Definitions:
+- POLYMER_USED: The name or acronym of the polymer, hydrogel, or cryogel acting as the adsorbent.
+- DRUG: The target pharmaceutical, dye, or emerging pollutant being removed.
+- WATER_PH: The pH level of the aqueous solution.
+- CONCENTRATION: The initial concentration of the drug/pollutant. Output only the number (assume standard units like mg/L or ppm).
+- CAPACITY: The adsorption capacity (qe or Qmax) of the polymer. Output only the number.
+
+Examples of desired output:
+polyPhOx,Aspirin,8.20,10,0.1865
+polyPhOx,Aspirin,8.20,25,0.342
+C-ph,Doxycycline,6.5,25,13.26
+NaN,Piroxicam,NaN,25,NaN
+
+--- START OF TEXT ---
+{insert_paper_chunk_here}
+--- END OF TEXT ---
+
+Output the CSV data now:

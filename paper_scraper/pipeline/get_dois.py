@@ -28,7 +28,7 @@ def get_dois(config: Config) -> list[str]:
     else:
         logger.debug("No extracted_references_path provided or file not found")
 
-    if config.filter.arguments:
+    if config.filter.topics:
         filter_dois = OpenAlex.get_dois_from_filter(config.filter)
         logger.info(f"Found {len(filter_dois)} DOIs from filter")
         dois.extend(filter_dois)

@@ -7,9 +7,10 @@ from paper_scraper import OpenAlex
 
 OpenAlexOptions = OpenAlex.Options.Options
 
+
 @dataclass
 class SearchFilter:
-    arguments: str | list[str] | None = None
+    topics: str | list[str] | None = None
     keywords: str | list[str] | None = None
     year_min: int | None = None
     year_max: int | None = None
@@ -307,7 +308,6 @@ class Evaluator:
         return dois
 
 
-
 def _parse_expression(expression: str, max_papers: int) -> set[str]:
     if not expression:
         return set()
@@ -324,14 +324,14 @@ def _parse_expression(expression: str, max_papers: int) -> set[str]:
 def get_dois_from_filter(filter: SearchFilter) -> list[str]:
     result_dois: set[str] | None = None
 
-    if filter.arguments is not None:
-        if isinstance(filter.arguments, list):
-            if filter.arguments:
-                expression = " and ".join(filter.arguments)
+    if filter.topics is not None:
+        if isinstance(filter.topics, list):
+            if filter.topics:
+                expression = " and ".join(filter.topics)
             else:
                 expression = ""
         else:
-            expression = filter.arguments.strip()
+            expression = filter.topics.strip()
 
         arg_dois = _parse_expression(expression, filter.max_papers)
         result_dois = arg_dois
@@ -419,38 +419,38 @@ def _filter_open_access_only(dois: list[str]) -> set[str]:
 
 
 def test_usage():
-    f = SearchFilter(arguments="T11948", max_papers=10)
+    f = SearchFilter(topics="T11948", max_papers=10)
     dois = get_dois_from_filter(f)
     logger.info(f"Found {len(dois)} DOIs: {dois}")
 
 
 def test_and_operator():
-    f = SearchFilter(arguments="T11948 and C185592680", max_papers=10)
+    f = SearchFilter(topics="T11948 and C185592680", max_papers=10)
     dois = get_dois_from_filter(f)
     logger.info(f"AND result: {len(dois)} DOIs")
 
 
 def test_or_operator():
-    f = SearchFilter(arguments="T11948 or C185592680", max_papers=10)
+    f = SearchFilter(topics="T11948 or C185592680", max_papers=10)
     dois = get_dois_from_filter(f)
     logger.info(f"OR result: {len(dois)} DOIs")
 
 
 def test_complex():
-    f = SearchFilter(arguments="(T11948 or C185592680)", max_papers=10)
+    f = SearchFilter(topics="(T11948 or C185592680)", max_papers=10)
     dois = get_dois_from_filter(f)
     logger.info(f"Complex expression: {len(dois)} DOIs")
 
 
 def test_list_input():
-    f = SearchFilter(arguments=["T11948", "C185592680"], max_papers=10)
+    f = SearchFilter(topics=["T11948", "C185592680"], max_papers=10)
     dois = get_dois_from_filter(f)
     logger.info(f"List input (implicit AND): {len(dois)} DOIs")
 
 
 def test_missing_operator_error():
     try:
-        f = SearchFilter(arguments="T11948 T12345", max_papers=10)
+        f = SearchFilter(topics="T11948 T12345", max_papers=10)
         get_dois_from_filter(f)
     except ValueError as e:
         logger.info(f"Caught expected error: {e}")
@@ -458,7 +458,7 @@ def test_missing_operator_error():
 
 def test_invalid_id_error():
     try:
-        f = SearchFilter(arguments="T999999999", max_papers=10)
+        f = SearchFilter(topics="T999999999", max_papers=10)
         get_dois_from_filter(f)
     except ValueError as e:
         logger.info(f"Caught expected error: {e}")
@@ -471,9 +471,9 @@ def test_keywords_only():
 
 
 def test_keywords_and_arguments():
-    f = SearchFilter(arguments="T11948", keywords='"CRISPR"', max_papers=10)
+    f = SearchFilter(topics="T11948", keywords='"CRISPR"', max_papers=10)
     dois = get_dois_from_filter(f)
-    logger.info(f"Keywords AND arguments: {len(dois)} DOIs")
+    logger.info(f"Keywords AND topics: {len(dois)} DOIs")
 
 
 def test_keywords_boolean():
