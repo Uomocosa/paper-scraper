@@ -1,26 +1,27 @@
-# Pipeline:
-# 1. Use Grobid to extract references from seed papers
-# 2. Extract DOIs from the references
-# 3. If search_opts.topics is set: query OpenAlex and download papers matching the filter
-# 4. Download papers referencing the seed DOIs (recursively, based on download_reference_opts.depth)
-# 5. If extract_refs_from_output: extract references from downloaded papers and download them
-# 6. If questions provided: analyze papers with Ollama
+"""
+# PIPELINE:
+1. Extract references from seed papers (Grobid)
+2. Get DOIs from references + filter
+3. Download papers
+4. Analyze with Ollama
+"""
 
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field
 from pathlib import Path
+
 from loguru import logger
 
 import pytest
-from paper_scraper import Grobid
-from paper_scraper import OpenAlex
-from paper_scraper import Ollama
+
 from paper_scraper.__global__ import (
-    SEED_PAPERS_DIR,
     OUTPUT_DIR,
+    SEED_PAPERS_DIR,
     TEST_SEED_PAPER_1,
     TEMP_OUTPUT_DIR,
 )
+from paper_scraper import OpenAlex, Ollama
+from paper_scraper.pipeline import extract_refs, get_dois, download_papers, analyze
+
 
 OpenAlexOptions = OpenAlex.Options.Options
 DownloadFilter = OpenAlex.get_dois_from_filter.Filter
@@ -32,9 +33,10 @@ OllamaOptions = Ollama.Options.Options
 class Config:
     seed_papers: list[Path] | Path | None = None
     output_dir: Path = field(default_factory=lambda: OUTPUT_DIR)
+    batch_size: int = 1
 
     openalex_opts: OpenAlexOptions = field(default_factory=OpenAlexOptions)
-    search_opts: DownloadFilter = field(default_factory=DownloadFilter)
+    filter: DownloadFilter = field(default_factory=DownloadFilter)
     download_reference_opts: DownloadReferenceOptions = field(
         default_factory=DownloadReferenceOptions
     )
@@ -48,29 +50,20 @@ class Config:
     questions: list[str] | Path | None = None
     max_chunks: int = 10
 
-    batch_size: int = 4
     extract_refs_from_seed: bool = True
     extract_refs_from_output: bool = False
 
-    def __post_init__(self):
+    @property
+    def papers(self) -> list[Path]:
         if self.seed_papers is None:
-            self.seed_papers = list(SEED_PAPERS_DIR.glob("*.pdf"))
-            logger.debug(
-                f"Auto-discovered {len(self.seed_papers)} PDFs in SEED_PAPERS_DIR"
+            papers = list(SEED_PAPERS_DIR.glob("*.pdf"))
+            logger.debug(f"Auto-discovered {len(papers)} PDFs in SEED_PAPERS_DIR")
+            return papers
+        if isinstance(self.seed_papers, Path):
+            return (
+                [self.seed_papers] if self.seed_papers.suffix.lower() == ".pdf" else []
             )
-        elif isinstance(self.seed_papers, Path) and self.seed_papers.suffix == ".txt":
-            self._load_from_txt(
-                self.seed_papers, lambda paths: setattr(self, "seed_papers", paths)
-            )
-
-        if isinstance(self.questions, Path) and self.questions.suffix == ".txt":
-            self._load_from_txt(self.questions, lambda q: setattr(self, "questions", q))
-
-    def _load_from_txt(self, path: Path, setter) -> None:
-        with open(path, "r", encoding="utf-8") as f:
-            lines = [line.strip() for line in f if line.strip()]
-        logger.info(f"Loaded {len(lines)} items from {path.name}")
-        setter(lines)
+        return [p for p in self.seed_papers if p.suffix.lower() == ".pdf"]
 
     @property
     def papers_dir(self) -> Path:
@@ -89,234 +82,75 @@ class Config:
         return self.output_dir / "extracted_references.json"
 
     @property
-    def resolved_seed_papers(self) -> list[Path]:
-        papers = self.seed_papers
-        if isinstance(papers, Path):
-            return [papers] if papers.suffix.lower() == ".pdf" else []
-        return [p for p in papers if p.suffix.lower() == ".pdf"]
-
-    @property
-    def resolved_questions(self) -> list[str]:
+    def questions_list(self) -> list[str]:
         if self.questions is None:
             return []
         if isinstance(self.questions, list):
             return self.questions
+        if isinstance(self.questions, Path) and self.questions.suffix.lower() == ".txt":
+            with open(self.questions, "r", encoding="utf-8") as f:
+                return [line.strip() for line in f if line.strip()]
         return []
 
 
+
 @dataclass
-class LocalConfig(Config):
-    """Config for testing on laptop/CPU - minimal resources."""
-
-    def __post_init__(self):
-        self.ollama_opts = OllamaOptions(
-            model="tinyllama",
-            max_context_tokens=256,
-        )
-        self.batch_size = 1
-        self.max_chunks = 1
-        super().__post_init__()
-
-
-def _extract_refs_sequential(papers: list[Path]) -> list[dict]:
-    all_references = []
-    for pdf_file in papers:
-        refs = Grobid.extract_references_from_pdf(pdf_file)
-        logger.info(f"Extracted {len(refs)} references from {pdf_file.name}.")
-        all_references.extend(refs)
-    return all_references
-
-
-def _extract_refs_parallel(papers: list[Path], batch_size: int) -> list[dict]:
-    all_references = []
-    with ThreadPoolExecutor(max_workers=batch_size) as executor:
-        futures = {
-            executor.submit(Grobid.extract_references_from_pdf, p): p for p in papers
-        }
-        for future in as_completed(futures):
-            pdf_file = futures[future]
-            try:
-                refs = future.result()
-                logger.info(f"Extracted {len(refs)} references from {pdf_file.name}.")
-                all_references.extend(refs)
-            except Exception as e:
-                logger.error(f"Failed to extract refs from {pdf_file.name}: {e}")
-    return all_references
-
-
-def _download_sequential(
-    dois: list[str], output_dir: Path, openalex_opts: OpenAlexOptions
-) -> None:
-    for doi in dois:
-        OpenAlex.download_paper_from_doi(doi, output_dir, openalex_opts)
-
-
-def _download_parallel(
-    dois: list[str],
-    output_dir: Path,
-    openalex_opts: OpenAlexOptions,
-    batch_size: int,
-) -> None:
-    with ThreadPoolExecutor(max_workers=batch_size) as executor:
-        futures = [
-            executor.submit(
-                OpenAlex.download_paper_from_doi, doi, output_dir, openalex_opts
-            )
-            for doi in dois
-        ]
-        for future in as_completed(futures):
-            try:
-                future.result()
-            except Exception as e:
-                logger.error(f"Download failed: {e}")
-
-
-def _save_questions(questions: list[str], questions_dir: Path) -> None:
-    questions_dir.mkdir(parents=True, exist_ok=True)
-    for q_idx, question in enumerate(questions, start=1):
-        question_file = questions_dir / f"q{q_idx}.md"
-        question_file.write_text(question, encoding="utf-8")
-    logger.info(f"Saved {len(questions)} question(s) to {questions_dir}")
-
-
-def _analyze_with_ollama(config: Config, questions: list[str]) -> None:
-    if not questions:
-        return
-
-    logger.info(f"Starting Ollama analysis with {len(questions)} question(s)")
-
-    _save_questions(questions, config.questions_dir)
-    config.responses_dir.mkdir(parents=True, exist_ok=True)
-
-    papers = list(config.papers_dir.glob("*.pdf"))
-    if not papers:
-        logger.warning(f"No PDFs found in {config.papers_dir}")
-        return
-
-    logger.info(f"Found {len(papers)} PDFs to analyze")
-
-    for pdf_path in papers:
-        paper_name = pdf_path.stem
-        paper_responses_dir = config.responses_dir / paper_name
-        paper_responses_dir.mkdir(parents=True, exist_ok=True)
-
-        logger.info(f"Analyzing {paper_name}")
-        full_text = Ollama.read_pdf(pdf_path)
-        chunks = Ollama.chunk_text(
-            full_text, config.ollama_opts.max_context_tokens, config.max_chunks
-        )
-        logger.debug(f"Created {len(chunks)} chunk(s) for {paper_name}")
-
-        for q_idx, question in enumerate(questions, start=1):
-            response_file = paper_responses_dir / f"q{q_idx}.md"
-
-            if response_file.exists():
-                logger.debug(f"Skipping {response_file.name} (already exists)")
-                continue
-
-            chunk_texts = "\n\n---\n\n".join(chunks)
-            result = Ollama.answer_question_for_paper(
-                chunk_texts, question, config.ollama_opts
-            )
-
-            content = f"# Question {q_idx}\n\n{question}\n\n---\n\n# Response\n\n{result.response}"
-            response_file.write_text(content, encoding="utf-8")
-            logger.info(f"Saved {response_file}")
-
-    logger.info("Ollama analysis complete")
+class LocalTestConfig(Config):
+    ollama_opts: OllamaOptions = field(default_factory = lambda: OllamaOptions(
+        model="tinyllama",
+        max_context_tokens=256,
+    ))
+    batch_size: int = 1
+    max_chunks: int = 1
 
 
 def main(config: Config) -> None:
-    logger.info("Checking Grobid connection...")
-    Grobid.check_connection()
-    logger.info("Grobid connection OK.")
-
-    config.output_dir.mkdir(parents=True, exist_ok=True)
-    config.papers_dir.mkdir(parents=True, exist_ok=True)
-    config.openalex_opts.setup_pyalex_key()
-
-    seed_papers = config.resolved_seed_papers
-    logger.info(f"Processing {len(seed_papers)} seed paper(s)")
-
-    all_references = []
-    seed_dois = []
-
-    if config.extract_refs_from_seed and seed_papers:
-        if config.batch_size > 1:
-            all_references = _extract_refs_parallel(seed_papers, config.batch_size)
-        else:
-            all_references = _extract_refs_sequential(seed_papers)
-
-        if config.extracted_references_path:
-            import json
-
-            with open(config.extracted_references_path, "w", encoding="utf-8") as f:
-                json.dump(all_references, f, indent=4)
-            logger.info(
-                f"Saved {len(all_references)} references to {config.extracted_references_path}"
-            )
-
-        seed_dois = [ref.get("doi") for ref in all_references if ref.get("doi")]
-        logger.info(f"Found {len(seed_dois)} DOIs from seed papers")
-
-    has_filter = bool(config.search_opts.topics)
-
-    if has_filter:
-        dois = OpenAlex.get_dois_from_filter(config.search_opts)
-        logger.info(f"Found {len(dois)} DOIs from filter")
-        if config.batch_size > 1:
-            _download_parallel(
-                dois, config.papers_dir, config.openalex_opts, config.batch_size
-            )
-        else:
-            _download_sequential(dois, config.papers_dir, config.openalex_opts)
-
-    if seed_dois:
-        OpenAlex.get_reference_dois.from_dois(
-            seed_dois,
-            config.papers_dir,
-            config.download_reference_opts,
-            config.openalex_opts,
+    extract_refs(
+        extract_refs.Config(
+            seed_papers=config.seed_papers,
+            output_dir=config.output_dir,
+            batch_size=config.batch_size,
         )
+    )
 
-    if config.extract_refs_from_output:
-        downloaded_papers = list(config.papers_dir.glob("*.pdf"))
-        if downloaded_papers:
-            logger.info(f"Found {len(downloaded_papers)} papers in papers_dir")
-            reference_dois = OpenAlex.get_reference_dois.from_papers(
-                downloaded_papers,
-                config.download_reference_opts,
-            )
-            logger.info(
-                f"Found {len(reference_dois)} reference DOIs from downloaded papers"
-            )
-            if config.batch_size > 1:
-                _download_parallel(
-                    reference_dois,
-                    config.papers_dir,
-                    config.openalex_opts,
-                    config.batch_size,
-                )
-            else:
-                _download_sequential(
-                    reference_dois, config.papers_dir, config.openalex_opts
-                )
+    dois = get_dois(
+        get_dois.Config(
+            extracted_references_path=config.extracted_references_path,
+            filter=config.filter,
+            output_dir=config.output_dir,
+        )
+    )
 
-    questions = config.resolved_questions
-    if questions:
-        _analyze_with_ollama(config, questions)
+    download_papers(
+        download.Config(
+            dois=dois,
+            output_dir=config.papers_dir,
+            papers_dir=config.papers_dir,
+            openalex_opts=config.openalex_opts,
+            batch_size=config.batch_size,
+            extract_refs=config.extract_refs_from_output,
+            reference_opts=config.download_reference_opts,
+        )
+    )
+
+    analyze(
+        analyze.Config(
+            questions=config.questions,
+            papers_dir=config.papers_dir,
+            output_dir=config.output_dir,
+            ollama_opts=config.ollama_opts,
+            max_chunks=config.max_chunks,
+        )
+    )
 
     logger.info("Pipeline complete.")
 
 
-# IMPORTANT!
-# Each test MUST use a temporary directory to avoid polluting the test environment.
-# It cannot use the global OUTPUT_DIR
-# I propose:
-# 1. For test that we dont care to see the output: use tempfile.TemporaryDirectory()
-# 2. To see the output of functions: use a fixed directory.
-#   -> paper_scraper/__HELPER_DIR__/OUTPUT_DIR (needs to be added to __global__ as TEMP_OUTPUT_DIR)
-
+"""
+IMPORTANT!
+Each test MUST use a temporary directory to avoid polluting the test environment.
+It cannot use the global OUTPUT_DIR
+"""
 
 @pytest.mark.requires_grobid
 @pytest.mark.above10s
@@ -327,11 +161,8 @@ def test_extract_refs_only():
     with tempfile.TemporaryDirectory() as tmpdir:
         custom_dir = Path(tmpdir) / "output"
         main(
-            LocalConfig(
+            LocalTestConfig(
                 seed_papers=[TEST_SEED_PAPER_1],
-                extract_refs_from_seed=True,
-                extract_refs_from_output=False,
-                questions=None,
                 output_dir=custom_dir,
             )
         )
@@ -341,14 +172,12 @@ def test_extract_refs_only():
 @pytest.mark.above10s
 def test_analyze_existing_pdfs():
     """Analyze a local seed paper with Ollama (1 call)."""
-
     main(
-        LocalConfig(
+        LocalTestConfig(
             seed_papers=[TEST_SEED_PAPER_1],
-            extract_refs_from_seed=False,
-            extract_refs_from_output=False,
             output_dir=TEMP_OUTPUT_DIR,
             questions=["What is this paper about?"],
+            extract_refs_from_seed=False,
         )
     )
 
@@ -360,7 +189,7 @@ def test_questions_dir_creation():
     with tempfile.TemporaryDirectory() as tmpdir:
         questions_dir = Path(tmpdir) / "QUESTIONS"
         questions = ["Question 1?", "Question 2?"]
-        _save_questions(questions, questions_dir)
+        analyze._save_questions(questions, questions_dir)
 
         assert (questions_dir / "q1.md").exists()
         assert (questions_dir / "q2.md").exists()
@@ -374,9 +203,8 @@ def test_custom_output_dir():
 
     with tempfile.TemporaryDirectory() as tmpdir:
         custom_dir = Path(tmpdir) / "custom_output"
-        config = LocalConfig(
+        config = LocalTestConfig(
             seed_papers=[TEST_SEED_PAPER_1],
-            extract_refs_from_seed=False,
             output_dir=custom_dir,
         )
 
@@ -395,14 +223,14 @@ def test_resolved_seed_papers():
     with tempfile.TemporaryDirectory() as tmpdir:
         custom_dir = Path(tmpdir) / "output"
 
-        config = LocalConfig(seed_papers=[TEST_SEED_PAPER_1], output_dir=custom_dir)
-        assert len(config.resolved_seed_papers) == 1
-        assert config.resolved_seed_papers[0] == TEST_SEED_PAPER_1
+        config = LocalTestConfig(seed_papers=[TEST_SEED_PAPER_1], output_dir=custom_dir)
+        assert len(config.papers) == 1
+        assert config.papers[0] == TEST_SEED_PAPER_1
 
-        config_single = LocalConfig(
+        config_single = LocalTestConfig(
             seed_papers=TEST_SEED_PAPER_1, output_dir=custom_dir
         )
-        assert len(config_single.resolved_seed_papers) == 1
+        assert len(config_single.papers) == 1
 
-        config_non_pdf = LocalConfig(seed_papers=Path(__file__), output_dir=custom_dir)
-        assert len(config_non_pdf.resolved_seed_papers) == 0
+        config_non_pdf = LocalTestConfig(seed_papers=Path(__file__), output_dir=custom_dir)
+        assert len(config_non_pdf.papers) == 0
