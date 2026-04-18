@@ -7,6 +7,15 @@ from paper_scraper import OpenAlex
 
 OpenAlexOptions = OpenAlex.Options.Options
 
+@dataclass
+class SearchFilter:
+    arguments: str | list[str] | None = None
+    keywords: str | list[str] | None = None
+    year_min: int | None = None
+    year_max: int | None = None
+    open_access_only: bool = True
+    max_papers: int = 100
+
 
 @dataclass
 class ASTNode:
@@ -16,6 +25,11 @@ class ASTNode:
 @dataclass
 class IdNode(ASTNode):
     id: str
+
+
+@dataclass
+class KeywordNode(ASTNode):
+    keyword: str
 
 
 @dataclass
@@ -37,6 +51,7 @@ class OrNode(ASTNode):
 
 class TokenType:
     ID = "ID"
+    KEYWORD = "KEYWORD"
     AND = "AND"
     OR = "OR"
     NOT = "NOT"
@@ -75,6 +90,8 @@ class Tokenizer:
             elif char in self.RPAREN:
                 self.tokens.append(Token(TokenType.RPAREN, char))
                 self.pos += 1
+            elif char in {'"', "'"}:
+                self._read_quoted_keyword(char)
             elif char.isalnum() or char in {"T", "C"}:
                 self._read_id_or_keyword()
             else:
@@ -88,6 +105,21 @@ class Tokenizer:
     def _skip_whitespace(self) -> None:
         while self.pos < len(self.expression) and self.expression[self.pos].isspace():
             self.pos += 1
+
+    def _read_quoted_keyword(self, quote_char: str) -> None:
+        self.pos += 1
+        start = self.pos
+        while (
+            self.pos < len(self.expression) and self.expression[self.pos] != quote_char
+        ):
+            self.pos += 1
+
+        if self.pos >= len(self.expression):
+            raise ValueError(f"Unclosed quote at position {start}")
+
+        keyword = self.expression[start : self.pos]
+        self.pos += 1
+        self.tokens.append(Token(TokenType.KEYWORD, keyword))
 
     def _read_id_or_keyword(self) -> None:
         start = self.pos
@@ -178,9 +210,11 @@ class Parser:
             return node
         elif self._current().type == TokenType.ID:
             return IdNode(self._advance().value)
+        elif self._current().type == TokenType.KEYWORD:
+            return KeywordNode(self._advance().value)
         else:
             raise ValueError(
-                f"Expected ID or '(', got '{self._current().type}' "
+                f"Expected ID, KEYWORD, or '(', got '{self._current().type}' "
                 f"('{self._current().value}') at position {self.pos}"
             )
 
@@ -206,6 +240,8 @@ class Evaluator:
     def evaluate(self, ast: ASTNode) -> set[str]:
         if isinstance(ast, IdNode):
             return self._get_ids(ast.id)
+        elif isinstance(ast, KeywordNode):
+            return self._get_keyword_dois(ast.keyword)
         elif isinstance(ast, NotNode):
             all_ids = self._get_all_ids()
             return all_ids - self.evaluate(ast.child)
@@ -249,40 +285,78 @@ class Evaluator:
         logger.info(f"Queried {id}: found {len(dois)} DOIs")
         return dois
 
+    def _get_keyword_dois(self, keyword: str) -> set[str]:
+        if keyword in self.cache:
+            return self.cache[keyword]
 
-@dataclass
-class SearchFilter:
-    arguments: str | list[str] | None = None
-    year_min: int | None = None
-    year_max: int | None = None
-    open_access_only: bool = True
-    max_papers: int = 100
+        dois = self._query_openalex_keyword(keyword)
+        self.cache[keyword] = dois
+        return dois
+
+    def _query_openalex_keyword(self, keyword: str) -> set[str]:
+        query = Works().search(keyword)
+        results = query.get(per_page=self.max_papers)
+
+        dois: set[str] = set()
+        for work in results:
+            doi = work.get("doi")
+            if doi:
+                dois.add(doi)
+
+        logger.info(f"Queried keyword '{keyword}': found {len(dois)} DOIs")
+        return dois
 
 
-def get_dois_from_filter(filter: SearchFilter) -> list[str]:
-    if filter.arguments is None:
-        return []
 
-    if isinstance(filter.arguments, list):
-        if not filter.arguments:
-            return []
-        expression = " and ".join(filter.arguments)
-    else:
-        expression = filter.arguments.strip()
-
+def _parse_expression(expression: str, max_papers: int) -> set[str]:
     if not expression:
-        return []
+        return set()
 
     tokens = Tokenizer(expression).tokenize()
     ast = Parser(tokens).parse()
 
     validate_id(ast)
 
-    evaluator = Evaluator(filter.max_papers)
-    dois = evaluator.evaluate(ast)
+    evaluator = Evaluator(max_papers)
+    return evaluator.evaluate(ast)
 
-    logger.info(f"Found {len(dois)} DOIs from filter")
-    return sorted(dois)
+
+def get_dois_from_filter(filter: SearchFilter) -> list[str]:
+    result_dois: set[str] | None = None
+
+    if filter.arguments is not None:
+        if isinstance(filter.arguments, list):
+            if filter.arguments:
+                expression = " and ".join(filter.arguments)
+            else:
+                expression = ""
+        else:
+            expression = filter.arguments.strip()
+
+        arg_dois = _parse_expression(expression, filter.max_papers)
+        result_dois = arg_dois
+
+    if filter.keywords is not None:
+        if isinstance(filter.keywords, list):
+            if filter.keywords:
+                expression = " and ".join(filter.keywords)
+            else:
+                expression = ""
+        else:
+            expression = filter.keywords.strip()
+
+        keyword_dois = _parse_expression(expression, filter.max_papers)
+
+        if result_dois is None:
+            result_dois = keyword_dois
+        else:
+            result_dois &= keyword_dois
+
+    if result_dois is None:
+        return []
+
+    logger.info(f"Found {len(result_dois)} DOIs from filter")
+    return sorted(result_dois)
 
 
 def validate_id(ast: ASTNode) -> bool:
@@ -388,3 +462,27 @@ def test_invalid_id_error():
         get_dois_from_filter(f)
     except ValueError as e:
         logger.info(f"Caught expected error: {e}")
+
+
+def test_keywords_only():
+    f = SearchFilter(keywords='"deep learning"', max_papers=10)
+    dois = get_dois_from_filter(f)
+    logger.info(f"Keywords only: {len(dois)} DOIs")
+
+
+def test_keywords_and_arguments():
+    f = SearchFilter(arguments="T11948", keywords='"CRISPR"', max_papers=10)
+    dois = get_dois_from_filter(f)
+    logger.info(f"Keywords AND arguments: {len(dois)} DOIs")
+
+
+def test_keywords_boolean():
+    f = SearchFilter(keywords='"AI" and "ethics"', max_papers=10)
+    dois = get_dois_from_filter(f)
+    logger.info(f"Keywords boolean: {len(dois)} DOIs")
+
+
+def test_keywords_list():
+    f = SearchFilter(keywords=['"AI"', '"ethics"'], max_papers=10)
+    dois = get_dois_from_filter(f)
+    logger.info(f"Keywords list: {len(dois)} DOIs")
