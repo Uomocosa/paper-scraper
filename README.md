@@ -33,32 +33,21 @@
     1. Create a free account at [openalex.org](https://openalex.org/)
     2. Go to [openalex.org/settings/api](https://openalex.org/login?redirect=/settings/api-key) to get your API key
 
-# Example run (Complete):
+# Example - What I did for my Thesis:
+1. On my low-end laptop PC I runned this command to only download the papers.
 ```bash
 pixi run scrape |
     --topics ["", ""] |
-    --questions "" |
-    --ollama-opts.system-prompt ""
+    --extract_refs_from_seed
+    --extract_refs_from_output |
+    --questions None
 ```
-
-# Example run (Gurobid search + Download from OpenAlex):
+2. On the university server with a 4090 GPU. I runned to only respond to question with ollama.
 ```bash
 pixi run scrape |
     --topics ["", ""] |
-    --questions "" |
     --ollama-opts.system-prompt ""
 ```
-
-# Example run (Ollama response):
-```bash
-pixi run scrape |
-    --topics ["", ""] |
-    --questions "" |
-    --ollama-opts.system-prompt ""
-```
-
-
-
 
 # SUMMANY - Local AI Scientific Paper Pipeline 🤖📄
 
