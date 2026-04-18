@@ -34,20 +34,52 @@
     2. Go to [openalex.org/settings/api](https://openalex.org/login?redirect=/settings/api-key) to get your API key
 
 # Example - What I did for my Thesis:
+1. I've searcht the topics-codes I needed from openalex, and listed the ones that best suited my case study.
+```bash
+pixi run get_openalex_topics_codes --search-term "Adsorption"
+```
+
+```bash
+pixi run get_openalex_topics_codes --search-term "Sorption"
+```
+
+```bash
+pixi run get_openalex_topics_codes --search-term "Wastewater treatment"
+```
+
+```bash
+pixi run get_openalex_topics_codes --search-term "Water purification Secondary"
+```
+
+```bash
+pixi run get_openalex_topics_codes --search-term "Polymers"
+```
+
+```bash
+pixi run get_openalex_topics_codes --search-term "Polymer Wastewater"
+```
+
+```bash
+pixi run get_openalex_topics_codes --search-term "Wastewater Polymer"
+```
+
 1. On my low-end laptop PC I runned this command to only download the papers.
 ```bash
 pixi run scrape |
-    --topics ["", ""] |
+    --topics ["T10016", "T11781", "T14252"] |
+    --keywords ["poly or polymer or polymers"]
     --extract_refs_from_seed
-    --extract_refs_from_output |
+    --no-extract_refs_from_output |
     --questions None
 ```
 2. On the university server with a 4090 GPU. I runned to only respond to question with ollama.
 ```bash
 pixi run scrape |
-    --topics ["", ""] |
     --ollama-opts.system-prompt ""
 ```
+
+# TODOs
+- The `SearchFilter` could also search for specific `domain`, `field` and especially `subfields`.
 
 # SUMMANY - Local AI Scientific Paper Pipeline 🤖📄
 

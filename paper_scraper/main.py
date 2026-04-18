@@ -24,7 +24,7 @@ from paper_scraper.pipeline import extract_refs, get_dois, download_papers, anal
 
 
 OpenAlexOptions = OpenAlex.Options.Options
-DownloadFilter = OpenAlex.get_dois_from_filter.Filter
+SearchFilter = OpenAlex.get_dois_from_filter.SearchFilter
 DownloadReferenceOptions = OpenAlex.get_reference_dois.Options
 OllamaOptions = Ollama.Options.Options
 
@@ -36,7 +36,7 @@ class Config:
     batch_size: int = 1
 
     openalex_opts: OpenAlexOptions = field(default_factory=OpenAlexOptions)
-    filter: DownloadFilter = field(default_factory=DownloadFilter)
+    filter: SearchFilter = field(default_factory=SearchFilter)
     download_reference_opts: DownloadReferenceOptions = field(
         default_factory=DownloadReferenceOptions
     )
@@ -93,13 +93,14 @@ class Config:
         return []
 
 
-
 @dataclass
 class LocalTestConfig(Config):
-    ollama_opts: OllamaOptions = field(default_factory = lambda: OllamaOptions(
-        model="tinyllama",
-        max_context_tokens=256,
-    ))
+    ollama_opts: OllamaOptions = field(
+        default_factory=lambda: OllamaOptions(
+            model="tinyllama",
+            max_context_tokens=256,
+        )
+    )
     batch_size: int = 1
     max_chunks: int = 1
 
@@ -151,6 +152,7 @@ IMPORTANT!
 Each test MUST use a temporary directory to avoid polluting the test environment.
 It cannot use the global OUTPUT_DIR
 """
+
 
 @pytest.mark.requires_grobid
 @pytest.mark.above10s
@@ -232,5 +234,7 @@ def test_resolved_seed_papers():
         )
         assert len(config_single.papers) == 1
 
-        config_non_pdf = LocalTestConfig(seed_papers=Path(__file__), output_dir=custom_dir)
+        config_non_pdf = LocalTestConfig(
+            seed_papers=Path(__file__), output_dir=custom_dir
+        )
         assert len(config_non_pdf.papers) == 0

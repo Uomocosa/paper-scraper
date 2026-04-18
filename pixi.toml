@@ -9,6 +9,7 @@ extract_references = "python -c 'from paper_scraper.pipeline import extract_refs
 get_dois = "python -c 'from paper_scraper.pipeline import get_dois; import tyro; config = tyro.cli(get_dois.Config); get_dois(config)'"
 download_papers = "python -c 'from paper_scraper.pipeline import download; import tyro; config = tyro.cli(download.Config); download(config)'"
 analyze = "python -c 'from paper_scraper.pipeline import analyze; import tyro; config = tyro.cli(analyze.Config); analyze(config)'"
+get_openalex_topics_codes = "python -c 'from paper_scraper import get_openalex_topics_codes; import tyro; config = tyro.cli(get_openalex_topics_codes.Config); get_openalex_topics_codes.main(config)'"
 
 [dependencies]
 python = ">=3.11"

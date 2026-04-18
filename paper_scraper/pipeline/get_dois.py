@@ -7,13 +7,13 @@ from paper_scraper import OpenAlex, Utils
 
 
 OpenAlexOptions = OpenAlex.Options.Options
-DownloadFilter = OpenAlex.get_dois_from_filter.Filter
+SearchFilter = OpenAlex.get_dois_from_filter.SearchFilter
 
 
 @dataclass
 class Config:
     extracted_references_path: Path | None = None
-    filter: DownloadFilter = field(default_factory=DownloadFilter)
+    filter: SearchFilter = field(default_factory=SearchFilter)
     output_dir: Path = field(default_factory=lambda: Path("OUTPUT_DIR"))
 
 
@@ -28,7 +28,7 @@ def get_dois(config: Config) -> list[str]:
     else:
         logger.debug("No extracted_references_path provided or file not found")
 
-    if config.filter.topics:
+    if config.filter.arguments:
         filter_dois = OpenAlex.get_dois_from_filter(config.filter)
         logger.info(f"Found {len(filter_dois)} DOIs from filter")
         dois.extend(filter_dois)
