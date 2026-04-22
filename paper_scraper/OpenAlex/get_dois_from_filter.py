@@ -15,7 +15,7 @@ class SearchFilter:
     year_min: int | None = None
     year_max: int | None = None
     open_access_only: bool = True
-    max_papers: int = 100
+    max_papers: int = 1000
 
 
 @dataclass
@@ -91,6 +91,24 @@ class Tokenizer:
             elif char in self.RPAREN:
                 self.tokens.append(Token(TokenType.RPAREN, char))
                 self.pos += 1
+            elif char == "&":
+                if (
+                    self.pos + 1 < len(self.expression)
+                    and self.expression[self.pos + 1] == "&"
+                ):
+                    self.tokens.append(Token(TokenType.AND, "&&"))
+                    self.pos += 2
+                else:
+                    raise ValueError(f"Unexpected character '&' at position {self.pos}")
+            elif char == "|":
+                if (
+                    self.pos + 1 < len(self.expression)
+                    and self.expression[self.pos + 1] == "|"
+                ):
+                    self.tokens.append(Token(TokenType.OR, "||"))
+                    self.pos += 2
+                else:
+                    raise ValueError(f"Unexpected character '|' at position {self.pos}")
             elif char in {'"', "'"}:
                 self._read_quoted_keyword(char)
             elif char.isalnum() or char in {"T", "C"}:
@@ -141,11 +159,9 @@ class Tokenizer:
                 self.tokens.append(Token(TokenType.NOT, value))
             else:
                 raise ValueError(f"Unknown operator '{value}' at position {start}")
+        elif not value.startswith(("T", "C")):
+            self.tokens.append(Token(TokenType.KEYWORD, value))
         else:
-            if not value.startswith(("T", "C")):
-                raise ValueError(
-                    f"ID must start with 'T' (topic) or 'C' (concept), got '{value}'"
-                )
             self.tokens.append(Token(TokenType.ID, value))
 
 
@@ -234,8 +250,9 @@ def validate_id(id: str) -> bool:
 
 
 class Evaluator:
-    def __init__(self, max_papers: int):
+    def __init__(self, max_papers: int, is_keyword: bool = False):
         self.max_papers = max_papers
+        self.is_keyword = is_keyword
         self.cache: dict[str, set[str]] = {}
 
     def evaluate(self, ast: ASTNode) -> set[str]:
@@ -308,16 +325,19 @@ class Evaluator:
         return dois
 
 
-def _parse_expression(expression: str, max_papers: int) -> set[str]:
+def _parse_expression(
+    expression: str, max_papers: int, is_keyword: bool = False
+) -> set[str]:
     if not expression:
         return set()
 
     tokens = Tokenizer(expression).tokenize()
     ast = Parser(tokens).parse()
 
-    validate_id(ast)
+    if not is_keyword:
+        validate_id(ast)
 
-    evaluator = Evaluator(max_papers)
+    evaluator = Evaluator(max_papers, is_keyword=is_keyword)
     return evaluator.evaluate(ast)
 
 
@@ -345,7 +365,7 @@ def get_dois_from_filter(filter: SearchFilter) -> list[str]:
         else:
             expression = filter.keywords.strip()
 
-        keyword_dois = _parse_expression(expression, filter.max_papers)
+        keyword_dois = _parse_expression(expression, filter.max_papers, is_keyword=True)
 
         if result_dois is None:
             result_dois = keyword_dois

@@ -1,7 +1,7 @@
 """
 # PIPELINE:
 1. Extract references from seed papers (Grobid)
-2. Get DOIs from references + filter
+2. Get DOIs from references + search_filter
 3. Download papers
 4. Analyze with Ollama
 """
@@ -36,7 +36,7 @@ class Config:
     batch_size: int = 1
 
     openalex_opts: OpenAlexOptions = field(default_factory=OpenAlexOptions)
-    filter: SearchFilter = field(default_factory=SearchFilter)
+    search_filter: SearchFilter = field(default_factory=SearchFilter)
     download_reference_opts: DownloadReferenceOptions = field(
         default_factory=DownloadReferenceOptions
     )
@@ -118,13 +118,13 @@ def main(config: Config) -> None:
     dois = get_dois(
         get_dois.Config(
             extracted_references_path=config.extracted_references_path,
-            filter=config.filter,
+            search_filter=config.search_filter,
             output_dir=config.output_dir,
         )
     )
 
     download_papers(
-        download.Config(
+        download_papers.Config(
             dois=dois,
             output_dir=config.papers_dir,
             papers_dir=config.papers_dir,
@@ -240,3 +240,27 @@ def test_resolved_seed_papers():
             seed_papers=Path(__file__), output_dir=custom_dir
         )
         assert len(config_non_pdf.papers) == 0
+
+
+def test_search_filter_with_symbol_operators():
+    """Test that search_filter supports && and || operators."""
+    import tempfile
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        custom_dir = Path(tmpdir) / "output"
+        config = LocalTestConfig(
+            output_dir=custom_dir,
+            extract_refs_from_seed=False,
+            extract_refs_from_output=False,
+        )
+        config.search_filter.topics = "T10016 && T11781 && T14252"
+        config.search_filter.keywords = "poly || polymer || polymers"
+        config.search_filter.max_papers = 10
+
+        dois = get_dois(
+            get_dois.Config(
+                extracted_references_path=config.extracted_references_path,
+                search_filter=config.search_filter,
+                output_dir=config.output_dir,
+            )
+        )

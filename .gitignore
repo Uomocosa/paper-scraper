@@ -1,3 +1,5 @@
+.secrets
+
 # Ignore everything in these folders
 PAPERS/DOWNLOADED/*
 PAPERS/SEED/*

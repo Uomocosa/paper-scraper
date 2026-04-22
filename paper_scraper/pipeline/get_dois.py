@@ -13,7 +13,7 @@ SearchFilter = OpenAlex.get_dois_from_filter.SearchFilter
 @dataclass
 class Config:
     extracted_references_path: Path | None = None
-    filter: SearchFilter = field(default_factory=SearchFilter)
+    search_filter: SearchFilter = field(default_factory=SearchFilter)
     output_dir: Path = field(default_factory=lambda: Path("OUTPUT_DIR"))
 
 
@@ -28,9 +28,9 @@ def get_dois(config: Config) -> list[str]:
     else:
         logger.debug("No extracted_references_path provided or file not found")
 
-    if config.filter.topics:
-        filter_dois = OpenAlex.get_dois_from_filter(config.filter)
-        logger.info(f"Found {len(filter_dois)} DOIs from filter")
+    if config.search_filter.topics:
+        filter_dois = OpenAlex.get_dois_from_filter(config.search_filter)
+        logger.info(f"Found {len(filter_dois)} DOIs from search_filter")
         dois.extend(filter_dois)
 
     unique_dois = list(dict.fromkeys(dois))
