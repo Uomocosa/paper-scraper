@@ -19,4 +19,8 @@ else
     git clone "$REPO_URL" "$TARGET_DIR"
 fi
 
+echo ">>> Installing dependencies..."
+cd "$TARGET_DIR"
+pixi install
+
 echo ">>> Done!"
