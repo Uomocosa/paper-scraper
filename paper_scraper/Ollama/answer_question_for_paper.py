@@ -52,7 +52,7 @@ def _answer_with_images(
     )
 
     image_paths = convert_pdf_to_images(pdf_path)
-    logger.info(f"Processing {len(image_paths)} page images for question")
+    logger.info(f"Processing {len(image_paths)} page images for question: {question}")
 
     responses = []
     for i, image_path in enumerate(image_paths):
@@ -61,7 +61,7 @@ def _answer_with_images(
             {"role": "system", "content": options.system_prompt},
             {
                 "role": "user",
-                "content": f"Page {i + 1} of the paper:\n\nQuestion: {question}\n\nPlease answer based only on the page image above.",
+                "content": f"[image]\n\nPage {i + 1} of the paper:\n\nQuestion: {question}\n\nPlease answer based only on the page image above.",
                 "images": [base64_image],
             },
         ]
