@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from pathlib import Path
 
-import pytest
 import requests
 from bs4 import BeautifulSoup
 from paper_scraper.__global__ import GROBID_URL, SEED_PAPERS_DIR
@@ -49,6 +48,7 @@ def extract_references_from_pdf(pdf_path, options: Options = Options()) -> list[
     return extracted_refs
 
 
+import pytest
 @pytest.mark.requires_grobid
 def test_usage():
     from paper_scraper.__global__ import TEST_SEED_PAPER_1
