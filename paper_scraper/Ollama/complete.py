@@ -13,7 +13,7 @@ def complete(
     messages: list[dict[str, str | list[str]]],
     options: Options,
 ) -> str:
-    url = f"{options.base_url}/api/chat"
+    url = f"{options.base_url}/api/generate"
 
     payload = {
         "model": options.model,
