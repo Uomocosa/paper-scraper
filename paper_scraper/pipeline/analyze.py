@@ -2,18 +2,16 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from loguru import logger
-
+from paper_scraper.__global__ import OUTPUT_DIR
 from paper_scraper import Ollama
-from paper_scraper.Ollama import Options as OllamaOptions
 
+OllamaOptions = Ollama.Options.Options
 
 @dataclass
 class Config:
     questions: list[str] | Path | None = None
-    papers_dir: Path = field(
-        default_factory=lambda: Path("OUTPUT_DIR") / "DOWNLOADED_PAPERS"
-    )
-    output_dir: Path = field(default_factory=lambda: Path("OUTPUT_DIR"))
+    papers_dir: Path = OUTPUT_DIR / "DOWNLOADED_PAPERS"
+    output_dir: Path = OUTPUT_DIR
     ollama_opts: OllamaOptions = field(
         default_factory=lambda: OllamaOptions(model="tinyllama")
     )

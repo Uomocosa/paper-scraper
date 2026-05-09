@@ -4,7 +4,7 @@ from pathlib import Path
 from loguru import logger
 
 from paper_scraper import OpenAlex, Utils
-
+from paper_scraper.__global__ import OUTPUT_DIR
 
 OpenAlexOptions = OpenAlex.Options.Options
 SearchFilter = OpenAlex.get_dois_from_filter.SearchFilter
@@ -13,8 +13,8 @@ SearchFilter = OpenAlex.get_dois_from_filter.SearchFilter
 @dataclass
 class Config:
     extracted_references_path: Path | None = None
-    search_filter: SearchFilter = field(default_factory=SearchFilter)
-    output_dir: Path = field(default_factory=lambda: Path("OUTPUT_DIR"))
+    search_filter: SearchFilter = field(default_factory=lambda: SearchFilter())
+    output_dir: Path = OUTPUT_DIR
 
 
 def get_dois(config: Config) -> list[str]:

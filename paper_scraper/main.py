@@ -32,14 +32,12 @@ OllamaOptions = Ollama.Options.Options
 @dataclass
 class Config:
     seed_papers: list[Path] | Path | None = None
-    output_dir: Path = field(default_factory=lambda: OUTPUT_DIR)
+    output_dir: Path = OUTPUT_DIR
     batch_size: int = 1
 
-    openalex_opts: OpenAlexOptions = field(default_factory=OpenAlexOptions)
-    search_filter: SearchFilter = field(default_factory=SearchFilter)
-    download_reference_opts: DownloadReferenceOptions = field(
-        default_factory=DownloadReferenceOptions
-    )
+    openalex_opts: OpenAlexOptions = field(default_factory=lambda: OpenAlexOptions())
+    search_filter: SearchFilter = field(default_factory=lambda: SearchFilter())
+    download_reference_opts: DownloadReferenceOptions = field(default_factory=lambda: DownloadReferenceOptions())
 
     ollama_opts: OllamaOptions = field(
         default_factory=lambda: OllamaOptions(

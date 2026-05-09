@@ -4,6 +4,7 @@ from pathlib import Path
 from loguru import logger
 
 from paper_scraper import OpenAlex
+from paper_scraper.__global__ import OUTPUT_DIR
 
 
 OpenAlexOptions = OpenAlex.Options.Options
@@ -13,12 +14,8 @@ DownloadReferenceOptions = OpenAlex.get_reference_dois.Options
 @dataclass
 class Config:
     dois: list[str] = field(default_factory=list)
-    output_dir: Path = field(
-        default_factory=lambda: Path("OUTPUT_DIR") / "DOWNLOADED_PAPERS"
-    )
-    papers_dir: Path = field(
-        default_factory=lambda: Path("OUTPUT_DIR") / "DOWNLOADED_PAPERS"
-    )
+    output_dir: Path = OUTPUT_DIR / "DOWNLOADED_PAPERS"
+    papers_dir: Path = OUTPUT_DIR / "DOWNLOADED_PAPERS"
     openalex_opts: OpenAlexOptions = field(default_factory=OpenAlexOptions)
     batch_size: int = 1
     extract_refs: bool = False

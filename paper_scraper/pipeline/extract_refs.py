@@ -12,9 +12,7 @@ import json
 @dataclass
 class Config:
     seed_papers: list[Path] | Path | None = None
-    output_dir: Path = field(
-        default_factory=lambda: SEED_PAPERS_DIR.parent / "OUTPUT_DIR"
-    )
+    output_dir: Path = SEED_PAPERS_DIR.parent / "OUTPUT_DIR"
     batch_size: int = 1
 
     @property
