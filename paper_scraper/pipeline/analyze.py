@@ -119,30 +119,41 @@ import pytest
 import shutil
 from paper_scraper.__global__ import TEST_SEED_PAPER_1, TEMP_OUTPUT_DIR
 
+
 @pytest.mark.requires_ollama
-def test_usage():
-    # Clean up temp folder before test
-    if TEMP_OUTPUT_DIR.exists():
-        shutil.rmtree(TEMP_OUTPUT_DIR)
-    
-    config = Config(
+class Tests():
+    base_test_config = Config(
         questions=["Hi there!"],
         papers_dir=TEMP_OUTPUT_DIR / "DOWNLOADED_PAPERS",
         output_dir=TEMP_OUTPUT_DIR,
         max_chunks=1,
         ollama_opts=OllamaOptions(
-            system_prompt="greet me in the tone of the paper",
+            system_prompt="Greet me in the tone of the paper",
         )
     )
+
+    def print_results(self, config):
+        paths = get_analysis_results(config)
+        print(paths)
+        first_file = paths[0]
+        print("ANALYSIS RESULTS:")
+        print(f"\n{first_file.relative_to(config.responses_dir)}:")
+        print(first_file.read_text(encoding="utf-8"))
+
     
-    # Copy test paper to the papers directory
-    config.papers_dir.mkdir(parents=True, exist_ok=True)
-    shutil.copy(TEST_SEED_PAPER_1, config.papers_dir / TEST_SEED_PAPER_1.name)
-    
-    analyze(config)
-    paths = get_analysis_results(config)
-    print(paths)
-    first_file = paths[0]
-    print("ANALYSIS RESULTS:")
-    print(f"\n{first_file.relative_to(config.responses_dir)}:")
-    print(first_file.read_text(encoding="utf-8"))
+    def test_pdf2text(self):
+        if TEMP_OUTPUT_DIR.exists(): shutil.rmtree(TEMP_OUTPUT_DIR)
+        config = self.base_test_config
+        config.papers_dir.mkdir(parents=True, exist_ok=True)
+        shutil.copy(TEST_SEED_PAPER_1, config.papers_dir / TEST_SEED_PAPER_1.name)
+        analyze(config)
+        self.print_results(config)
+
+    def test_pdf2image(self):
+        if TEMP_OUTPUT_DIR.exists(): shutil.rmtree(TEMP_OUTPUT_DIR)
+        config = self.base_test_config
+        config.ollama_opts.handle_pdfs = "pdf2image"
+        config.papers_dir.mkdir(parents=True, exist_ok=True)
+        shutil.copy(TEST_SEED_PAPER_1, config.papers_dir / TEST_SEED_PAPER_1.name)
+        analyze(config)
+        self.print_results(config)
