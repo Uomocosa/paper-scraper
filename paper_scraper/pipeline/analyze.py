@@ -4,6 +4,8 @@ from pathlib import Path
 from loguru import logger
 from paper_scraper.__global__ import OUTPUT_DIR
 from paper_scraper import Ollama
+from paper_scraper.Ollama.__global__ import HandlePDFType
+from paper_scraper.Ollama.get_handle_pdf_function import get_handle_pdf_function
 
 OllamaOptions = Ollama.Options.Options
 
@@ -16,7 +18,7 @@ class Config:
         default_factory=lambda: OllamaOptions(model="tinyllama")
     )
     max_chunks: int = 1
-    handle_pdfs: str = "pdf2text"
+    handle_pdfs: HandlePDFType = "pdf2text"
 
     @property
     def questions_list(self) -> list[str]:
@@ -46,6 +48,12 @@ def _save_questions(questions: list[str], questions_dir: Path) -> None:
     logger.info(f"Saved {len(questions)} question(s) to {questions_dir}")
 
 
+def get_analysis_results(config: Config) -> list[Path]:
+    if not config.responses_dir.exists():
+        return []
+    return sorted(config.responses_dir.rglob("*.md"))
+
+
 def analyze(config: Config) -> None:
     questions = config.questions_list
     if not questions:
@@ -71,13 +79,14 @@ def analyze(config: Config) -> None:
 
         logger.info(f"Analyzing {paper_name}")
 
+        handle_pdf = get_handle_pdf_function(config.handle_pdfs)
+        pdf_content = handle_pdf(pdf_path)
+        
         if config.handle_pdfs == "pdf2image":
-            full_text = ""
-            chunks = []
+            chunks = pdf_content
         else:
-            full_text = Ollama.read_pdf(pdf_path)
             chunks = Ollama.chunk_text(
-                full_text, config.ollama_opts.max_context_tokens, config.max_chunks
+                pdf_content, config.ollama_opts.max_context_tokens, config.max_chunks
             )
         logger.debug(f"Created {len(chunks)} chunk(s) for {paper_name}")
 
@@ -88,10 +97,7 @@ def analyze(config: Config) -> None:
                 logger.debug(f"Skipping {response_file.name} (already exists)")
                 continue
 
-            if config.handle_pdfs == "pdf2image":
-                chunk_texts = ""
-            else:
-                chunk_texts = "\n\n---\n\n".join(chunks)
+            chunk_texts = "\n\n---\n\n".join(chunks) if isinstance(chunks[0], str) else ""
 
             result = Ollama.answer_question_for_paper(
                 chunk_texts,
@@ -108,16 +114,35 @@ def analyze(config: Config) -> None:
     logger.info("Ollama analysis complete")
 
 
-import pytest
-from paper_scraper.__global__ import TEST_SEED_PAPER_1, TEMP_OUTPUT_DIR
 
+import pytest
+import shutil
+from paper_scraper.__global__ import TEST_SEED_PAPER_1, TEMP_OUTPUT_DIR
 
 @pytest.mark.requires_ollama
 def test_usage():
+    # Clean up temp folder before test
+    if TEMP_OUTPUT_DIR.exists():
+        shutil.rmtree(TEMP_OUTPUT_DIR)
+    
     config = Config(
-        questions=["What is this paper about?"],
+        questions=["Hi there!"],
         papers_dir=TEMP_OUTPUT_DIR / "DOWNLOADED_PAPERS",
         output_dir=TEMP_OUTPUT_DIR,
         max_chunks=1,
+        ollama_opts=OllamaOptions(
+            system_prompt="greet me in the tone of the paper",
+        )
     )
+    
+    # Copy test paper to the papers directory
+    config.papers_dir.mkdir(parents=True, exist_ok=True)
+    shutil.copy(TEST_SEED_PAPER_1, config.papers_dir / TEST_SEED_PAPER_1.name)
+    
     analyze(config)
+    paths = get_analysis_results(config)
+    print(paths)
+    first_file = paths[0]
+    print("ANALYSIS RESULTS:")
+    print(f"\n{first_file.relative_to(config.responses_dir)}:")
+    print(first_file.read_text(encoding="utf-8"))

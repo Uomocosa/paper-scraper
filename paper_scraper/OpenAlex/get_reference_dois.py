@@ -99,6 +99,8 @@ def download_paper_result(doi: str) -> OpenAlex.Result:
     return
 
 
+import pytest
+@pytest.mark.requires_grobid
 def test_usage():
     dois = ["10.3390/w12061530"]
     result_dois = from_dois(dois, TEMP_DOWLOADED_PAPERS_DIR, Options(depth=1))

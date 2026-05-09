@@ -12,7 +12,7 @@ from paper_scraper.Grobid.Error import (
 
 @dataclass
 class Options:
-    timeout: float = 5.0
+    timeout_s: float = 5.0
 
 
 def check_connection(options: Options = Options()) -> None:
@@ -20,14 +20,14 @@ def check_connection(options: Options = Options()) -> None:
     try:
         response = requests.get(
             f"{base_url}/isalive",
-            timeout=options.timeout,
+            timeout=options.timeout_s,
         )
         if response.status_code != 200:
             raise UnexpectedStatus(url=base_url, status_code=response.status_code)
     except requests.exceptions.ConnectionError as e:
         raise ConnectionRefused(url=base_url) from e
     except requests.exceptions.Timeout:
-        raise ConnectionTimeout(url=base_url, timeout_s=options.timeout)
+        raise ConnectionTimeout(url=base_url, timeout_s=options.timeout_s)
 
 
 import pytest

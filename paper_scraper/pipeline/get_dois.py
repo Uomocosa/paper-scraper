@@ -38,11 +38,12 @@ def get_dois(config: Config) -> list[str]:
     return unique_dois
 
 
+
+
 import pytest
-from paper_scraper.__global__ import TEMP_OUTPUT_DIR
-
-
+@pytest.mark.requires_grobid
 def test_usage():
+    from paper_scraper.__global__ import TEMP_OUTPUT_DIR
     config = Config(
         extracted_references_path=TEMP_OUTPUT_DIR / "extracted_references.json",
         output_dir=TEMP_OUTPUT_DIR,

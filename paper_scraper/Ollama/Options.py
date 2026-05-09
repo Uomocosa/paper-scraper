@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Literal
 
 
 @dataclass
@@ -9,4 +10,4 @@ class Options:
     system_prompt: str = "You are a helpful scientific research assistant."
     max_context_tokens: int = 256
     batch: int = 1
-    handle_pdfs: str = "pdf2text"
+    handle_pdfs: Literal["pdf2text", "pdf2image"] = "pdf2text"
