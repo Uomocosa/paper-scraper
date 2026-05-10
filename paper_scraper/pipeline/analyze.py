@@ -84,6 +84,7 @@ def analyze(config: Config) -> None:
         return
 
     logger.info(f"Starting Ollama analysis with {len(questions)} question(s)")
+    
     _save_questions(questions, config.questions_dir)
     config.responses_dir.mkdir(parents=True, exist_ok=True)
 
