@@ -73,13 +73,13 @@ def _answer_with_images(
 
 
 import pytest
-from paper_scraper.Ollama.read_pdf import read_pdf
+from paper_scraper import Ollama
 from paper_scraper.__global__ import TEST_SEED_PAPER_1
 
 
 @pytest.mark.above10s
 def test_usage():
-    full_text = read_pdf(TEST_SEED_PAPER_1)
+    full_text = Ollama.extract_text_from_pdf(TEST_SEED_PAPER_1)
     ollama_options = Options()
     words = full_text.split()
     safe_word_count = int(ollama_options.max_context_tokens / 4)

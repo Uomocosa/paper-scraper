@@ -5,7 +5,6 @@ from loguru import logger
 from paper_scraper.__global__ import OUTPUT_DIR
 from paper_scraper import Ollama
 from paper_scraper.Ollama.__global__ import HandlePDFType
-from paper_scraper.Ollama.get_handle_pdf_function import get_handle_pdf_function
 import lele
 
 OllamaOptions = Ollama.Options.Options
@@ -102,7 +101,7 @@ def analyze(config: Config) -> None:
 
         logger.info(f"Analyzing {paper_name}")
 
-        handle_pdf = get_handle_pdf_function(config.handle_pdfs)
+        handle_pdf = Ollama.get_handle_pdf_function(config.handle_pdfs)
         pdf_content = handle_pdf(pdf_path)
         
         if config.handle_pdfs == "pdf2image":

@@ -1,5 +1,7 @@
 from pathlib import Path
+import base64
 from loguru import logger
+from paper_scraper import Utils
 
 FUNCTIONS = {
     "pdf2text": lambda pdf_path: pdf2text(pdf_path),
@@ -10,22 +12,20 @@ def get_handle_pdf_function(function_name: str):
     return FUNCTIONS[function_name]
 
 def pdf2text(pdf_path: Path) -> str:
-    from paper_scraper.Ollama.read_pdf import read_pdf
-    
     logger.info(f"Converting {pdf_path.name} to text")
-    return read_pdf(pdf_path)
+    return Utils.extract_text_from_pdf(pdf_path)
 
 
 def pdf2image(pdf_path: Path) -> list[str]:
-    from paper_scraper.Ollama.convert_pdf_to_images import (
-        convert_pdf_to_images,
-        encode_image_to_base64,
-    )
-    
     logger.info(f"Converting {pdf_path.name} to images")
-    image_paths = convert_pdf_to_images(pdf_path)
+    image_paths = Utils.convert_pdf_to_images(pdf_path)
     base64_images = [encode_image_to_base64(path) for path in image_paths]
     return base64_images
+
+def encode_image_to_base64(image_path: Path) -> str:
+    with open(image_path, "rb") as f:
+        return base64.b64encode(f.read()).decode("utf-8")
+
 
 
 def test_to_text():

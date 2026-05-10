@@ -1,4 +1,3 @@
-import base64
 from pathlib import Path
 
 import pytest
@@ -6,15 +5,6 @@ from loguru import logger
 
 
 def convert_pdf_to_images(pdf_path: Path, output_dir: Path | None = None) -> list[Path]:
-    """Convert each PDF page to a PNG image.
-
-    Args:
-        pdf_path: Path to the PDF file
-        output_dir: Directory to save images. If None, uses temp directory.
-
-    Returns:
-        List of paths to generated PNG images (one per page, in order)
-    """
     import fitz
 
     logger.info(f"Converting PDF to images: {pdf_path.name}")
@@ -43,16 +33,8 @@ def convert_pdf_to_images(pdf_path: Path, output_dir: Path | None = None) -> lis
     return image_paths
 
 
-def encode_image_to_base64(image_path: Path) -> str:
-    """Encode an image file to base64 string for Ollama vision API."""
-    with open(image_path, "rb") as f:
-        return base64.b64encode(f.read()).decode("utf-8")
-
-
-@pytest.mark.requires_grobid
 def test_usage():
     from paper_scraper.__global__ import TEST_SEED_PAPER_1
-
     image_paths = convert_pdf_to_images(TEST_SEED_PAPER_1)
     logger.info(f"Created {len(image_paths)} images")
     for path in image_paths[:3]:
