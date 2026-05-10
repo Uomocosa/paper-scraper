@@ -68,7 +68,7 @@ pixi run get_openalex_topics_codes --search-term "Wastewater Polymer"
 pixi run scrape `
     --search-filter.topics "T10016 && T11781 && T14252" `
     --search-filter.keywords "poly || polymer || polymers" `
-    --search-filter.max-papers 10 `
+    --search-filter.max-papers 1000 `
     --extract-refs-from-seed `
     --no-extract-refs-from-output `
     --questions None 
