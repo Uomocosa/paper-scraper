@@ -6,6 +6,7 @@ from paper_scraper.__global__ import OUTPUT_DIR
 from paper_scraper import Ollama
 from paper_scraper.Ollama.__global__ import HandlePDFType
 from paper_scraper.Ollama.get_handle_pdf_function import get_handle_pdf_function
+import lele
 
 OllamaOptions = Ollama.Options.Options
 
@@ -22,13 +23,35 @@ class Config:
 
     @property
     def questions_list(self) -> list[str]:
-        if self.questions is None:
+        if self.questions is None: 
             return []
-        if isinstance(self.questions, list):
-            return self.questions
-        if isinstance(self.questions, Path) and self.questions.suffix.lower() == ".txt":
-            with open(self.questions, "r", encoding="utf-8") as f:
-                return [line.strip() for line in f if line.strip()]
+        if isinstance(self.questions, list): 
+            questions = lele.List.flatten(self.questions)
+            questions = [Config.get_questions_from_str(q) for q in questions]
+            questions = lele.List.flatten(questions)
+            return list(questions)
+        return Config.get_questions_from_str(self.questions)
+    
+    @staticmethod
+    def get_questions_from_str(question: str) -> list[str]:
+        path = Path(question)
+        if not path.exists(): return question
+        if path.exists() and path.is_dir():
+            md_files = sorted(path.glob("*.md"))
+            if not md_files:
+                logger.error(f"No .md file in {path} to get question from")
+                return []
+            questions = []
+            for md_file in md_files:
+                with open(md_file, "r", encoding="utf-8") as f:
+                    questions.append(f.read().strip())
+            return questions
+        if path.exists() and path.is_file():
+            if path.suffix.lower() != ".md":
+                logger.error(f"Expected .md file, found {path.suffix}")
+                return []
+            with open(path, "r", encoding="utf-8") as f:
+                return [f.read().strip()]
         return []
 
     @property
@@ -61,7 +84,6 @@ def analyze(config: Config) -> None:
         return
 
     logger.info(f"Starting Ollama analysis with {len(questions)} question(s)")
-
     _save_questions(questions, config.questions_dir)
     config.responses_dir.mkdir(parents=True, exist_ok=True)
 
@@ -153,6 +175,15 @@ class Tests():
         if TEMP_OUTPUT_DIR.exists(): shutil.rmtree(TEMP_OUTPUT_DIR)
         config = self.base_test_config
         config.ollama_opts.handle_pdfs = "pdf2image"
+        config.papers_dir.mkdir(parents=True, exist_ok=True)
+        shutil.copy(TEST_SEED_PAPER_1, config.papers_dir / TEST_SEED_PAPER_1.name)
+        analyze(config)
+        self.print_results(config)
+
+    def test_read_question_from_folder(self):
+        if TEMP_OUTPUT_DIR.exists(): shutil.rmtree(TEMP_OUTPUT_DIR)
+        config = self.base_test_config
+        config.questions = "./QUESTIONS"
         config.papers_dir.mkdir(parents=True, exist_ok=True)
         shutil.copy(TEST_SEED_PAPER_1, config.papers_dir / TEST_SEED_PAPER_1.name)
         analyze(config)
