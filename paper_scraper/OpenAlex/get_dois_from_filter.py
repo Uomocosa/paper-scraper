@@ -292,13 +292,21 @@ class Evaluator:
         else:
             raise ValueError(f"Unknown ID type: {id}")
 
-        results = query.get(per_page=self.max_papers)
-
         dois: set[str] = set()
-        for work in results:
-            doi = work.get("doi")
-            if doi:
-                dois.add(doi)
+        page = 1
+        per_page = min(200, self.max_papers)
+
+        while len(dois) < self.max_papers:
+            results = query.get(per_page=per_page, page=page)
+            if not results:
+                break
+            for work in results:
+                doi = work.get("doi")
+                if doi:
+                    dois.add(doi.removeprefix("https://doi.org/"))
+                    if len(dois) >= self.max_papers:
+                        break
+            page += 1
 
         logger.info(f"Queried {id}: found {len(dois)} DOIs")
         return dois
@@ -313,13 +321,22 @@ class Evaluator:
 
     def _query_openalex_keyword(self, keyword: str) -> set[str]:
         query = Works().search(keyword)
-        results = query.get(per_page=self.max_papers)
 
         dois: set[str] = set()
-        for work in results:
-            doi = work.get("doi")
-            if doi:
-                dois.add(doi)
+        page = 1
+        per_page = min(200, self.max_papers)
+
+        while len(dois) < self.max_papers:
+            results = query.get(per_page=per_page, page=page)
+            if not results:
+                break
+            for work in results:
+                doi = work.get("doi")
+                if doi:
+                    dois.add(doi.removeprefix("https://doi.org/"))
+                    if len(dois) >= self.max_papers:
+                        break
+            page += 1
 
         logger.info(f"Queried keyword '{keyword}': found {len(dois)} DOIs")
         return dois

@@ -105,13 +105,14 @@ class LocalTestConfig(Config):
 
 
 def main(config: Config) -> None:
-    extract_refs(
-        extract_refs.Config(
-            seed_papers=config.seed_papers,
-            output_dir=config.output_dir,
-            batch_size=config.batch_size,
+    if config.extract_refs_from_seed:
+        extract_refs(
+            extract_refs.Config(
+                seed_papers=config.seed_papers,
+                output_dir=config.output_dir,
+                batch_size=config.batch_size,
+            )
         )
-    )
 
     dois = get_dois(
         get_dois.Config(
