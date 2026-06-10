@@ -1,9 +1,9 @@
 ---
 name: git-workflow
-description: Use when the user asks about git commands, commit messages, branch management, rebasing, merging, resolving merge conflicts, stashing, reverting, or any git workflow in Rust projects. Provides commit message conventions, atomic commit rules, branching strategy, rebase workflow, conflict resolution protocol, stashing patterns, and dangerous-command safeguards.
+description: Use when the user asks about git commands, commit messages, branch management, rebasing, merging, resolving merge conflicts, stashing, reverting, or any git workflow in software projects. Provides commit message conventions, atomic commit rules, branching strategy, rebase workflow, conflict resolution protocol, stashing patterns, and dangerous-command safeguards.
 ---
 
-# Git Workflow for Rust Projects
+# Git Workflow for Software Projects
 
 ## 0. Authorization Gate
 
@@ -101,11 +101,11 @@ chore: bump rustc from 1.80 to 1.82
 
 ## 3. Atomic Commits
 
-One commit = one logical change. A commit must:
+One commit = one logical change. A commit should:
 
-- **Build successfully** (`cargo build --all-targets`)
-- **Pass lints** (`cargo clippy -- -D warnings`, `cargo fmt -- --check`)
-- **Pass tests** (`cargo test --all-targets`)
+- **Build/type-check successfully** (e.g., `cargo build`, `pixi run pytest --no-header`, `mypy .`)
+- **Pass lints** (e.g., `cargo clippy`, `ruff check`, `ruff format --check`)
+- **Pass tests** (e.g., `cargo test`, `pixi run pytest`)
 - Be a single concern (don't mix formatting changes with logic changes)
 
 ### When to split
@@ -181,7 +181,7 @@ When a rebase or merge produces conflicts:
    - Understand both sides — what does each version intend?
    - Choose one side, or write a combined version
    - **Remove the conflict markers** (`<<<<<<<`, `=======`, `>>>>>>>`)
-   - Verify the result compiles: `cargo build`
+   - Verify the result builds/passes: `cargo build`, `pixi run pytest`
 
 4. **Stage and continue:**
    ```bash
@@ -252,7 +252,7 @@ git stash drop stash@{2}
 ## 8. PR / Review Flow
 
 1. **Before opening a PR:**
-   - `cargo build --all-targets && cargo clippy -- -D warnings && cargo fmt -- --check && cargo test --all-targets`
+   - Run build/lint/tests (`cargo build --all-targets && cargo clippy -- -D warnings && cargo fmt -- --check && cargo test --all-targets`, or Python equivalents: `ruff check && mypy . && pixi run pytest`)
    - Rebase onto latest `main`
    - Squash fixup commits into logical units
 

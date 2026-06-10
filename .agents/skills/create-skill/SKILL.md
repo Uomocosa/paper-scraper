@@ -1,12 +1,12 @@
 ---
 name: create-skill
-description: Create reusable Rust agent skills. Use when the user asks to create a new skill, make a skill for X, or set up agent instructions. ALWAYS searches the community ecosystem first and evaluates existing alternatives before creating anything new. Enforces maximal generality so skills work across ANY Rust project.
+description: Create reusable agent skills. Use when the user asks to create a new skill, make a skill for X, or set up agent instructions. ALWAYS searches the community ecosystem first and evaluates existing alternatives before creating anything new. Enforces maximal generality so skills work across ANY project.
 disable-model-invocation: true
 ---
 
 # Create Skill
 
-You are a skill architect for Rust. Your job is to create skills that are **maximally general across Rust projects, maximally reusable**, and never project-specific. All skills target Rust codebases only — templates like `{{module}}`, `{{Type}}`, `crate::` assume Rust idioms.
+You are a skill architect. Your job is to create skills that are **maximally general across projects, maximally reusable**, and never language-specific. All skills must be language-agnostic — templates like `{{module}}`, `{{Type}}`, `{{function}}` avoid language-specific idioms.
 
 ## Phase 1: Community Discovery (MANDATORY — first step always)
 
@@ -17,7 +17,7 @@ You are a skill architect for Rust. Your job is to create skills that are **maxi
 2. Search GitHub for repos: `anthropics/skills`, `vercel-labs/skills`, `mattpocock/skills`, `obra/superpowers`.
 3. Search `skills.sh/trending` and `skills.sh/hot` for relevant trending skills.
 
-Filter results to Rust-relevant skills only. For every match found, report to the user:
+Filter results to relevant skills only. For every match found, report to the user:
    - Skill name, install count, source repo
    - What it does (summary from skills.sh)
    - Your evaluation: does it fully cover the need? Partially? Not at all?
@@ -31,8 +31,8 @@ Filter results to Rust-relevant skills only. For every match found, report to th
 Before writing any file, design the skill to be **project-agnostic**:
 
 ### Generality Rules (enforced)
-1. **Zero project-specific identifiers.** No `src/`, no `lib.rs`, no crate name, no module path from this project. Use `{{template}}` variables: `{{module}}`, `{{Type}}`, `{{function}}`, `{{project_name}}`.
-2. **Description-first.** The `description` field must make sense in ANY Rust codebase. Test: read the description aloud — if it mentions this project, rewrite.
+1. **Zero project-specific identifiers.** No `src/`, no package name, no module path from this project. Use `{{template}}` variables: `{{module}}`, `{{Type}}`, `{{function}}`, `{{project_name}}`.
+2. **Description-first.** The `description` field must make sense in ANY codebase. Test: read the description aloud — if it mentions this project, rewrite.
 3. **Single responsibility.** One skill = one domain. If the skill does two unrelated things, split it.
 4. **Cross-reference test for splitting decisions.** Apply this decision tree:
    ```
@@ -72,7 +72,7 @@ Create the `SKILL.md` with:
 ---
 name: skill-name            # lowercase, hyphens, 1-64 chars
 description: |              # 1-1024 chars, must trigger correctly
-  Use when... [trigger conditions]. Works with any Rust project.
+  Use when... [trigger conditions]. Works with any project.
 license: Apache-2.0         # optional
 metadata:
   author: project-name
@@ -98,7 +98,7 @@ Check every rule:
                          template variables are a warning. |
 | Cross-refs clean? | Search for `see Rule`, `see section`, `as described in`. If present, do NOT split. If absent AND >500 lines, split reference material. |
 | Under 500 lines? | `Measure-Object -Line` on SKILL.md. Ignore if cross-references exist. |
-| Reusable in other Rust project? | Would this work if copied to a different Rust repo unchanged? |
+| Reusable in other project? | Would this work if copied to a different repo unchanged? |
 | Community check done? | Verifiable by user |
 
 ## Phase 5: Report
