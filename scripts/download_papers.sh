@@ -11,8 +11,6 @@ pixi run scrape \
     --search-filter.topics "T10016 || T11781 || T14252" \
     --search-filter.keywords "poly || polymer || polymers || adsorption || pollutant || hydrogel || adsorbent || wastewater" \
     --search-filter.max-papers 1000 \
-    --no-extract-refs-from-seed \
-    --no-extract-refs-from-output \
     --questions None
 
 info "Done. Papers saved to $LOCAL_DIR/OUTPUT_DIR/DOWNLOADED_PAPERS/"
