@@ -50,7 +50,7 @@ class Config:
     handle_pdfs: str = "pdf2text"
 
     extract_refs_from_seed: bool = True
-    extract_refs_from_output: bool = False
+    extract_refs_from_output: bool = True
 
     @property
     def papers(self) -> list[Path]:

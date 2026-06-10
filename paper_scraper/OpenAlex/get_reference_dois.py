@@ -17,7 +17,7 @@ OpenAlexOptions = OpenAlex.Options.Options
 
 @dataclass
 class Options:
-    depth: int = 1
+    depth: int = 2
 
 
 def from_dois(

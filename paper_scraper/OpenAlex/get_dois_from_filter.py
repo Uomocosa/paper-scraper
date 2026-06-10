@@ -286,9 +286,9 @@ class Evaluator:
 
     def _query_openalex(self, id: str) -> set[str]:
         if id.startswith("T"):
-            query = Works().filter(topics={"id": id})
+            query = Works().filter(topics={"id": id}).filter(open_access={"is_oa": True})
         elif id.startswith("C"):
-            query = Works().filter(concepts={"id": id})
+            query = Works().filter(concepts={"id": id}).filter(open_access={"is_oa": True})
         else:
             raise ValueError(f"Unknown ID type: {id}")
 
@@ -320,7 +320,7 @@ class Evaluator:
         return dois
 
     def _query_openalex_keyword(self, keyword: str) -> set[str]:
-        query = Works().search(keyword)
+        query = Works().search(keyword).filter(open_access={"is_oa": True})
 
         dois: set[str] = set()
         page = 1
@@ -392,7 +392,18 @@ def get_dois_from_filter(filter: SearchFilter) -> list[str]:
     if result_dois is None:
         return []
 
-    logger.info(f"Found {len(result_dois)} DOIs from filter")
+    result_list = list(result_dois)
+
+    if filter.open_access_only:
+        result_dois = _filter_open_access_only(result_list)
+        result_list = list(result_dois)
+        logger.info(f"After OA filter: {len(result_dois)} DOIs")
+
+    if filter.year_min is not None or filter.year_max is not None:
+        result_dois = _filter_by_year(result_list, filter.year_min, filter.year_max)
+        logger.info(f"After year filter: {len(result_dois)} DOIs")
+
+    logger.info(f"Total DOIs from filter: {len(result_dois)}")
     return sorted(result_dois)
 
 
@@ -428,8 +439,8 @@ def _filter_by_year(
 ) -> set[str]:
     filtered: set[str] = set()
     for doi in dois:
-        work = Works()["https://openalex.org/" + doi.replace("https://doi.org/", "")]
         try:
+            work = Works()[f"doi:{doi}"]
             pub_year = work.get("publication_year")
             if pub_year is None:
                 continue
@@ -446,8 +457,8 @@ def _filter_by_year(
 def _filter_open_access_only(dois: list[str]) -> set[str]:
     filtered: set[str] = set()
     for doi in dois:
-        work = Works()["https://openalex.org/" + doi.replace("https://doi.org/", "")]
         try:
+            work = Works()[f"doi:{doi}"]
             if work.get("is_oa"):
                 filtered.add(doi)
         except Exception:
