@@ -13,15 +13,15 @@
 2. Install grobid, following these steps:
     1. `podman machine init`
     2. `podman machine start`
-    3. (CPU version) `podman run --rm --init --ulimit core=0 -p 8070:8070 grobid/grobid:0.8.2-crf`
-    4. (Full - GPU version) `podman run --rm --init --ulimit core=0 -p 8070:8070 grobid/grobid:0.8.2-full`
+    3. (CPU version) `podman run --rm --init --ulimit core=0 -p 8070:8070 grobid/grobid:0.9.0-full`
+    4. (Full - GPU version) `podman run --rm --init --ulimit core=0 -p 8070:8070 grobid/grobid:0.9.0-full`
 
 # Installation (using docker)
 1. [Install Docker](https://docs.docker.com/get-docker/).
 2. Install grobid, following these steps:
     1. Make sure Docker Desktop is open and running in the background.
-    2. (CPU version) `docker run --rm --init --ulimit core=0 -p 8070:8070 grobid/grobid:0.8.2-crf`
-    3. (Full - GPU version) `docker run --rm --init --gpus all --ulimit core=0 -p 8070:8070 grobid/grobid:0.8.2-full`
+    2. (CPU version) `docker run --rm --init --ulimit core=0 -p 8070:8070 grobid/grobid:0.9.0-full`
+    3. (Full - GPU version) `docker run --rm --init --gpus all --ulimit core=0 -p 8070:8070 grobid/grobid:0.9.0-full`
 
 # Continue Installation
 3. [Install ollama](https://ollama.com/download).
