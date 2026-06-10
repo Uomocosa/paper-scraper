@@ -45,6 +45,10 @@ venv.bak/
 
 # PEP 582; __pypackages__
 __pypackages__/
+# Generated output data (PDFs, analysis responses)
+OUTPUT_DIR/DOWNLOADED_PAPERS/
+gemma4_26b-*-respones/
+
 # pixi environments
 .pixi/*
 !.pixi/config.toml
