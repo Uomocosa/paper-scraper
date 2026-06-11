@@ -1,3 +1,4 @@
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -348,6 +349,43 @@ class Evaluator:
         return dois
 
 
+def _normalize_search(expression: str) -> str:
+    """Convert our boolean operators to OpenAlex search syntax."""
+    return expression.replace("&&", "AND").replace("||", "OR")
+
+
+def _query_keywords_direct(
+    expression: str, max_papers: int, open_access_only: bool = True
+) -> set[str]:
+    """Query OpenAlex with the full keyword expression string (server-side boolean)."""
+    if not expression:
+        return set()
+
+    expression = _normalize_search(expression)
+    query = Works().search(expression)
+    if open_access_only:
+        query = query.filter(open_access={"is_oa": True})
+
+    dois: set[str] = set()
+    page = 1
+    per_page = min(200, max_papers)
+
+    while len(dois) < max_papers:
+        results = query.get(per_page=per_page, page=page)
+        if not results:
+            break
+        for work in results:
+            doi = work.get("doi")
+            if doi:
+                dois.add(doi.removeprefix("https://doi.org/"))
+                if len(dois) >= max_papers:
+                    break
+        page += 1
+
+    logger.info(f"Keyword expression '{expression}': found {len(dois)} DOIs")
+    return dois
+
+
 def _parse_expression(
     expression: str, max_papers: int, is_keyword: bool = False, open_access_only: bool = True
 ) -> set[str]:
@@ -364,36 +402,72 @@ def _parse_expression(
     return evaluator.evaluate(ast)
 
 
+def _query_combined(
+    topic_id: str, kw_expression: str, max_papers: int, open_access_only: bool
+) -> set[str]:
+    """Single server-side query combining topic filter + keyword search."""
+    kw_expression = _normalize_search(kw_expression)
+    query = Works().filter(topics={"id": topic_id}).search(kw_expression)
+    if open_access_only:
+        query = query.filter(open_access={"is_oa": True})
+
+    dois: set[str] = set()
+    page = 1
+    per_page = min(200, max_papers)
+
+    while len(dois) < max_papers:
+        results = query.get(per_page=per_page, page=page)
+        if not results:
+            break
+        for work in results:
+            doi = work.get("doi")
+            if doi:
+                dois.add(doi.removeprefix("https://doi.org/"))
+                if len(dois) >= max_papers:
+                    break
+        page += 1
+
+    logger.info(f"Combined query {topic_id} + '{kw_expression}': found {len(dois)} DOIs")
+    return dois
+
+
 def get_dois_from_filter(filter: SearchFilter) -> list[str]:
-    result_dois: set[str] | None = None
+    topic_expression: str | None = None
+    kw_expression: str | None = None
 
     if filter.topics is not None:
         if isinstance(filter.topics, list):
-            if filter.topics:
-                expression = " and ".join(filter.topics)
-            else:
-                expression = ""
+            topic_expression = " and ".join(filter.topics) if filter.topics else ""
         else:
-            expression = filter.topics.strip()
-
-        arg_dois = _parse_expression(expression, filter.max_papers, open_access_only=filter.open_access_only)
-        result_dois = arg_dois
+            topic_expression = filter.topics.strip()
 
     if filter.keywords is not None:
         if isinstance(filter.keywords, list):
-            if filter.keywords:
-                expression = " and ".join(filter.keywords)
-            else:
-                expression = ""
+            kw_expression = " and ".join(filter.keywords) if filter.keywords else ""
         else:
-            expression = filter.keywords.strip()
+            kw_expression = filter.keywords.strip()
 
-        keyword_dois = _parse_expression(expression, filter.max_papers, is_keyword=True, open_access_only=filter.open_access_only)
+    # Combined query: single topic ID + keywords → one server-side call
+    is_single_topic = topic_expression and re.match(r'^T\d+$', topic_expression)
+    if is_single_topic and kw_expression:
+        dois = _query_combined(topic_expression, kw_expression, filter.max_papers, filter.open_access_only)
+        if filter.year_min is not None or filter.year_max is not None:
+            dois = _filter_by_year(list(dois), filter.year_min, filter.year_max)
+        logger.info(f"Total DOIs from filter: {len(dois)}")
+        return sorted(dois)
 
+    # Fallback: separate queries with client-side intersection
+    result_dois: set[str] | None = None
+
+    if topic_expression:
+        result_dois = _parse_expression(topic_expression, filter.max_papers, open_access_only=filter.open_access_only)
+
+    if kw_expression:
+        kw_dois = _query_keywords_direct(kw_expression, filter.max_papers, filter.open_access_only)
         if result_dois is None:
-            result_dois = keyword_dois
+            result_dois = kw_dois
         else:
-            result_dois &= keyword_dois
+            result_dois &= kw_dois
 
     if result_dois is None:
         return []
