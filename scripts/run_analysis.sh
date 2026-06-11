@@ -17,6 +17,9 @@ set -euo pipefail
 
 cd ~/paper-scraper
 
+echo ">>> Pulling latest code from GitHub..."
+git pull
+
 if ! command -v pixi &>/dev/null; then
     echo ">>> Installing pixi..."
     curl -fsSL https://pixi.sh/install.sh | sh

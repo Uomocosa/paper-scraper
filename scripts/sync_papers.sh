@@ -5,8 +5,15 @@
 set -euo pipefail
 source "$(dirname "$0")/config.sh"
 
+QUESTIONS_LOCAL="$LOCAL_DIR/QUESTIONS/"
+QUESTIONS_REMOTE="$REMOTE:$REMOTE_REPO_DIR/QUESTIONS/"
 PDFS_LOCAL="$LOCAL_DIR/OUTPUT_DIR/DOWNLOADED_PAPERS/"
 PDFS_REMOTE="$REMOTE:$REMOTE_REPO_DIR/OUTPUT_DIR/DOWNLOADED_PAPERS/"
+
+info "Syncing questions to UNISI server..."
+info "  From: $QUESTIONS_LOCAL"
+info "  To:   $QUESTIONS_REMOTE"
+rsync -avz --progress "$QUESTIONS_LOCAL" "$QUESTIONS_REMOTE"
 
 info "Syncing PDFs to UNISI server..."
 info "  From: $PDFS_LOCAL"
