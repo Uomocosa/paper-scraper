@@ -29,7 +29,7 @@ def _make_session() -> requests.Session:
     return session
 
 
-def _collect_pdf_urls(work: dict) -> list[str]:
+def _collect_pdf_urls(work: dict, doi: str) -> list[str]:
     urls: list[str] = []
     seen: set[str] = set()
 
@@ -50,9 +50,10 @@ def _collect_pdf_urls(work: dict) -> list[str]:
     add(best_oa.get("landing_page_url"))
 
     for loc in work.get("locations") or []:
-        if loc.get("is_oa"):
-            add(loc.get("pdf_url"))
-            add(loc.get("landing_page_url"))
+        add(loc.get("pdf_url"))
+        add(loc.get("landing_page_url"))
+
+    add(f"https://doi.org/{doi}")
 
     return urls
 
@@ -63,7 +64,8 @@ def _try_download(url: str, session: requests.Session, doi: str) -> bytes | None
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
             "AppleWebKit/537.36 (KHTML, like Gecko) "
             "Chrome/120.0.0.0 Safari/537.36"
-        )
+        ),
+        "Accept": "application/pdf,text/html,application/xhtml+xml,*/*;q=0.8",
     }
     try:
         resp = session.get(url, timeout=30, headers=headers)
@@ -107,9 +109,9 @@ def download_paper_from_doi(
         logger.warning(f"Work not found for DOI: {doi}")
         return Result(Status.ERROR)
 
-    pdf_urls = _collect_pdf_urls(work)
+    pdf_urls = _collect_pdf_urls(work, doi)
     if not pdf_urls:
-        logger.warning(f"No OA location found for DOI: {doi}")
+        logger.warning(f"No URL found for DOI: {doi}")
         return Result(Status.NOT_OPEN_ACCESS)
 
     title = work.get("title", "unknown")
@@ -126,7 +128,7 @@ def download_paper_from_doi(
             return Result(Status.SUCCESS, filepath)
 
     logger.warning(
-        f"All {len(pdf_urls)} OA URLs failed for DOI: {doi}"
+        f"All {len(pdf_urls)} URLs failed for DOI: {doi}"
     )
     return Result(Status.NOT_OPEN_ACCESS)
 

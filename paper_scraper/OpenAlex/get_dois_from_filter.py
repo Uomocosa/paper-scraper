@@ -250,9 +250,10 @@ def validate_id(id: str) -> bool:
 
 
 class Evaluator:
-    def __init__(self, max_papers: int, is_keyword: bool = False):
+    def __init__(self, max_papers: int, is_keyword: bool = False, open_access_only: bool = True):
         self.max_papers = max_papers
         self.is_keyword = is_keyword
+        self.open_access_only = open_access_only
         self.cache: dict[str, set[str]] = {}
 
     def evaluate(self, ast: ASTNode) -> set[str]:
@@ -286,11 +287,14 @@ class Evaluator:
 
     def _query_openalex(self, id: str) -> set[str]:
         if id.startswith("T"):
-            query = Works().filter(topics={"id": id}).filter(open_access={"is_oa": True})
+            query = Works().filter(topics={"id": id})
         elif id.startswith("C"):
-            query = Works().filter(concepts={"id": id}).filter(open_access={"is_oa": True})
+            query = Works().filter(concepts={"id": id})
         else:
             raise ValueError(f"Unknown ID type: {id}")
+
+        if self.open_access_only:
+            query = query.filter(open_access={"is_oa": True})
 
         dois: set[str] = set()
         page = 1
@@ -320,7 +324,9 @@ class Evaluator:
         return dois
 
     def _query_openalex_keyword(self, keyword: str) -> set[str]:
-        query = Works().search(keyword).filter(open_access={"is_oa": True})
+        query = Works().search(keyword)
+        if self.open_access_only:
+            query = query.filter(open_access={"is_oa": True})
 
         dois: set[str] = set()
         page = 1
@@ -343,7 +349,7 @@ class Evaluator:
 
 
 def _parse_expression(
-    expression: str, max_papers: int, is_keyword: bool = False
+    expression: str, max_papers: int, is_keyword: bool = False, open_access_only: bool = True
 ) -> set[str]:
     if not expression:
         return set()
@@ -354,7 +360,7 @@ def _parse_expression(
     if not is_keyword:
         validate_id(ast)
 
-    evaluator = Evaluator(max_papers, is_keyword=is_keyword)
+    evaluator = Evaluator(max_papers, is_keyword=is_keyword, open_access_only=open_access_only)
     return evaluator.evaluate(ast)
 
 
@@ -370,7 +376,7 @@ def get_dois_from_filter(filter: SearchFilter) -> list[str]:
         else:
             expression = filter.topics.strip()
 
-        arg_dois = _parse_expression(expression, filter.max_papers)
+        arg_dois = _parse_expression(expression, filter.max_papers, open_access_only=filter.open_access_only)
         result_dois = arg_dois
 
     if filter.keywords is not None:
@@ -382,7 +388,7 @@ def get_dois_from_filter(filter: SearchFilter) -> list[str]:
         else:
             expression = filter.keywords.strip()
 
-        keyword_dois = _parse_expression(expression, filter.max_papers, is_keyword=True)
+        keyword_dois = _parse_expression(expression, filter.max_papers, is_keyword=True, open_access_only=filter.open_access_only)
 
         if result_dois is None:
             result_dois = keyword_dois
