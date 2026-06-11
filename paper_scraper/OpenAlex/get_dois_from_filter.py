@@ -14,7 +14,7 @@ class SearchFilter:
     keywords: str | list[str] | None = None
     year_min: int | None = None
     year_max: int | None = None
-    open_access_only: bool = True
+    open_access_only: bool = False
     max_papers: int = 1000
 
 
