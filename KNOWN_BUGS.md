@@ -17,20 +17,6 @@ The individual loop exists solely to get the file path for Grobid extraction, bu
 
 ---
 
-## 2. `pdf2image` mode broken in `pipeline/analyze.py`
-
-**File:** `paper_scraper/pipeline/analyze.py:122`
-
-When `handle_pdfs == "pdf2image"`, `chunks` is a list of base64-encoded image strings. Line 122 unconditionally joins them:
-
-```python
-chunk_texts = "\n\n---\n\n".join(chunks) if isinstance(chunks[0], str) else ""
-```
-
-This concatenates base64 image data with `\n\n---\n\n` separators, producing corrupted data. The joined string is then passed to `answer_question_for_paper()` which expects either plain text (for `pdf2text` mode) or handles images internally (for `pdf2image` mode). The result is garbage in both cases.
-
----
-
 ## 3. Dead stub `download_paper_result()` returns `None`
 
 **File:** `paper_scraper/OpenAlex/get_reference_dois.py:98-99`

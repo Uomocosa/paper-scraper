@@ -46,10 +46,8 @@ def _answer_with_images(
     if pdf_path is None:
         raise ValueError("pdf_path is required for pdf2image mode")
 
-    from paper_scraper.Ollama.convert_pdf_to_images import (
-        convert_pdf_to_images,
-        encode_image_to_base64,
-    )
+    from paper_scraper.Utils.convert_pdf_to_images import convert_pdf_to_images
+    from paper_scraper.Ollama.get_handle_pdf_function import encode_image_to_base64
 
     image_paths = convert_pdf_to_images(pdf_path)
     logger.info(f"Processing {len(image_paths)} page images for question: {question}")

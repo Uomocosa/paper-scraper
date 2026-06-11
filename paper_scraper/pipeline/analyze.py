@@ -101,16 +101,13 @@ def analyze(config: Config) -> None:
 
         logger.info(f"Analyzing {paper_name}")
 
-        handle_pdf = Ollama.get_handle_pdf_function(config.handle_pdfs)
-        pdf_content = handle_pdf(pdf_path)
-        
-        if config.handle_pdfs == "pdf2image":
-            chunks = pdf_content
-        else:
+        if config.handle_pdfs != "pdf2image":
+            handle_pdf = Ollama.get_handle_pdf_function(config.handle_pdfs)
+            pdf_content = handle_pdf(pdf_path)
             chunks = Ollama.chunk_text(
                 pdf_content, config.ollama_opts.max_context_tokens, config.max_chunks
             )
-        logger.debug(f"Created {len(chunks)} chunk(s) for {paper_name}")
+            logger.debug(f"Created {len(chunks)} chunk(s) for {paper_name}")
 
         for q_idx, question in enumerate(questions, start=1):
             response_file = paper_responses_dir / f"q{q_idx}.md"
@@ -119,15 +116,21 @@ def analyze(config: Config) -> None:
                 logger.debug(f"Skipping {response_file.name} (already exists)")
                 continue
 
-            chunk_texts = "\n\n---\n\n".join(chunks) if isinstance(chunks[0], str) else ""
-
-            result = Ollama.answer_question_for_paper(
-                chunk_texts,
-                question,
-                config.ollama_opts,
-                pdf_path=pdf_path,
-                handle_pdfs=config.handle_pdfs,
-            )
+            if config.handle_pdfs == "pdf2image":
+                result = Ollama.answer_question_for_paper(
+                    paper_text="",
+                    question=question,
+                    options=config.ollama_opts,
+                    pdf_path=pdf_path,
+                    handle_pdfs=config.handle_pdfs,
+                )
+            else:
+                chunk_texts = "\n\n---\n\n".join(chunks)
+                result = Ollama.answer_question_for_paper(
+                    paper_text=chunk_texts,
+                    question=question,
+                    options=config.ollama_opts,
+                )
 
             content = f"# Question {q_idx}\n\n{question}\n\n---\n\n# Response\n\n{result.response}"
             response_file.write_text(content, encoding="utf-8")
