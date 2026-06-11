@@ -22,8 +22,9 @@ run_search() {
         --search-filter.topics "$TOPIC" \
         --search-filter.keywords "$keywords" \
         --search-filter.max-papers "$MAX" \
-        --search-filter.open-access-only True \
+        --search-filter.open-access-only \
         --no-extract-refs-from-seed \
+        --no-extract-refs-from-output \
         --questions None
 }
 
