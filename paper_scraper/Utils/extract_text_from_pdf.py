@@ -10,12 +10,19 @@ def extract_text_from_pdf(pdf_path: Path) -> str:
     content = pdf_path.read_bytes()
     if not content.startswith(b"%PDF"):
         raise ValueError(f"File is not a valid PDF: {pdf_path}")
-    reader = PdfReader(str(pdf_path))
+    try:
+        reader = PdfReader(str(pdf_path))
+    except Exception as e:
+        logger.warning(f"Cannot read {pdf_path.name}: {e}")
+        return ""
     text_parts = []
     for i, page in enumerate(reader.pages):
-        text = page.extract_text()
-        if text:
-            text_parts.append(text)
+        try:
+            text = page.extract_text()
+            if text:
+                text_parts.append(text)
+        except Exception:
+            continue
     result = "\n\n".join(text_parts)
     logger.info(f"Extracted {len(result)} characters from {pdf_path.name}")
     return result
