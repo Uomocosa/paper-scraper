@@ -43,12 +43,12 @@ def complete(
     try:
         logger.debug(f"Sending request to {url} with model {options.model}")
         logger.debug(f"Message count: {len(processed_messages)}")
-        response = requests.post(url, json=payload, timeout=120)
+        response = requests.post(url, json=payload, timeout=600)
     except (requests.ConnectionError, urllib3.exceptions.NewConnectionError) as e:
         raise ConnectionRefused(url=url) from e
     except urllib3.exceptions.MaxRetryError as e:
         if isinstance(e.reason, urllib3.exceptions.ConnectTimeoutError):
-            raise ConnectionTimeout(url=url, timeout_s=120.0) from e
+            raise ConnectionTimeout(url=url, timeout_s=600.0) from e
         raise ConnectionRefused(url=url) from e
 
     response.raise_for_status()

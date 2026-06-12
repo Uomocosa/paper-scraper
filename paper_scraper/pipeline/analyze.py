@@ -116,25 +116,29 @@ def analyze(config: Config) -> None:
                 logger.debug(f"Skipping {response_file.name} (already exists)")
                 continue
 
-            if config.handle_pdfs == "pdf2image":
-                result = Ollama.answer_question_for_paper(
-                    paper_text="",
-                    question=question,
-                    options=config.ollama_opts,
-                    pdf_path=pdf_path,
-                    handle_pdfs=config.handle_pdfs,
-                )
-            else:
-                chunk_texts = "\n\n---\n\n".join(chunks)
-                result = Ollama.answer_question_for_paper(
-                    paper_text=chunk_texts,
-                    question=question,
-                    options=config.ollama_opts,
-                )
+            try:
+                if config.handle_pdfs == "pdf2image":
+                    result = Ollama.answer_question_for_paper(
+                        paper_text="",
+                        question=question,
+                        options=config.ollama_opts,
+                        pdf_path=pdf_path,
+                        handle_pdfs=config.handle_pdfs,
+                    )
+                else:
+                    chunk_texts = "\n\n---\n\n".join(chunks)
+                    result = Ollama.answer_question_for_paper(
+                        paper_text=chunk_texts,
+                        question=question,
+                        options=config.ollama_opts,
+                    )
 
-            content = f"# Question {q_idx}\n\n{question}\n\n---\n\n# Response\n\n{result.response}"
-            response_file.write_text(content, encoding="utf-8")
-            logger.info(f"Saved {response_file}")
+                content = f"# Question {q_idx}\n\n{question}\n\n---\n\n# Response\n\n{result.response}"
+                response_file.write_text(content, encoding="utf-8")
+                logger.info(f"Saved {response_file}")
+            except Exception as e:
+                logger.error(f"Failed to analyze {paper_name} (q{q_idx}): {e}")
+                continue
 
     logger.info("Ollama analysis complete")
 
