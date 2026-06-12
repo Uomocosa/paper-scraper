@@ -10,10 +10,8 @@
 set -euo pipefail
 source "$(dirname "$0")/config.sh"
 
-REMOTE_SCRIPT="$REMOTE_REPO_DIR/scripts/remote_analysis.sh"
-
 info "Starting remote analysis script on server..."
-ssh "$REMOTE" "chmod +x $REMOTE_SCRIPT && screen -dmS $SCREEN_NAME $REMOTE_SCRIPT"
+ssh "$REMOTE" "chmod +x /tmp/remote_analysis.sh && screen -dmS $SCREEN_NAME /tmp/remote_analysis.sh"
 
 info "Analysis started in screen session '$SCREEN_NAME' on $REMOTE_HOST."
 info ""

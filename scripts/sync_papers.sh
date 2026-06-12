@@ -6,14 +6,13 @@ set -euo pipefail
 source "$(dirname "$0")/config.sh"
 
 SCRIPT_LOCAL="$LOCAL_DIR/scripts/remote_analysis.sh"
-SCRIPT_REMOTE="$REMOTE:$REMOTE_REPO_DIR/scripts/remote_analysis.sh"
 QUESTIONS_LOCAL="$LOCAL_DIR/QUESTIONS/"
 QUESTIONS_REMOTE="$REMOTE:$REMOTE_REPO_DIR/QUESTIONS/"
 PDFS_LOCAL="$LOCAL_DIR/OUTPUT_DIR/DOWNLOADED_PAPERS/"
 PDFS_REMOTE="$REMOTE:$REMOTE_REPO_DIR/OUTPUT_DIR/DOWNLOADED_PAPERS/"
 
-info "Syncing remote analysis script..."
-rsync -avz "$SCRIPT_LOCAL" "$SCRIPT_REMOTE"
+info "Syncing remote analysis script to /tmp/..."
+rsync -avz "$SCRIPT_LOCAL" "$REMOTE:/tmp/remote_analysis.sh"
 
 info "Syncing questions to UNISI server..."
 info "  From: $QUESTIONS_LOCAL"
