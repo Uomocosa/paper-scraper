@@ -12,7 +12,8 @@ echo "=== PAPER ANALYSIS STARTED $(date) ==="
 cd ~/paper-scraper
 
 echo ">>> Pulling latest code from GitHub..."
-git pull
+git fetch origin
+git reset --hard origin/main
 
 if ! command -v pixi &>/dev/null; then
     echo ">>> Installing pixi..."
