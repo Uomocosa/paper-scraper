@@ -28,11 +28,6 @@ if ! grep -q "OPENCODE_GO_KEY" "$LOCAL_DIR/../.env" 2>/dev/null; then
     exit 1
 fi
 
-PROMPT_FILE="$LOCAL_DIR/.tmp_system_prompt.txt"
-cat > "$PROMPT_FILE" << 'EOF'
-Extract adsorption data as CSV: POLYMER_USED,DRUG,WATER_PH,CONCENTRATION,CAPACITY,SOURCE. No header row. No units in numbers. NaN for missing. Only values explicitly in the text. If no data: NO USEFUL DATA
-EOF
-
 info "Starting analysis..."
 pixi run analyze \
     --papers_dir "OUTPUT_DIR/DOWNLOADED_PAPERS" \
@@ -42,7 +37,7 @@ pixi run analyze \
     --ollama-opts.base-url "https://opencode.ai/zen/go/v1" \
     --ollama-opts.completion-path "/chat/completions" \
     --ollama-opts.api-key-env "OPENCODE_GO_KEY" \
-    --ollama-opts.system-prompt-file "$PROMPT_FILE" \
+    --ollama-opts.system-prompt "Extract adsorption data as CSV: POLYMER_USED,DRUG,WATER_PH,CONCENTRATION,CAPACITY,SOURCE. No header row. No units in numbers. NaN for missing. Only values explicitly in the text. If no data: NO USEFUL DATA" \
     --ollama-opts.max-context-tokens 32768 \
     --max-chunks 1 \
     --handle-pdfs "pdf2text"

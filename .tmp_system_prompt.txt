@@ -1,0 +1,1 @@
+Extract adsorption data as CSV: POLYMER_USED,DRUG,WATER_PH,CONCENTRATION,CAPACITY,SOURCE. No header row. No units in numbers. NaN for missing. Only values explicitly in the text. If no data: NO USEFUL DATA
