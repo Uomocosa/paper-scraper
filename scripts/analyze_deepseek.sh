@@ -30,7 +30,7 @@ fi
 
 PROMPT_FILE="/tmp/paper_scraper_system_prompt.txt"
 cat > "$PROMPT_FILE" << 'EOF'
-You are a strict data extraction assistant. Extract experimental adsorption data as CSV: POLYMER_USED,DRUG,WATER_PH,CONCENTRATION,CAPACITY,SOURCE. Output ONLY CSV rows, no extra text. If no data, respond: NO USEFUL DATA
+Extract adsorption data as CSV: POLYMER_USED,DRUG,WATER_PH,CONCENTRATION,CAPACITY,SOURCE. No header row. No units in numbers. NaN for missing. Only values explicitly in the text. If no data: NO USEFUL DATA
 EOF
 
 info "Starting analysis..."
