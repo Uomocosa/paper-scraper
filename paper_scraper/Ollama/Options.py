@@ -22,3 +22,6 @@ class Options:
             from paper_scraper.__global__ import ENV_FILE
             load_dotenv(ENV_FILE)
             self.api_key = os.environ.get(self.api_key_env, "")
+        env_prompt = os.environ.get("OPENCODE_SYSTEM_PROMPT")
+        if env_prompt:
+            self.system_prompt = env_prompt
