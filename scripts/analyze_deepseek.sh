@@ -28,6 +28,8 @@ if ! grep -q "OPENCODE_GO_KEY" "$LOCAL_DIR/../.env" 2>/dev/null; then
     exit 1
 fi
 
+SYSTEM_PROMPT="You are a strict data extraction assistant specializing in polymer chemistry and environmental science. Your ONLY job is to extract experimental data from research papers regarding the adsorption of drugs/pollutants by polymers, hydrogels, cryogels, adsorbents, or composites in water. You must output the data in CSV format with exactly 6 columns: POLYMER_USED,DRUG,WATER_PH,CONCENTRATION,CAPACITY,SOURCE. Rules: 1. Output ONLY CSV rows, no headers, no conversational text, no markdown formatting. 2. Search figures, tables, and text thoroughly. 3. If no numerical data found, respond ONLY: NO USEFUL DATA 4. Use NaN for missing values. 5. Use scientific notation for small numbers. 6. One row per unique condition. 7. SOURCE is the paper's DOI or URL."
+
 info "Starting analysis..."
 pixi run analyze \
     --papers_dir "OUTPUT_DIR/DOWNLOADED_PAPERS" \
@@ -38,6 +40,7 @@ pixi run analyze \
     --ollama-opts.completion-path "/chat/completions" \
     --ollama-opts.api-key-env "OPENCODE_GO_KEY" \
     --ollama-opts.max-context-tokens 32768 \
+    --ollama-opts.system-prompt "$SYSTEM_PROMPT" \
     --max-chunks 1 \
     --handle-pdfs "pdf2text"
 

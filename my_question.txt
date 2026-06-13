@@ -1,20 +1,26 @@
-Extract adsorption data from the following scientific text. 
+Extract adsorption data from the following paper text. Output CSV rows with columns:
 
-Schema Definitions:
-- POLYMER_USED: The name or acronym of the polymer, hydrogel, or cryogel acting as the adsorbent.
-- DRUG: The target pharmaceutical, dye, or emerging pollutant being removed.
+POLYMER_USED,DRUG,WATER_PH,CONCENTRATION,CAPACITY,SOURCE
+
+Definition of columns:
+- POLYMER_USED: The name or acronym of the polymer, hydrogel, cryogel, or adsorbent material.
+- DRUG: The target pharmaceutical, dye, or pollutant being removed.
 - WATER_PH: The pH level of the aqueous solution.
-- CONCENTRATION: The initial concentration of the drug/pollutant. Output only the number (assume standard units like mg/L or ppm).
-- CAPACITY: The adsorption capacity (qe or Qmax) of the polymer. Output only the number.
+- CONCENTRATION: The initial concentration of the drug/pollutant. Output only the number (assume mg/L or ppm).
+- CAPACITY: The adsorption capacity (qe or Qmax). Output only the number (assume mg/g).
+- SOURCE: The paper's DOI or URL (use the DOI if available).
 
-Examples of desired output:
-polyPhOx,Aspirin,8.20,10,0.1865
-polyPhOx,Aspirin,8.20,25,0.342
-C-ph,Doxycycline,6.5,25,13.26
-NaN,Piroxicam,NaN,25,NaN
+Examples of valid output:
+polyPhOx,Aspirin,8.20,10,0.1865,https://doi.org/10.xxx
+C-ph,Doxycycline,6.5,25,13.26,https://doi.org/10.xxx
+polyethylene,fluoxetine,7.8,0.5,0.362,https://doi.org/10.xxx
+NaN,Piroxicam,NaN,25,NaN,https://doi.org/10.xxx
+
+Read tables, figures (titles and labels), and text carefully. Extract ALL data points.
+If truly no numerical adsorption data is found, respond: NO USEFUL DATA
 
 --- START OF TEXT ---
 {insert_paper_chunk_here}
 --- END OF TEXT ---
 
-Output the CSV data now:
+Output CSV data now:
