@@ -28,7 +28,7 @@ if ! grep -q "OPENCODE_GO_KEY" "$LOCAL_DIR/../.env" 2>/dev/null; then
     exit 1
 fi
 
-PROMPT_FILE="/tmp/paper_scraper_system_prompt.txt"
+PROMPT_FILE="$LOCAL_DIR/.tmp_system_prompt.txt"
 cat > "$PROMPT_FILE" << 'EOF'
 Extract adsorption data as CSV: POLYMER_USED,DRUG,WATER_PH,CONCENTRATION,CAPACITY,SOURCE. No header row. No units in numbers. NaN for missing. Only values explicitly in the text. If no data: NO USEFUL DATA
 EOF
