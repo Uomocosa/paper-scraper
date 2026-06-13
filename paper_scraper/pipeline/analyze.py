@@ -144,9 +144,10 @@ def analyze(config: Config) -> None:
 
 
 
+import random
 import pytest
 import shutil
-from paper_scraper.__global__ import TEST_SEED_PAPER_1, TEMP_OUTPUT_DIR
+from paper_scraper.__global__ import TEST_SEED_PAPER_1, TEMP_OUTPUT_DIR, OUTPUT_DIR
 
 
 @pytest.mark.requires_ollama
@@ -195,3 +196,47 @@ class Tests():
         shutil.copy(TEST_SEED_PAPER_1, config.papers_dir / TEST_SEED_PAPER_1.name)
         analyze(config)
         self.print_results(config)
+
+
+@pytest.mark.requires_opencode_go_key
+class TestDeepSeekGo():
+    test_output = TEMP_OUTPUT_DIR / "DEEPSEEK_GO_TEST"
+
+    base_config = Config(
+        questions=["Does this paper contain experimental adsorption data? Answer YES or NO."],
+        papers_dir=test_output / "PAPERS",
+        output_dir=test_output / "OUTPUT",
+        max_chunks=1,
+        handle_pdfs="pdf2text",
+        ollama_opts=OllamaOptions(
+            model="deepseek-v4-flash",
+            base_url="https://opencode.ai/zen/go/v1",
+            completion_path="/chat/completions",
+            api_key_env="OPENCODE_GO_KEY",
+            max_context_tokens=32768,
+        ),
+    )
+
+    def test_deepseek_go_with_seed_paper(self):
+        if TEMP_OUTPUT_DIR.exists(): shutil.rmtree(TEMP_OUTPUT_DIR)
+        config = self.base_config
+        config.papers_dir.mkdir(parents=True, exist_ok=True)
+        shutil.copy(TEST_SEED_PAPER_1, config.papers_dir / TEST_SEED_PAPER_1.name)
+        analyze(config)
+        results = get_analysis_results(config)
+        assert len(results) > 0
+        print(results[0].read_text(encoding="utf-8"))
+
+    def test_deepseek_go_with_downloaded_papers(self):
+        if TEMP_OUTPUT_DIR.exists(): shutil.rmtree(TEMP_OUTPUT_DIR)
+        config = self.base_config
+        config.papers_dir.mkdir(parents=True, exist_ok=True)
+        src = OUTPUT_DIR / "DOWNLOADED_PAPERS"
+        papers = list(src.glob("*.pdf"))
+        if not papers:
+            pytest.skip("No downloaded papers found in OUTPUT_DIR/DOWNLOADED_PAPERS")
+        for p in random.sample(papers, min(3, len(papers))):
+            shutil.copy(p, config.papers_dir / p.name)
+        analyze(config)
+        results = get_analysis_results(config)
+        assert len(results) > 0
