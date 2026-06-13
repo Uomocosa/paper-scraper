@@ -17,7 +17,7 @@ The individual loop exists solely to get the file path for Grobid extraction, bu
 
 ---
 
-## 3. Dead stub `download_paper_result()` returns `None`
+## 2. Dead stub `download_paper_result()` returns `None`
 
 **File:** `paper_scraper/OpenAlex/get_reference_dois.py:98-99`
 
@@ -30,7 +30,7 @@ The function body is just `return` (returns `None`) despite the return type anno
 
 ---
 
-## 4. Per-DOI API calls for year and OA post-filtering (performance bug)
+## 3. Per-DOI API calls for year and OA post-filtering (performance bug)
 
 **File:** `paper_scraper/OpenAlex/get_dois_from_filter.py:437-466`
 
@@ -46,7 +46,7 @@ For hundreds of DOIs, this is extremely slow and likely to hit OpenAlex rate lim
 
 ---
 
-## 5. Typo: `TEMP_DOWLOADED_PAPERS_DIR` (missing 'n')
+## 4. Typo: `TEMP_DOWLOADED_PAPERS_DIR` (missing 'n')
 
 **File:** `paper_scraper/__global__.py:18,19,29`
 
@@ -58,7 +58,7 @@ The constant is misspelled as `TEMP_DOWLOADED_PAPERS_DIR` instead of `TEMP_DOWNL
 
 ---
 
-## 6. Import-time side effects in `__global__.py`
+## 5. Import-time side effects in `__global__.py`
 
 **File:** `paper_scraper/__global__.py:26-29`
 
@@ -76,7 +76,7 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 ---
 
-## 7. Unused import in `download_paper_from_doi.py`
+## 6. Unused import in `download_paper_from_doi.py`
 
 **File:** `paper_scraper/OpenAlex/download_paper_from_doi.py:16`
 
@@ -85,3 +85,10 @@ OpenAlexOptions = OpenAlex.Options.Options
 ```
 
 This variable is assigned but never used in the module. It shadows the import from `paper_scraper` for no purpose.
+
+## Resolved
+
+| Bug | Fix |
+|-----|-----|
+| `pdf2image` mode broken in `pipeline/analyze.py` | Fixed: import corrected, double conversion removed, error handling added |
+| OA-only limitation in search | Fixed: `SearchFilter.open_access_only` defaults to `False`, combined query uses server-side search |
