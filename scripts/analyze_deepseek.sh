@@ -28,8 +28,12 @@ if ! grep -q "OPENCODE_GO_KEY" "$LOCAL_DIR/../.env" 2>/dev/null; then
     exit 1
 fi
 
+PROMPT_FILE="/tmp/paper_scraper_system_prompt.txt"
+cat > "$PROMPT_FILE" << 'EOF'
+You are a strict data extraction assistant. Extract experimental adsorption data as CSV: POLYMER_USED,DRUG,WATER_PH,CONCENTRATION,CAPACITY,SOURCE. Output ONLY CSV rows, no extra text. If no data, respond: NO USEFUL DATA
+EOF
+
 info "Starting analysis..."
-export OPENCODE_SYSTEM_PROMPT="You are a strict data extraction assistant. Extract experimental adsorption data as CSV: POLYMER_USED,DRUG,WATER_PH,CONCENTRATION,CAPACITY,SOURCE. Output ONLY CSV rows, no extra text. If no data, respond: NO USEFUL DATA"
 pixi run analyze \
     --papers_dir "OUTPUT_DIR/DOWNLOADED_PAPERS" \
     --questions "QUESTIONS/q1.md" \
@@ -38,6 +42,7 @@ pixi run analyze \
     --ollama-opts.base-url "https://opencode.ai/zen/go/v1" \
     --ollama-opts.completion-path "/chat/completions" \
     --ollama-opts.api-key-env "OPENCODE_GO_KEY" \
+    --ollama-opts.system-prompt-file "$PROMPT_FILE" \
     --ollama-opts.max-context-tokens 32768 \
     --max-chunks 1 \
     --handle-pdfs "pdf2text"
