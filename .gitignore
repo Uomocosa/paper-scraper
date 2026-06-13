@@ -45,6 +45,9 @@ venv.bak/
 
 # PEP 582; __pypackages__
 __pypackages__/
+# Test / temp output helper directories
+__HELPER_DIR__/
+
 # Generated output data (PDFs, analysis responses)
 OUTPUT_DIR/DOWNLOADED_PAPERS/
 gemma4_26b-*-respones/
