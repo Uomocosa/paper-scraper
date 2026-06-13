@@ -24,10 +24,14 @@ def complete(
     messages: list[dict[str, str | list[str] | list[dict]]],
     options: Options,
 ) -> str:
-    url = f"{options.base_url}/api/chat"  # Modern endpoint with vision support
+    url = f"{options.base_url}{options.completion_path}"
     
     processed_messages = _process_messages(messages)
     
+    headers = {}
+    if options.api_key:
+        headers["Authorization"] = f"Bearer {options.api_key}"
+
     payload = {
         "model": options.model,
         "messages": processed_messages,
@@ -35,15 +39,19 @@ def complete(
     }
     
     if options.temperature != 1.0 or options.max_context_tokens != 256:
-        payload["options"] = {
-            "temperature": options.temperature,
-            "num_ctx": options.max_context_tokens,
-        }
+        if options.api_key:
+            payload["temperature"] = options.temperature
+            payload["max_tokens"] = options.max_context_tokens
+        else:
+            payload["options"] = {
+                "temperature": options.temperature,
+                "num_ctx": options.max_context_tokens,
+            }
 
     try:
         logger.debug(f"Sending request to {url} with model {options.model}")
         logger.debug(f"Message count: {len(processed_messages)}")
-        response = requests.post(url, json=payload, timeout=600)
+        response = requests.post(url, json=payload, headers=headers, timeout=600)
     except (requests.ConnectionError, urllib3.exceptions.NewConnectionError) as e:
         raise ConnectionRefused(url=url) from e
     except urllib3.exceptions.MaxRetryError as e:
@@ -54,9 +62,11 @@ def complete(
     response.raise_for_status()
     data = response.json()
     
+    if "choices" in data:
+        return data["choices"][0]["message"]["content"]
     if "message" not in data or "content" not in data["message"]:
         logger.error(f"Unexpected response structure: {data}")
-        raise ValueError(f"Unexpected Ollama response format: {data}")
+        raise ValueError(f"Unexpected response format: {data}")
     
     return data["message"]["content"]
 

@@ -48,6 +48,7 @@ __pypackages__/
 # Generated output data (PDFs, analysis responses)
 OUTPUT_DIR/DOWNLOADED_PAPERS/
 gemma4_26b-*-respones/
+opencode_go_deepseek_v4_flash_max_pdf2text_responses/
 
 # pixi environments
 .pixi/*
