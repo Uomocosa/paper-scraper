@@ -51,8 +51,7 @@ __HELPER_DIR__/
 # Temporary files
 .tmp_*
 
-# Compiled output
-compiled_adsorption_data.csv
+
 
 # Generated output data (PDFs, analysis responses)
 OUTPUT_DIR/DOWNLOADED_PAPERS/
