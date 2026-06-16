@@ -39,12 +39,19 @@ except Exception as e:
     logger.warning(f"Could not load SMILES from lele-bioinformatics: {e}")
 
 
+def _clean_val(val: str) -> str:
+    """Clean a value: strip whitespace and remove extra quotes."""
+    val = val.strip()
+    while val.startswith('"') and val.endswith('"') and len(val) >= 2:
+        val = val[1:-1].strip()
+    return val
+
+
 def try_lookup(name: str, lookup_dict: dict) -> str:
     """Try to find a name in the lookup dictionary."""
-    clean = name.strip().strip('"').strip("'")
+    clean = _clean_val(name)
     if clean in lookup_dict:
         return lookup_dict[clean]
-    # Try case-insensitive
     for k, v in lookup_dict.items():
         if k.lower() == clean.lower():
             return v
@@ -75,8 +82,8 @@ def filter_and_deduplicate() -> Path:
     seen: set[str] = set()
     deduped = []
     for r in filtered:
-        polymer = r.get("POLYMER_USED", "").strip().lower()
-        drug = r.get("DRUG", "").strip().lower()
+        polymer = _clean_val(r.get("POLYMER_USED", "")).lower()
+        drug = _clean_val(r.get("DRUG", "")).lower()
         ph = r.get("WATER_PH", "").strip().lower()
         conc = r.get("CONCENTRATION", "").strip().lower()
         key = f"{polymer}|{drug}|{ph}|{conc}"
@@ -86,20 +93,19 @@ def filter_and_deduplicate() -> Path:
 
     logger.info(f"After dedup: {len(deduped)} rows (from {len(filtered)})")
 
-    # Step 4: Attempt SMILES lookup
-    fieldnames = reader.fieldnames or list(rows[0].keys())
-    has_smiles = bool(PSMILES_DICT) or bool(SMILES_DICT)
-    if has_smiles:
-        fieldnames = fieldnames + ["POLYMER_PSMILES", "DRUG_SMILES"]
+    # Step 4: Write final CSV (clean values, PDCC-compatible columns only)
+    base_cols = ["POLYMER_USED", "DRUG", "WATER_PH", "CONCENTRATION", "CAPACITY", "SOURCE"]
+    extra_cols = ["POLYMER_PSMILES", "DRUG_SMILES"]
+    out_cols = base_cols + extra_cols
 
     with open(OUTPUT_FILE, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames, extrasaction="ignore")
+        writer = csv.DictWriter(f, fieldnames=out_cols, extrasaction="ignore")
         writer.writeheader()
         for r in deduped:
-            if has_smiles:
-                r["POLYMER_PSMILES"] = try_lookup(r.get("POLYMER_USED", ""), PSMILES_DICT)
-                r["DRUG_SMILES"] = try_lookup(r.get("DRUG", ""), SMILES_DICT)
-            writer.writerow(r)
+            row = {col: _clean_val(r.get(col, "")) for col in base_cols}
+            row["POLYMER_PSMILES"] = try_lookup(r.get("POLYMER_USED", ""), PSMILES_DICT)
+            row["DRUG_SMILES"] = try_lookup(r.get("DRUG", ""), SMILES_DICT)
+            writer.writerow(row)
 
     logger.info(f"Output: {OUTPUT_FILE} ({len(deduped)} rows)")
     return OUTPUT_FILE
