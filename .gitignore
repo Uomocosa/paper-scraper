@@ -53,6 +53,9 @@ __HELPER_DIR__/
 
 
 
+# Re-analysis output directories
+review_*/
+
 # Generated output data (PDFs, analysis responses)
 OUTPUT_DIR/DOWNLOADED_PAPERS/
 gemma4_26b-*-respones/
