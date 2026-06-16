@@ -40,8 +40,10 @@ fi
 MODEL="$1"
 INPUT_CSV="${2:-$LOCAL_DIR/papers_for_review.csv}"
 PAPERS_SRC="$LOCAL_DIR/OUTPUT_DIR/DOWNLOADED_PAPERS"
-OUTPUT_DIR="$LOCAL_DIR/gemma_review_${MODEL//./_}"
+OUTPUT_DIR_NAME="gemma_review_${MODEL//./_}"
+OUTPUT_DIR="$LOCAL_DIR/$OUTPUT_DIR_NAME"
 TEMP_DIR="$LOCAL_DIR/.tmp_review_papers"
+TEMP_DIR_RELATIVE=".tmp_review_papers"
 
 if [ ! -f "$INPUT_CSV" ]; then
     echo "ERROR: Paper list not found: $INPUT_CSV"
@@ -51,10 +53,15 @@ fi
 
 # Read paper names from CSV (skip header)
 PAPERS=()
-while IFS=, read -r name; do
-    if [ "$name" != "PAPER" ] && [ -n "$name" ]; then
-        PAPERS+=("$name")
+skip_header=1
+while IFS= read -r line || [ -n "$line" ]; do
+    # Skip empty lines and header
+    [ -z "$line" ] && continue
+    if [ "$skip_header" -eq 1 ]; then
+        skip_header=0
+        continue
     fi
+    PAPERS+=("$line")
 done < "$INPUT_CSV"
 
 if [ ${#PAPERS[@]} -eq 0 ]; then
@@ -72,10 +79,15 @@ mkdir -p "$TEMP_DIR"
 copied=0
 not_found=0
 for paper in "${PAPERS[@]}"; do
-    # Try to find the PDF (exact match or partial match)
-    found=$(ls "$PAPERS_SRC" 2>/dev/null | grep -i "$(echo "$paper" | sed 's/[][(){}*?$^|]/\\&/g')" | head -1 || true)
+    paper="$(echo "$paper" | sed 's/[[:space:]]*$//')"
+    # Try to find the PDF by prefix match
+    found=$(ls "$PAPERS_SRC"/"$paper"*.pdf 2>/dev/null | head -1 || true)
+    if [ -z "$found" ]; then
+        # Fallback: try partial match with find
+        found=$(find "$PAPERS_SRC" -maxdepth 1 -name "${paper}*.pdf" 2>/dev/null | head -1 || true)
+    fi
     if [ -n "$found" ]; then
-        cp "$PAPERS_SRC/$found" "$TEMP_DIR/"
+        cp "$found" "$TEMP_DIR/"
         copied=$((copied + 1))
     else
         echo "  NOT FOUND: $paper"
@@ -95,9 +107,9 @@ echo ""
 echo "Running analysis with model: $MODEL"
 cd "$LOCAL_DIR"
 pixi run analyze \
-    --papers_dir "$TEMP_DIR" \
+    --papers_dir "$TEMP_DIR_RELATIVE" \
     --questions "QUESTIONS/q1.md" \
-    --output_dir "$OUTPUT_DIR" \
+    --output_dir "$OUTPUT_DIR_NAME" \
     --ollama-opts.model "$MODEL" \
     --ollama-opts.base-url "https://opencode.ai/zen/go/v1" \
     --ollama-opts.completion-path "/chat/completions" \
@@ -112,5 +124,5 @@ rm -rf "$TEMP_DIR"
 
 echo ""
 echo "=== Done ==="
-echo "Results: $OUTPUT_DIR/RESPONSES/"
-echo "Compare: pixi run python scripts/compare_models.py --new $OUTPUT_DIR"
+echo "Results: $OUTPUT_DIR_NAME/RESPONSES/"
+echo "Compare: pixi run python scripts/compare_models.py --new $OUTPUT_DIR_NAME"

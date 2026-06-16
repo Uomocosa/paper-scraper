@@ -26,12 +26,12 @@ def _clean(val: str) -> str:
 
 def parse_csv_rows(content: str) -> list[list[str]]:
     """Parse CSV rows from a model response file."""
-    if "NO USEFUL DATA" in content:
-        return []
     m = re.search(r"^# Response\s*\n(.+)$", content, re.DOTALL | re.MULTILINE)
     if not m:
         return []
     text = m.group(1).strip()
+    if "NO USEFUL DATA" in text:
+        return []
     rows = []
     for line in text.split("\n"):
         cells = [c.strip() for c in line.split(",")]
