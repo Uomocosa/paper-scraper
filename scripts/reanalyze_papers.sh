@@ -8,17 +8,36 @@
 #
 #   2. Edit papers_for_review.csv, keep only papers you want.
 #
-#   3. Re-analyze with a different model:
-#      bash scripts/reanalyze_papers.sh                    # uses MiMo V2.5 (cheapest)
-#      bash scripts/reanalyze_papers.sh kimi-k2.7          # use Kimi K2.7
-#      bash scripts/reanalyze_papers.sh deepseek-v4-pro    # use DeepSeek V4 Pro
-#      bash scripts/reanalyze_papers.sh mimo-v2.5 mylist.csv   # custom model + file
+#   3. Re-analyze with a chosen model (REQUIRED):
+#      bash scripts/reanalyze_papers.sh mimo-v2.5              # MiMo V2.5 (cheapest)
+#      bash scripts/reanalyze_papers.sh kimi-k2.7              # Kimi K2.7 (good quality)
+#      bash scripts/reanalyze_papers.sh deepseek-v4-pro        # DeepSeek V4 Pro
+#
+#   Pricing (per 1M tokens / per paper est.):
+#     MiMo V2.5          $0.14/$0.33K  → ~$0.01/paper  (30 papers: $0.30)
+#     MiniMax M3         $0.30/$1.20   → ~$0.02/paper  (30 papers: $0.60)
+#     DeepSeek V4 Flash  $0.14/$0.28   → ~$0.01/paper  (30 papers: $0.30)
+#     Kimi K2.6          $0.95/$4.00   → ~$0.06/paper  (30 papers: $1.80)
+#     Kimi K2.7 Code     $0.95/$4.00   → ~$0.06/paper  (30 papers: $1.80)
+#     DeepSeek V4 Pro    $1.74/$3.48   → ~$0.10/paper  (30 papers: $3.00)
+#     Qwen3.7 Plus       $0.40/$1.60   → ~$0.03/paper  (30 papers: $0.90)
+#     GLM-5              $1.00/$3.20   → ~$0.06/paper  (30 papers: $1.80)
+#     MiMo V2.5 Pro      $1.74/$3.48   → ~$0.10/paper  (30 papers: $3.00)
 
 set -euo pipefail
 source "$(dirname "$0")/config.sh"
 
-# Config
-MODEL="${1:-mimo-v2.5}"
+# Config - MODEL is required (no default)
+if [ $# -lt 1 ]; then
+    echo "ERROR: Model name is required."
+    echo "Usage: bash scripts/reanalyze_papers.sh <model> [papers.csv]"
+    echo ""
+    echo "Available Go models: mimo-v2.5, kimi-k2.7, deepseek-v4-pro, deepseek-v4-flash, qwen3.7-plus, glm-5, minimax-m3"
+    echo "Pricing: https://opencode.ai/docs/go"
+    exit 1
+fi
+
+MODEL="$1"
 INPUT_CSV="${2:-$LOCAL_DIR/papers_for_review.csv}"
 PAPERS_SRC="$LOCAL_DIR/OUTPUT_DIR/DOWNLOADED_PAPERS"
 OUTPUT_DIR="$LOCAL_DIR/gemma_review_${MODEL//./_}"
