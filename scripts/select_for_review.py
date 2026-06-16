@@ -4,9 +4,10 @@
 Reads classified_adsorption_data.csv, applies selectors, writes papers_for_review.csv.
 
 Usage:
-  pixi run python scripts/select_for_review.py --dense 5 --diverse 3 --overlap --with-all-data 5
-  pixi run python scripts/select_for_review.py --dense 10
-  pixi run python scripts/select_for_review.py --with-all-data 10 --diverse 3
+  pixi run python scripts/select_for_review.py --dense 5 --diverse 3 --overlap --complete 5
+  pixi run python scripts/select_for_review.py --dense all       # all good papers
+  pixi run python scripts/select_for_review.py --complete 10 --diverse 3
+  pixi run python scripts/select_for_review.py --dense all --complete all
 """
 
 import csv
@@ -49,7 +50,14 @@ def load_data() -> list[dict]:
         return list(csv.DictReader(f))
 
 
-def selector_dense(rows: list[dict], n: int) -> list[str]:
+def _parse_n(val: str) -> int | None:
+    """Parse a value: int for numbers, None for 'all'."""
+    if val.lower() == "all":
+        return None
+    return int(val)
+
+
+def selector_dense(rows: list[dict], n: int | None) -> list[str]:
     """Top N papers by most data rows (HAS_POLYMER=yes + HAS_MOLECULE=yes)."""
     counts: dict[str, int] = defaultdict(int)
     for r in rows:
@@ -57,12 +65,13 @@ def selector_dense(rows: list[dict], n: int) -> list[str]:
             paper = _clean(r.get("PAPER", ""))
             if paper:
                 counts[paper] += 1
-    selected = [p for p, _ in sorted(counts.items(), key=lambda x: -x[1])[:n]]
-    logger.info(f"--dense {n}: {selected}")
+    sorted_papers = [p for p, _ in sorted(counts.items(), key=lambda x: -x[1])]
+    selected = sorted_papers if n is None else sorted_papers[:n]
+    logger.info(f"--dense {n or 'all'}: {len(selected)} papers")
     return selected
 
 
-def selector_diverse(rows: list[dict], n: int) -> list[str]:
+def selector_diverse(rows: list[dict], n: int | None) -> list[str]:
     """N papers spanning different polymer categories."""
     papers_by_category: dict[str, list[tuple[str, int]]] = defaultdict(list)
     paper_rows: dict[str, int] = defaultdict(int)
@@ -82,15 +91,14 @@ def selector_diverse(rows: list[dict], n: int) -> list[str]:
         cat = _classify_polymer(polymer)
         papers_by_category[cat].append((paper, paper_rows[paper]))
 
-    # Pick best paper from each category, round-robin up to N
+    # Pick best paper from each category, round-robin up to N (or all)
     selected = []
     ordered_cats = ["synthetic_polymer", "biopolymer", "hydrogel_cryogel", "composite", "functionalized", "other"]
-    while len(selected) < n:
+    while n is None or len(selected) < n:
         picked_any = False
         for cat in ordered_cats:
             if cat not in papers_by_category:
                 continue
-            # Pick the paper with most rows from this category
             cat_papers = papers_by_category[cat]
             best = max(cat_papers, key=lambda x: x[1])
             if best[0] not in selected:
@@ -99,12 +107,12 @@ def selector_diverse(rows: list[dict], n: int) -> list[str]:
                 if not cat_papers:
                     del papers_by_category[cat]
                 picked_any = True
-                if len(selected) >= n:
+                if n is not None and len(selected) >= n:
                     break
         if not picked_any:
             break
 
-    logger.info(f"--diverse {n}: {selected}")
+    logger.info(f"--diverse {n or 'all'}: {len(selected)} papers")
     return selected
 
 
@@ -123,7 +131,7 @@ def selector_overlap(rows: list[dict]) -> list[str]:
     return selected
 
 
-def selector_with_all_data(rows: list[dict], n: int) -> list[str]:
+def selector_complete(rows: list[dict], n: int | None) -> list[str]:
     """Top N papers where all 5 core fields have values."""
     counts: dict[str, int] = defaultdict(int)
     for r in rows:
@@ -133,30 +141,30 @@ def selector_with_all_data(rows: list[dict], n: int) -> list[str]:
             paper = _clean(r.get("PAPER", ""))
             if paper:
                 counts[paper] += 1
-    selected = [p for p, _ in sorted(counts.items(), key=lambda x: -x[1])[:n]]
-    logger.info(f"--with-all-data {n}: {selected}")
+    sorted_papers = [p for p, _ in sorted(counts.items(), key=lambda x: -x[1])]
+    selected = sorted_papers if n is None else sorted_papers[:n]
+    logger.info(f"--complete {n or 'all'}: {len(selected)} papers")
     return selected
 
 
 def main():
-    # Parse args
-    dense_n = 0
-    diverse_n = 0
+    dense_n = -1
+    diverse_n = -1
     do_overlap = False
-    all_data_n = 0
+    complete_n = -1
 
     args = sys.argv[1:]
     for i, a in enumerate(args):
         if a == "--dense" and i + 1 < len(args):
-            dense_n = int(args[i + 1])
+            dense_n = _parse_n(args[i + 1])
         elif a == "--diverse" and i + 1 < len(args):
-            diverse_n = int(args[i + 1])
+            diverse_n = _parse_n(args[i + 1])
         elif a == "--overlap":
             do_overlap = True
-        elif a == "--with-all-data" and i + 1 < len(args):
-            all_data_n = int(args[i + 1])
+        elif a == "--complete" and i + 1 < len(args):
+            complete_n = _parse_n(args[i + 1])
 
-    if not (dense_n or diverse_n or do_overlap or all_data_n):
+    if dense_n == -1 and diverse_n == -1 and not do_overlap and complete_n == -1:
         print(__doc__)
         return
 
@@ -170,14 +178,14 @@ def main():
                 seen.add(p)
                 selected.append(p)
 
-    if dense_n:
+    if dense_n != -1:
         add(selector_dense(rows, dense_n))
-    if diverse_n:
+    if diverse_n != -1:
         add(selector_diverse(rows, diverse_n))
     if do_overlap:
         add(selector_overlap(rows))
-    if all_data_n:
-        add(selector_with_all_data(rows, all_data_n))
+    if complete_n != -1:
+        add(selector_complete(rows, complete_n))
 
     # Write output
     with open(OUTPUT_FILE, "w", newline="", encoding="utf-8") as f:
