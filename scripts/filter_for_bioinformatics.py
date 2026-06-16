@@ -56,9 +56,9 @@ def filter_and_deduplicate() -> Path:
         reader = csv.DictReader(f)
         rows = list(reader)
 
-    # Step 1: Keep only high priority
-    high = [r for r in rows if r.get("PRIORITY", "") == "high"]
-    logger.info(f"High priority rows: {len(high)} / {len(rows)}")
+    # Step 1: Keep rows with a known polymer + known molecule
+    filtered = [r for r in rows if r.get("HAS_POLYMER") == "yes" and r.get("HAS_MOLECULE") == "yes"]
+    logger.info(f"Rows with polymer + molecule: {len(filtered)} / {len(rows)}")
 
     # Step 2: Sort: deepseek first (preferred), then gemma text, then gemma image
     def analyzer_rank(r):
@@ -69,12 +69,12 @@ def filter_and_deduplicate() -> Path:
             return 1
         return 2
 
-    high.sort(key=analyzer_rank)
+    filtered.sort(key=analyzer_rank)
 
     # Step 3: Deduplicate by (polymer, drug, pH, concentration)
     seen: set[str] = set()
     deduped = []
-    for r in high:
+    for r in filtered:
         polymer = r.get("POLYMER_USED", "").strip().lower()
         drug = r.get("DRUG", "").strip().lower()
         ph = r.get("WATER_PH", "").strip().lower()
@@ -84,7 +84,7 @@ def filter_and_deduplicate() -> Path:
             seen.add(key)
             deduped.append(r)
 
-    logger.info(f"After dedup: {len(deduped)} rows (from {len(high)})")
+    logger.info(f"After dedup: {len(deduped)} rows (from {len(filtered)})")
 
     # Step 4: Attempt SMILES lookup
     fieldnames = reader.fieldnames or list(rows[0].keys())

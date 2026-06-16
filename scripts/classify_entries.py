@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-"""Classify entries in the compiled adsorption CSV by polymer type, molecule type, and data completeness.
+"""Add quality flags to each row: polymer type, molecule type, and field presence.
 
 Input: compiled_adsorption_data.csv
-Output: classified_adsorption_data.csv (adds HAS_POLYMER, HAS_MOLECULE, HAS_ALL_DATA, PRIORITY columns)
+Output: classified_adsorption_data.csv (adds HAS_POLYMER, HAS_MOLECULE, HAS_WATER_PH, HAS_CONCENTRATION, HAS_CAPACITY)
 """
 
 import csv
@@ -90,42 +90,25 @@ def has_molecule(drug_name: str) -> str:
     return "yes"
 
 
-def count_non_nan(fields: list[str]) -> int:
-    count = 0
-    for f in fields:
-        val = _clean(f)
-        if val and val.upper() != "NAN":
-            count += 1
-    return count
+def _has_value(val: str) -> str:
+    """Returns 'yes' if the field has a real value, 'no' if NaN/empty."""
+    cleaned = _clean(val)
+    return "yes" if cleaned and cleaned.upper() != "NAN" else "no"
 
 
 def classify_row(row: dict) -> dict:
-    polymer = row.get("POLYMER_USED", "")
-    drug = row.get("DRUG", "")
-
-    hp = has_polymer(polymer)
-    hm = has_molecule(drug)
-
-    core_fields = [polymer, drug, row.get("WATER_PH", ""),
-                   row.get("CONCENTRATION", ""), row.get("CAPACITY", "")]
-    n_fields = count_non_nan(core_fields)
-
-    completeness = "yes" if n_fields >= 4 else "partial" if n_fields >= 3 else "no"
-
-    if hp == "yes" and hm == "yes" and completeness != "no":
-        priority = "high"
-    elif hp == "yes" and completeness != "no":
-        priority = "medium"
-    elif hp != "no" and hm == "yes":
-        priority = "medium"
-    else:
-        priority = "low"
+    hp = has_polymer(row.get("POLYMER_USED", ""))
+    hm = has_molecule(row.get("DRUG", ""))
+    hph = _has_value(row.get("WATER_PH", ""))
+    hco = _has_value(row.get("CONCENTRATION", ""))
+    hca = _has_value(row.get("CAPACITY", ""))
 
     return {
         "HAS_POLYMER": hp,
         "HAS_MOLECULE": hm,
-        "HAS_ALL_DATA": completeness,
-        "PRIORITY": priority,
+        "HAS_WATER_PH": hph,
+        "HAS_CONCENTRATION": hco,
+        "HAS_CAPACITY": hca,
     }
 
 
@@ -133,7 +116,9 @@ def classify_all() -> Path:
     with open(INPUT_FILE, newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         rows = list(reader)
-        fieldnames = list(reader.fieldnames) + ["HAS_POLYMER", "HAS_MOLECULE", "HAS_ALL_DATA", "PRIORITY"]
+        fieldnames = list(reader.fieldnames) + [
+            "HAS_POLYMER", "HAS_MOLECULE", "HAS_WATER_PH", "HAS_CONCENTRATION", "HAS_CAPACITY"
+        ]
 
     classified = []
     for row in rows:
@@ -145,10 +130,7 @@ def classify_all() -> Path:
         writer.writeheader()
         writer.writerows(classified)
 
-    n_high = sum(1 for r in classified if r["PRIORITY"] == "high")
-    n_medium = sum(1 for r in classified if r["PRIORITY"] == "medium")
-    n_low = sum(1 for r in classified if r["PRIORITY"] == "low")
-    logger.info(f"Classified {len(classified)} rows: high={n_high}, medium={n_medium}, low={n_low}")
+    logger.info(f"Classified {len(classified)} rows -> {OUTPUT_FILE}")
     return OUTPUT_FILE
 
 
