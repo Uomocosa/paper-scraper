@@ -75,7 +75,6 @@ def _process_messages(
     messages: list[dict[str, str | list[str] | list[dict]]],
     options: Options,
 ) -> list[dict]:
-    is_openai = bool(options.api_key)
     processed = []
     
     for msg in messages:
@@ -94,23 +93,21 @@ def _process_messages(
                     elif len(img_str) > 100 and not img_str.startswith(('http://', 'https://')):
                         base64_images.append(img_str)
                     else:
-                        logger.debug(f"Assuming base64 or will process later: {img_str[:50]}...")
+                        logger.debug(f"Assuming base64: {img_str[:50]}...")
                         base64_images.append(img_str)
                 else:
                     base64_images.append(img)
             
-            if is_openai:
-                text_content = processed_msg.get("content", "")
-                content_parts = [{"type": "text", "text": text_content}]
-                for b64 in base64_images:
-                    content_parts.append({
-                        "type": "image_url",
-                        "image_url": {"url": f"data:image/png;base64,{b64}"},
-                    })
-                processed_msg["content"] = content_parts
-                del processed_msg["images"]
-            else:
-                processed_msg["images"] = base64_images
+            # Convert to OpenAI-compatible content array
+            text_content = processed_msg.get("content", "")
+            content_parts = [{"type": "text", "text": text_content}]
+            for b64 in base64_images:
+                content_parts.append({
+                    "type": "image_url",
+                    "image_url": {"url": f"data:image/png;base64,{b64}"},
+                })
+            processed_msg["content"] = content_parts
+            del processed_msg["images"]
         
         processed.append(processed_msg)
     
@@ -118,23 +115,15 @@ def _process_messages(
 
 
 def test_image_format_conversion():
-    """Test that images are correctly formatted for Ollama vs OpenAI APIs."""
+    """Test that images are converted to OpenAI-compatible content array."""
     from paper_scraper.Ollama.Options import Options
 
-    # Ollama format (no api_key)
     opts = Options()
     msgs = [{"role": "user", "content": "text", "images": ["b64data"]}]
     result = _process_messages(msgs, opts)
-    assert "images" in result[0]
-    assert isinstance(result[0].get("content"), str)
-
-    # OpenAI format (api_key set)
-    opts2 = Options()
-    opts2.api_key = "test_key"
-    msgs2 = [{"role": "user", "content": "text", "images": ["b64data"]}]
-    result2 = _process_messages(msgs2, opts2)
-    assert "images" not in result2[0]
-    content = result2[0]["content"]
+    assert "images" not in result[0], "images key should be removed"
+    content = result[0]["content"]
+    assert isinstance(content, list), "content should be a list"
     assert content[0]["type"] == "text"
     assert content[1]["type"] == "image_url"
     assert "base64" in content[1]["image_url"]["url"]
