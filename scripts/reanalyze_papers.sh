@@ -40,7 +40,7 @@ fi
 MODEL="$1"
 INPUT_CSV="${2:-$LOCAL_DIR/papers_for_review.csv}"
 PAPERS_SRC="$LOCAL_DIR/OUTPUT_DIR/DOWNLOADED_PAPERS"
-OUTPUT_DIR_NAME="gemma_review_${MODEL//./_}"
+OUTPUT_DIR_NAME="review_${MODEL//./_}"
 OUTPUT_DIR="$LOCAL_DIR/$OUTPUT_DIR_NAME"
 TEMP_DIR="$LOCAL_DIR/.tmp_review_papers"
 TEMP_DIR_RELATIVE=".tmp_review_papers"
