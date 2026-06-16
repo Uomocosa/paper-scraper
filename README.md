@@ -18,8 +18,8 @@ Automated snowballing literature-review agent: extract references from seed PDFs
 | 0 | Setup | — |
 | 1 | Citation Extraction | Grobid (localhost:8070) |
 | 2 | Crawl & Download | OpenAlex API (pyalex) |
-| 3a | AI Analysis (local) | Ollama + gemma4:26b on GPU server |
-| 3b | AI Analysis (cloud) | OpenCode Go → DeepSeek V4 Flash (no GPU needed) |
+| 3a | AI Analysis (server) | Ollama + gemma4:26b on GPU server |
+| 3b | AI Analysis (local) | OpenCode Go → DeepSeek V4 Flash (no GPU) |
 | 4 | Smart Filter | ❌ Not implemented |
 
 ## Quick Start
@@ -31,7 +31,7 @@ Automated snowballing literature-review agent: extract references from seed PDFs
 - **API Key**: Create `.env` in the **parent directory** with:
   ```
   PYALEX_API_KEY=<your_openalex_key>   # openalex.org/settings/api
-  OPENCODE_GO_KEY=<your_go_key>        # opencode.ai/go (optional, for cloud analysis)
+  OPENCODE_GO_KEY=<your_go_key>        # opencode.ai/go (optional)
   ```
 
 ### Download papers
@@ -43,7 +43,6 @@ bash scripts/download_papers.sh
 ### Analyze with DeepSeek V4 Flash (local, no GPU)
 
 ```bash
-# Requires OPENCODE_GO_KEY in ../.env (OpenCode Go subscription)
 bash scripts/analyze_deepseek.sh
 ```
 
@@ -63,6 +62,28 @@ bash scripts/sync_results.sh
 |--------|-------------|
 | `scripts/download_papers.sh` | Download papers from OpenAlex (multiple targeted searches) |
 | `scripts/analyze_deepseek.sh` | Analyze all papers locally via OpenCode Go → DeepSeek V4 Flash |
+
+### Data compilation & cleaning pipeline
+
+| Script | Description |
+|--------|-------------|
+| `scripts/compile_results.py` | Merge all model outputs into `compiled_adsorption_data.csv` |
+| `scripts/detect_conflicts.py` | Find papers analyzed by multiple models, compare values |
+| `scripts/classify_entries.py` | Add quality flags (HAS_POLYMER, HAS_MOLECULE, etc.) |
+| `scripts/filter_for_bioinformatics.py` | Filter high-quality rows, add SMILES lookup, output `ready_for_bioinformatics.csv` |
+
+### Review workflow (re-analyze with another model)
+
+| Script | Description |
+|--------|-------------|
+| `scripts/list_good_papers.py` | Rank papers by data quality, export CSV for re-analysis |
+| `scripts/reanalyze_papers.sh` | Re-analyze selected papers with a different Go model |
+| `scripts/compare_models.py` | Compare extraction results between two models side-by-side |
+
+### Remote test & iteration
+
+| Script | Description |
+|--------|-------------|
 | `scripts/test_remote.sh` | Fast test: analyze N random papers on UNISI server |
 | `scripts/test_analyze.sh` | Fast local test: analyze N random papers with tinyllama |
 
@@ -76,65 +97,21 @@ bash scripts/sync_results.sh
 | `scripts/check_analysis.sh` | — | Check remote analysis log |
 | `scripts/run_all.sh` | 1→3 | Full pipeline in one command |
 | `scripts/test_rsync.sh` | — | Verify SSH + rsync connectivity |
+| `scripts/remote_analysis.sh` | — | The script that actually runs on the server |
 
-## Config Options
-
-```python
-from paper_scraper.main import main, Config
-from paper_scraper.OpenAlex import get_dois_from_filter
-from paper_scraper.Ollama import Options as OllamaOptions
-
-# Minimal
-config = Config()
-
-# Download with targeted search
-config = Config(
-    search_filter=get_dois_from_filter.SearchFilter(
-        topics="T10016",
-        keywords="pharmaceutical && adsorption && polymer",
-        max_papers=1000,
-        open_access_only=False,  # True = OA papers only
-    ),
-)
-
-# Analyze with DeepSeek V4 Flash (no GPU needed)
-config = Config(
-    questions=["Extract adsorption data as CSV: POLYMER_USED,DRUG,..."],
-    ollama_opts=OllamaOptions(
-        model="deepseek-v4-flash",
-        base_url="https://opencode.ai/zen/go/v1",
-        completion_path="/chat/completions",
-        api_key_env="OPENCODE_GO_KEY",
-        system_prompt_file="/tmp/prompt.txt",
-        max_context_tokens=32768,
-    ),
-    max_chunks=1,
-    handle_pdfs="pdf2text",
-)
-
-# Analyze with Ollama (requires GPU server)
-config = Config(
-    questions=["..."],
-    ollama_opts=OllamaOptions(model="gemma4:26b"),
-)
-
-# Parallel processing
-config = Config(batch_size=4)
-```
-
-### OllamaOptions fields
+## OllamaOptions fields
 
 | Field | Default | Description |
 |-------|---------|-------------|
 | `model` | `tinyllama` | Model name |
 | `base_url` | `http://localhost:11434` | API base URL |
-| `completion_path` | `/api/chat` | Endpoint path (use `/chat/completions` for OpenAI-compatible APIs) |
+| `completion_path` | `/api/chat` | Endpoint path (use `/chat/completions` for OpenAI-compatible) |
 | `api_key_env` | `""` | Env var name for API key (empty = Ollama mode) |
-| `system_prompt_file` | `""` | Path to file containing system prompt |
+| `system_prompt_file` | `""` | Path to file containing system prompt text |
 | `system_prompt` | `"You are a helpful..."` | System prompt text |
 | `temperature` | `1.0` | LLM temperature |
 | `max_context_tokens` | `256` | Context window size |
-| `handle_pdfs` | `"pdf2text"` | `"pdf2text"` or `"pdf2image"` |
+| `handle_pdfs` | `"pdf2text"` | `"pdf2text"` or `"pdf2image"` (images sent in OpenAI-compatible format) |
 
 ## Directories
 
@@ -147,6 +124,16 @@ config = Config(batch_size=4)
 | `gemma4_26b-pdf2image-respones/` | Ollama image analysis results (UNISI) |
 | `opencode_go_deepseek_v4_flash_max_pdf2text_responses/` | DeepSeek text analysis results (local) |
 | `paper_scraper/__HELPER_DIR__/` | Temp test outputs (gitignored) |
+
+## Generated files
+
+| File | Description |
+|------|-------------|
+| `compiled_adsorption_data.csv` | Raw merged output from all models |
+| `classified_adsorption_data.csv` | Same with HAS_POLYMER, HAS_MOLECULE, HAS_* flags |
+| `conflicts_report.csv` | Papers where two models disagree |
+| `ready_for_bioinformatics.csv` | Clean, high-quality rows ready for ML training |
+| `papers_for_review.csv` | Selected papers for re-analysis |
 
 ## Testing
 
