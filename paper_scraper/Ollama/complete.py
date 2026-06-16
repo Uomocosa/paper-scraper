@@ -26,7 +26,7 @@ def complete(
 ) -> str:
     url = f"{options.base_url}{options.completion_path}"
     
-    processed_messages = _process_messages(messages)
+    processed_messages = _process_messages(messages, options)
     
     headers = {}
     if options.api_key:
@@ -73,7 +73,9 @@ def complete(
 
 def _process_messages(
     messages: list[dict[str, str | list[str] | list[dict]]],
+    options: Options,
 ) -> list[dict]:
+    is_openai = bool(options.api_key)
     processed = []
     
     for msg in messages:
@@ -81,27 +83,62 @@ def _process_messages(
         
         if "images" in processed_msg and processed_msg["images"]:
             images = processed_msg["images"]
-            processed_images = []
+            base64_images = []
             
             for img in images:
                 if isinstance(img, (str, Path)):
                     img_str = str(img)
                     if Path(img_str).exists():
                         logger.debug(f"Encoding image from file: {img_str}")
-                        processed_images.append(_encode_image_to_base64(img_str))
+                        base64_images.append(_encode_image_to_base64(img_str))
                     elif len(img_str) > 100 and not img_str.startswith(('http://', 'https://')):
-                        processed_images.append(img_str)
+                        base64_images.append(img_str)
                     else:
                         logger.debug(f"Assuming base64 or will process later: {img_str[:50]}...")
-                        processed_images.append(img_str)
+                        base64_images.append(img_str)
                 else:
-                    processed_images.append(img)
+                    base64_images.append(img)
             
-            processed_msg["images"] = processed_images
+            if is_openai:
+                text_content = processed_msg.get("content", "")
+                content_parts = [{"type": "text", "text": text_content}]
+                for b64 in base64_images:
+                    content_parts.append({
+                        "type": "image_url",
+                        "image_url": {"url": f"data:image/png;base64,{b64}"},
+                    })
+                processed_msg["content"] = content_parts
+                del processed_msg["images"]
+            else:
+                processed_msg["images"] = base64_images
         
         processed.append(processed_msg)
     
     return processed
+
+
+def test_image_format_conversion():
+    """Test that images are correctly formatted for Ollama vs OpenAI APIs."""
+    from paper_scraper.Ollama.Options import Options
+
+    # Ollama format (no api_key)
+    opts = Options()
+    msgs = [{"role": "user", "content": "text", "images": ["b64data"]}]
+    result = _process_messages(msgs, opts)
+    assert "images" in result[0]
+    assert isinstance(result[0].get("content"), str)
+
+    # OpenAI format (api_key set)
+    opts2 = Options()
+    opts2.api_key = "test_key"
+    msgs2 = [{"role": "user", "content": "text", "images": ["b64data"]}]
+    result2 = _process_messages(msgs2, opts2)
+    assert "images" not in result2[0]
+    content = result2[0]["content"]
+    assert content[0]["type"] == "text"
+    assert content[1]["type"] == "image_url"
+    assert "base64" in content[1]["image_url"]["url"]
+    logger.info("test_image_format_conversion PASSED")
 
 
 import pytest
