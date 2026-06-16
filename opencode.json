@@ -1,0 +1,13 @@
+{
+  "permission": {
+    "file": {
+      "*": "allow"
+    },
+    "skill": {
+      "*": "deny",
+      "opencode-*": "allow",
+      "*-py": "allow",
+      "pixi": "allow"
+    }
+  }
+}
