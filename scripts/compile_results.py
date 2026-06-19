@@ -22,6 +22,7 @@ RESPONSE_DIRS: dict[str, str] = {
     "opencode_go_deepseek_v4_flash_max_pdf2text_responses": "deepseek-v4-flash (pdf2text)",
     "gemma4_26b-pdf2text-respones": "gemma4:26b (pdf2text)",
     "gemma4_26b-pdf2image-respones": "gemma4:26b (pdf2image)",
+    "review_kimi-k2_6": "kimi-k2.6 (pdf2text)",
 }
 
 OUTPUT_FILE = REPO_DIR / "compiled_adsorption_data.csv"
