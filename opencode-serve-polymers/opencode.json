@@ -1,0 +1,25 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "permission": {
+    "tool": {
+      "WebFetch": "allow"
+    },
+    "skill": {
+      "*": "deny"
+    }
+  },
+  "provider": {
+    "opencode": {
+      "models": {
+        "deepseek-v4-flash": {
+          "options": {
+            "thinking": {
+              "type": "enabled",
+              "reasoning_effort": "max"
+            }
+          }
+        }
+      }
+    }
+  }
+}

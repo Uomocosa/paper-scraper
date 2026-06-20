@@ -1,0 +1,38 @@
+name,psmiles,notes
+chitosan,*C(C(C(C(C(CO)O)O)O)O)*,linearized polysaccharide; deacetylated chitin
+cellulose,*C(C(C(C(CO)O)O)O)*,linearized polysaccharide; beta-1,4 glucan
+PVA,*CC(O)*,poly(vinyl alcohol); simple C-C backbone with OH
+PEG,*CCO*,poly(ethylene glycol); ether backbone
+poly(acrylic acid),*CC(C(=O)O)*,carboxyl side chain
+polyaniline,*C1=CC=C(N)C=C1*,non-aromatic ring notation; NH2 substituent
+polypyrrole,*c1cc[nH]c1*,aromatic ring with in-ring NH
+PAN,*CC(C#N)*,polyacrylonitrile; nitrile side chain
+polystyrene,*c1ccccc1*,aromatic side chain
+polyethylene,*CC*,simplest polymer; just CH2 repeats
+alginate,*C(C(C(C(=O)[O-])O)O)*,uronic acid; carboxylate side chain
+polyacrylamide,*CC(C(=O)N)*,amide side chain
+PMMA,*CC(C)(C(=O)OC)*,methyl methacrylate; ester side chain
+chitin,*C(C(C(C(C(CO)O)O)O)NC(=O)C)*,acetylated; different from chitosan
+cellulose acetate,*C(C(C(C(CO)O)O)O)*,same backbone as cellulose
+gelatin,NOT_A_VALID_POLYMER,protein not a simple linear polymer
+PCL,*CCCCC(=O)O*,polycaprolactone; ester backbone
+PLA,*CC(=O)O*,polylactic acid; ester backbone
+PVP,*CCN1CCCC1=O*,poly(vinylpyrrolidone); pyrrolidone ring side chain
+PVC,*CC(Cl)*,poly(vinyl chloride); chlorine side chain
+PVDF,*CC(F)(F)*,poly(vinylidene fluoride); fluorine side chain
+PET,*CCOC(=O)c1ccc(cc1)C(=O)*,poly(ethylene terephthalate); aromatic ester
+poly(vinyl alcohol),*CC(O)*,same as PVA
+poly(ethylene glycol),*CCO*,same as PEG
+polyacrylonitrile,*CC(C#N)*,same as PAN
+poly(N-isopropylacrylamide),*CC(C(=O)NC(C)C)*,amide with isopropyl side chain
+poly(HEMA),*CC(C)(C(=O)OCCO)*,hydroxyethyl methacrylate
+poly(4-vinylpyridine),*CCc1ccncc1*,pyridine ring side chain
+poly(ethyleneimine),*CCN*,amine in backbone
+poly(dimethylsiloxane),*C[Si](C)(C)O*,silicon-oxygen backbone
+PDMS,*C[Si](C)(C)O*,same as poly(dimethylsiloxane)
+poly(styrene),*c1ccccc1*,same as polystyrene
+poly(methyl methacrylate),*CC(C)(C(=O)OC)*,same as PMMA
+activated carbon,NOT_A_VALID_POLYMER,amorphous carbon not a polymer
+graphene oxide,NOT_A_VALID_POLYMER,2D material not a linear polymer
+Fe3O4,NOT_A_VALID_POLYMER,metal oxide
+biochar,NOT_A_VALID_POLYMER,pyrolyzed biomass

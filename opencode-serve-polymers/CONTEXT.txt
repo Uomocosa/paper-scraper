@@ -1,0 +1,81 @@
+# Polymer PSMILES Resolution — Project Context
+
+## What this pipeline builds
+
+A training dataset for ML models that predict adsorption capacity of polymers.
+Each data row: POLYMER, DRUG, pH, CONCENTRATION, CAPACITY.
+
+The data comes from 1700+ scientific papers on adsorption. LLMs (DeepSeek V4 Flash,
+Kimi K2.6, gemma4:26b) read each paper and extracted structured rows as CSV with
+columns: POLYMER_USED,DRUG,WATER_PH,CONCENTRATION,CAPACITY,SOURCE
+
+## The problem: polymer names are messy free-text
+
+The LLMs extracted polymer names as they appeared in the paper. Examples:
+- "chitosan (crab shells)" — source descriptor, the polymer is still chitosan
+- "CS/PVA hydrogel" — two polymers blended (CS=chitosan, PVA=polyvinyl alcohol)
+- "Chitosan-BN-Fe2O3" — chitosan with non-polymer additives (BN, Fe2O3)
+- "Poly(HEMA-GMA)-PLL-Cu(II)" — copolymer with metal complex
+- "Bacterial cellulose aerogel" — cellulose is the polymer, "aerogel" is a form
+- "activated lignin-chitosan extruded blend (ALiCE)" — composite blend
+
+## Why we need PSMILES, not just names
+
+For ML featurization, polymers need a machine-readable structural representation.
+PSMILES (Polymer SMILES) uses * as connection points for the repeating unit,
+making them compatible with featurization libraries (RDKit, polymetrix).
+
+## What the agent should do
+
+For each polymer name in a paper, determine its correct PSMILES:
+
+1. SEARCH the web via WebFetch for "PSMILES of <polymer>" or "<polymer> polymer SMILES"
+   to find and confirm the correct structure.
+2. CHECK the full paper text (included in the prompt) for any SMILES strings or
+   structural formulas given by the authors.
+3. USE your chemistry training knowledge.
+
+For composites/blends: identify the MAIN polymer component.
+- If a blend of MULTIPLE polymers (CS/PVA hydrogel, PANI/PPy/HMS): return NOT_A_VALID_POLYMER
+- If a single polymer with descriptors (chitosan (crab shells), bacterial cellulose aerogel,
+  calcium alginate): return the base polymer's PSMILES
+
+Rules for NOT_A_VALID_POLYMER:
+- Name is not a polymer (metal oxide, biochar, activated carbon, zeolite, etc.)
+- Name is a composite/blend/copolymer of multiple polymers
+- You cannot determine the structure
+
+## PSMILES format rules
+
+- Exactly two * atoms as connection points for the repeating unit
+- Linearized backbone (not cyclic), * at both ends
+- Side chains in parentheses
+- Validated by RDKit via the polymetrix library
+
+## Abbreviations
+
+CS = chitosan
+PVA = poly(vinyl alcohol)
+PAN = polyacrylonitrile
+PPy = polypyrrole
+PAA = poly(acrylic acid)
+PEG = poly(ethylene glycol)
+PMMA = poly(methyl methacrylate)
+PET = poly(ethylene terephthalate)
+PANI = polyaniline
+PCL = polycaprolactone
+PLA = polylactic acid
+PVP = poly(vinylpyrrolidone)
+PP = polypropylene
+CMC = carboxymethyl cellulose
+PEO = poly(ethylene oxide)
+PSS = poly(styrene sulfonate)
+PVDF = poly(vinylidene fluoride)
+PVC = poly(vinyl chloride)
+
+## Output format
+
+One line per polymer:
+  name -> PSMILES
+
+NOT_A_VALID_POLYMER when the name is not a single valid polymer
