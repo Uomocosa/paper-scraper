@@ -1,0 +1,26 @@
+Featurization Check Summary
+========================================
+Input: C:\Users\acer\Desktop\Samuele\Syncthing\LWF - LightWeigth Folder\[P] Python\lele-paper-scraper\output\training_dataset_deepseek.csv
+Total rows: 252
+OVERALL PASS: 222
+OVERALL FAIL: 30
+All skipped (no real failures): 0
+
+Failures by stage (actual failures, not SKIPPED):
+  Format (ranges/NaN)           :   10/ 252 failed (4.0%)
+  SMILES validity               :   27/ 252 failed (10.7%)
+  PSMILES validity              :    0/ 252 failed (0.0%)
+  PSMILES capping               :    0/ 252 failed (0.0%)
+  logP (RDKit)                  :    0/ 225 failed (0.0%)
+  Fingerprint (RDKit)           :    0/ 225 failed (0.0%)
+  logD (dimorphite_dl)          :    0/ 222 failed (0.0%)
+  Net charge (dimorphite_dl)    :    0/ 222 failed (0.0%)
+  Polymetrix PSMILES feat.      :    0/ 252 failed (0.0%)
+  Polymetrix SMILES feat.       :    0/ 225 failed (0.0%)
+
+First failure reasons (top 20):
+    20x  RDKit MolFromSmiles returned None
+     7x  WATER_PH=range(6.6-6.8)
+     1x  CONCENTRATION=range(50-900)
+     1x  CONCENTRATION=range(0-500)
+     1x  CONCENTRATION=range(50-200)
