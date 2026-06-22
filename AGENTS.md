@@ -13,6 +13,7 @@ pixi run python scripts/resolve_polymer_batch.py --total 5 --part 0     # Single
 pixi run python scripts/merge_polymer_results.py          # Merge all parts
 pixi run python scripts/build_training_dataset.py     # Merge all → output/
 pixi run python scripts/match_model_datasets.py       # Cross-model matching
+pixi run python scripts/check_featurization_failures.py  # Check rows that fail bio featurization
 pixi run pytest                                # Run tests (skip slow/external)
 ```
 
@@ -29,6 +30,7 @@ pixi run pytest                                # Run tests (skip slow/external)
 | Polymer PSMILES | `resolve_polymer_batch.py` (parallel) + `merge_polymer_results.py` | opencode serve + WebFetch |
 | Build datasets | `build_training_dataset.py` | Join + dedup + split |
 | Match models | `match_model_datasets.py` | 5-field, 10% tolerance |
+| Featurization check | `check_featurization_failures.py` | Validate vs real bio featurization (10 stages) |
 
 ## Pipeline
 
@@ -96,10 +98,21 @@ Resume-safe: if a terminal crashes, re-run the same command and it skips already
 
 | File | Rows | Description |
 |------|------|-------------|
-| `output/training_dataset_deepseek.csv` | 379 | DeepSeek-only, with KIMI_MATCHED flag |
-| `output/training_dataset_matched.csv` | 205 | Gold standard (both models agree) |
+| `output/training_dataset_deepseek.csv` | 252 | DeepSeek-only, with KIMI_MATCHED flag |
+| `output/training_dataset_kimi.csv` | 123 | Kimi-only comparison |
+| `output/training_dataset_gemma4_image.csv` | 43 | Gemma4 (pdf2image) — model comparison |
+| `output/training_dataset_gemma4_text.csv` | 0 | Gemma4 (pdf2text) — no data |
+| `output/training_dataset.csv` | 321 | All models combined |
+| `output/training_dataset_matched_deepseek_kimi.csv` | 94 | Gold standard (both models agree) |
 | `output/drug_smiles.json` | 125 | Drug → SMILES (102 resolved) |
 | `output/polymer_psmiles.json` | ~210 | Polymer → PSMILES |
+| `output/featurization_check_report.csv` | 252 | Per-row pass/fail for all 10 featurization stages |
+| `output/featurization_check_summary.txt` | — | Aggregate stats |
+
+## Dependencies
+
+- `bio` from `../lele-py-bioinformatics` (added as pixi pypi-dependency)
+- `dimorphite-dl` may need manual install: `pixi run pip install dimorphite-dl`
 
 ## Testing
 
