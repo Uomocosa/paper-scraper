@@ -102,9 +102,13 @@ def main():
 
     seen_ds = set()
     seen_km = set()
+    seen_g4t = set()
+    seen_g4i = set()
     seen_all = set()
     deepseek_rows = []
     kimi_rows = []
+    gemma4_text_rows = []
+    gemma4_image_rows = []
     combined_rows = []
 
     for r in filtered:
@@ -121,9 +125,20 @@ def main():
             if key not in seen_km:
                 seen_km.add(key)
                 kimi_rows.append(r)
+        elif "gemma" in model:
+            if "image" in model:
+                if key not in seen_g4i:
+                    seen_g4i.add(key)
+                    gemma4_image_rows.append(r)
+            else:
+                if key not in seen_g4t:
+                    seen_g4t.add(key)
+                    gemma4_text_rows.append(r)
 
     logger.info(f"DeepSeek deduplicated: {len(deepseek_rows)}")
     logger.info(f"Kimi deduplicated: {len(kimi_rows)}")
+    logger.info(f"Gemma4 (pdf2text) deduplicated: {len(gemma4_text_rows)}")
+    logger.info(f"Gemma4 (pdf2image) deduplicated: {len(gemma4_image_rows)}")
     logger.info(f"Combined deduplicated: {len(combined_rows)}")
 
     # Add KIMI_MATCHED flag (initially all False) for deepseek
@@ -146,13 +161,17 @@ def main():
 
     write_csv("training_dataset_deepseek.csv", deepseek_with_flag, ds_cols)
     write_csv("training_dataset_kimi.csv", kimi_rows, out_cols)
+    write_csv("training_dataset_gemma4_text.csv", gemma4_text_rows, out_cols)
+    write_csv("training_dataset_gemma4_image.csv", gemma4_image_rows, out_cols)
     write_csv("training_dataset.csv", combined_rows, out_cols)
 
     print()
     print(f"=== Summary ===")
-    print(f"training_dataset_deepseek.csv: {len(deepseek_with_flag)} rows (with KIMI_MATCHED flag)")
-    print(f"training_dataset_kimi.csv:     {len(kimi_rows)} rows")
-    print(f"training_dataset.csv:          {len(combined_rows)} rows (all models)")
+    print(f"training_dataset_deepseek.csv:    {len(deepseek_with_flag)} rows (with KIMI_MATCHED flag)")
+    print(f"training_dataset_kimi.csv:        {len(kimi_rows)} rows")
+    print(f"training_dataset_gemma4_text.csv:  {len(gemma4_text_rows)} rows")
+    print(f"training_dataset_gemma4_image.csv: {len(gemma4_image_rows)} rows")
+    print(f"training_dataset.csv:             {len(combined_rows)} rows (all models)")
 
 
 if __name__ == "__main__":

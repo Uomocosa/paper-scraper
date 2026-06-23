@@ -6,7 +6,7 @@ For papers analyzed by both models, match individual data rows on 5 fields
 10% numeric tolerance and greedy assignment.
 
 Flags matched rows in training_dataset_deepseek.csv (KIMI_MATCHED=True)
-and outputs training_dataset_matched.csv (only matched rows).
+and outputs training_dataset_matched_deepseek_kimi.csv (only matched rows).
 
 Usage:  pixi run python scripts/match_model_datasets.py
 """
@@ -21,7 +21,7 @@ REPO_DIR = Path(__file__).resolve().parent.parent
 DEEPSEEK_FILE = REPO_DIR / "output" / "training_dataset_deepseek.csv"
 KIMI_FILE = REPO_DIR / "output" / "training_dataset_kimi.csv"
 OUTPUT_DIR = REPO_DIR / "output"
-MATCHED_FILE = OUTPUT_DIR / "training_dataset_matched.csv"
+MATCHED_FILE = OUTPUT_DIR / "training_dataset_matched_deepseek_kimi.csv"
 TOLERANCE = 0.10
 
 
@@ -162,7 +162,7 @@ def main():
     print()
     print("Notes:")
     print("  - training_dataset_deepseek.csv updated with KIMI_MATCHED column")
-    print("  - training_dataset_matched.csv is the gold standard set")
+    print("  - training_dataset_matched_deepseek_kimi.csv is the gold standard set")
     print("  - Use for LOOCV validation / quality floor")
 
 

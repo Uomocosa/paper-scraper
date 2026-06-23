@@ -21,7 +21,7 @@
 
 | Script | Purpose | Input | Output |
 |--------|---------|-------|--------|
-| `compile_results.py` | Merge all model response dirs into one CSV (scans RESPONSE_DIRS) | Model response directories | `compiled_adsorption_data.csv` (20,807 rows) |
+| `compile_results.py` | Merge all model response dirs into one CSV (scans RESPONSE_DIRS) | Model response directories | `compiled_adsorption_data.csv` (33,226 rows) |
 | `classify_entries.py` | Add quality flags: HAS_POLYMER, HAS_MOLECULE, HAS_WATER_PH, HAS_CONCENTRATION, HAS_CAPACITY | `compiled_adsorption_data.csv` | `classified_adsorption_data.csv` |
 | `filter_for_bioinformatics.py` | Filter to polymer+molecule rows, deduplicate, partial SMILES lookup | `classified_adsorption_data.csv` | `ready_for_bioinformatics.csv` (1,347 rows, deprecated) |
 
@@ -52,8 +52,8 @@
 
 | Script | Purpose | Input | Output |
 |--------|---------|-------|--------|
-| `build_training_dataset.py` | Filter all5-valid rows (HAS_POLYMER=yes, HAS_MOLECULE=yes, all 3 numeric fields non-NaN), apply SMILES/PSMILES mappings, deduplicate, split by model, add KIMI_MATCHED flag | `classified_adsorption_data.csv` + `output/drug_smiles.json` + `output/polymer_psmiles.json` | `output/training_dataset_deepseek.csv` (379 rows), `output/training_dataset_kimi.csv` (243 rows), `output/training_dataset.csv` (469 rows) |
-| `match_model_datasets.py` | Cross-model matching between DeepSeek and Kimi datasets. 5-field matching (POLYMER_PSMILES, DRUG_SMILES, WATER_PH, CONCENTRATION, CAPACITY) with 10% numeric tolerance, greedy assignment. Flags matched rows in DeepSeek CSV and outputs a gold-standard matched set. | `output/training_dataset_deepseek.csv` + `output/training_dataset_kimi.csv` | `output/training_dataset_matched.csv` (205 rows, both models agree). Updates `training_dataset_deepseek.csv` with KIMI_MATCHED column. |
+| `build_training_dataset.py` | Filter all5-valid rows (HAS_POLYMER=yes, HAS_MOLECULE=yes, all 3 numeric fields non-NaN), apply SMILES/PSMILES mappings, deduplicate, split by model, add KIMI_MATCHED flag | `classified_adsorption_data.csv` + `output/drug_smiles.json` + `output/polymer_psmiles.json` | `output/training_dataset_deepseek.csv` (252 rows), `output/training_dataset_kimi.csv` (123 rows), `output/training_dataset_gemma4_text.csv` (0 rows), `output/training_dataset_gemma4_image.csv` (43 rows), `output/training_dataset.csv` (321 rows) |
+| `match_model_datasets.py` | Cross-model matching between DeepSeek and Kimi datasets. 5-field matching (POLYMER_PSMILES, DRUG_SMILES, WATER_PH, CONCENTRATION, CAPACITY) with 10% numeric tolerance, greedy assignment. Flags matched rows in DeepSeek CSV and outputs a gold-standard matched set. | `output/training_dataset_deepseek.csv` + `output/training_dataset_kimi.csv` | `output/training_dataset_matched_deepseek_kimi.csv` (94 rows, both models agree). Updates `training_dataset_deepseek.csv` with KIMI_MATCHED column. |
 
 ## Phase 5: Analysis & Review
 
@@ -104,7 +104,9 @@ All generated datasets live in `output/`:
 
 | File | Rows | Quality tier |
 |------|------|--------------|
-| `training_dataset_deepseek.csv` | 379 | Primary — DeepSeek-only, clean SMILES/PSMILES |
-| `training_dataset_kimi.csv` | 243 | Kimi-only comparison |
-| `training_dataset.csv` | 469 | All models combined |
-| `training_dataset_matched.csv` | 205 | Gold standard — both models agree |
+| `training_dataset_deepseek.csv` | 252 | Primary — DeepSeek-only, clean SMILES/PSMILES |
+| `training_dataset_kimi.csv` | 123 | Kimi-only comparison |
+| `training_dataset_gemma4_image.csv` | 43 | Gemma4 (pdf2image) — lower quality, model comparison |
+| `training_dataset_gemma4_text.csv` | 0 | Gemma4 (pdf2text) — no data extracted |
+| `training_dataset.csv` | 321 | All models combined (deduplicated) |
+| `training_dataset_matched_deepseek_kimi.csv` | 94 | Gold standard — both models agree |

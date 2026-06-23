@@ -29,24 +29,34 @@ OUTPUT_FILE = REPO_DIR / "compiled_adsorption_data.csv"
 
 
 def parse_csv_rows(content: str, debug_label: str = "") -> list[list[str]]:
-    """Parse CSV rows from a model response, skipping headers and NO USEFUL DATA."""
+    """Parse CSV rows from a model response, skipping headers and NO USEFUL DATA.
+
+    Handles per-page responses (pdf2image mode) where "NO USEFUL DATA" appears
+    on individual pages but real CSV data may be present on other pages.
+    """
 
     # Extract the # Response section (ignore the question text above)
     response_match = re.search(r"^# Response\s*\n(.+)$", content, re.DOTALL | re.MULTILINE)
     if not response_match:
         return []
     response_text = response_match.group(1).strip()
-
-    if "NO USEFUL DATA" in response_text:
-        return []
     if not response_text:
         return []
 
-    # Parse each line as CSV
     rows = []
     for line in response_text.split("\n"):
         stripped = line.strip()
         if not stripped:
+            continue
+
+        # Skip non-data lines (page markers, NO USEFUL DATA, markdown, bold text)
+        if stripped.upper() == "NO USEFUL DATA":
+            continue
+        if stripped.startswith("---"):
+            continue
+        if stripped.startswith("```"):
+            continue
+        if stripped.startswith("**") or stripped.startswith("__"):
             continue
 
         cells = [c.strip() for c in stripped.split(",")]
@@ -69,7 +79,6 @@ def parse_csv_rows(content: str, debug_label: str = "") -> list[list[str]]:
         row = [c[:200] for c in cells[:6]]
         rows.append(row)
 
-    return rows
     return rows
 
 

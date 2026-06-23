@@ -23,19 +23,19 @@ SEED_PAPERS/  →  Grobid  →  DOIs  →  OpenAlex  →  PDFs  →  LLM Analysi
                                                                                 │
                                                                                 ▼
                                                                         training_dataset_deepseek.csv
-                                                                        training_dataset_matched.csv
+                                                                        training_dataset_matched_deepseek_kimi.csv
 ```
 
 | Phase | Name | Tool | Output |
 |-------|------|------|--------|
 | 1 | Citation Extraction | Grobid (localhost:8070) | Extracted DOIs |
 | 2 | Crawl & Download | OpenAlex API (pyalex) | PDFs in `OUTPUT_DIR/DOWNLOADED_PAPERS/` |
-| 3a | AI Analysis (GPU server) | Ollama + gemma4:26b | `gemma4_26b-*-respones/` |
+| 3a | AI Analysis (GPU server) | Ollama + gemma4:26b (text & image mode) | `gemma4_26b-*-respones/` |
 | 3b | AI Analysis (local, no GPU) | OpenCode Go → any model | `review_*/` or custom dirs |
 | 4 | Data Compilation | `compile_results.py` | `compiled_adsorption_data.csv` |
 | 5 | Quality Filtering | `classify_entries.py` | `classified_adsorption_data.csv` |
 | 6a | Drug SMILES Resolution | `resolve_smiles.py` (dict + PubChem + metal) | `output/drug_smiles.json` |
-| 6b | Polymer PSMILES Resolution | `resolve_polymer_psmiles_via_opencode.py` (web search) | `output/polymer_psmiles.json` |
+| 6b | Polymer PSMILES Resolution | `resolve_polymer_batch_orchestrator.py` (opencode serve + WebFetch) | `output/polymer_psmiles.json` |
 | 7 | Build Training Datasets | `build_training_dataset.py` + `match_model_datasets.py` | `output/training_dataset_*.csv` |
 
 ## Quick Start
@@ -66,7 +66,7 @@ pixi run python scripts/classify_entries.py
 
 # 4. Resolve SMILES/PSMILES
 pixi run python scripts/resolve_smiles.py
-pixi run python scripts/resolve_polymer_psmiles_via_opencode.py
+pixi run python scripts/resolve_polymer_batch_orchestrator.py
 
 # 5. Build training datasets
 pixi run python scripts/build_training_dataset.py
@@ -76,12 +76,12 @@ pixi run python scripts/match_model_datasets.py
 ## Pipeline Data Flow
 
 ```
-classified_adsorption_data.csv (20,807 rows, 277 papers)
+classified_adsorption_data.csv (33,226 rows, 2,241 papers)
         │
         ▼ filter: HAS_POLYMER=yes + HAS_MOLECULE=yes + all 5 fields
         │
   ┌─────┴─────┐
-  │  977 rows  │  (131 papers)
+  │ 1,604 rows │  (131 papers)
   └─────┬─────┘
         │
   ┌─────┴──────────────────────────────────┐
@@ -92,21 +92,23 @@ classified_adsorption_data.csv (20,807 rows, 277 papers)
   │   ─────────────────────                │
   │  102/125 resolved (82%)                │
   │                                        │
-  │  POLYMER PSMILES:                      │  resolve_polymer_psmiles_via_opencode.py
+  │  POLYMER PSMILES:                      │  resolve_polymer_batch_orchestrator.py
   │    opencode serve agent on port 4092   │
   │    WebFetch → PubChem, Wikipedia,      │
   │    polymer databases                   │
   │    One API call per paper DOI          │
   └─────┬──────────────────────────────────┘
         │
-        ▼ join + drop unresolved
+        ▼ join + drop unresolved + deduplicate
         │
   ┌─────┴──────────────────────────────────────────┐
-  │  training_dataset_deepseek.csv   379 rows      │  build_training_dataset.py
-  │  training_dataset_kimi.csv       243 rows      │
-  │  training_dataset.csv            469 rows      │
+  │  training_dataset_deepseek.csv   252 rows      │  build_training_dataset.py
+  │  training_dataset_kimi.csv       123 rows      │
+  │  training_dataset_gemma4_image.csv  43 rows    │
+  │  training_dataset_gemma4_text.csv    0 rows     │
+  │  training_dataset.csv            321 rows      │
   │                                                 │  match_model_datasets.py
-  │  training_dataset_matched.csv    205 rows      │  (5-field, 10% tolerance, greedy)
+  │  training_dataset_matched_deepseek_kimi.csv     94 rows      │  (5-field, 10% tolerance, greedy)
   └─────────────────────────────────────────────────┘
 ```
 
@@ -119,7 +121,7 @@ See `scripts/README.md` for a complete, organized reference.
 | Script | Description |
 |--------|-------------|
 | `scripts/resolve_smiles.py` | Drug SMILES via dict + PubChem REST API + metal patterns. No AI. |
-| `scripts/resolve_polymer_psmiles_via_opencode.py` | Polymer PSMILES via local `opencode serve` agent with WebFetch internet search. |
+| `scripts/resolve_polymer_batch.py` / `resolve_polymer_batch_orchestrator.py` | Polymer PSMILES via local `opencode serve` agent with WebFetch internet search (5 parallel workers). |
 | `scripts/build_training_dataset.py` | Filter all5-valid rows, apply SMILES/PSMILES, deduplicate, split by model. |
 | `scripts/match_model_datasets.py` | Cross-model matching (5-field, 10% tolerance, greedy assignment). |
 
@@ -200,15 +202,17 @@ or the name is incorrect. Unresolved drugs (23) are dropped from the final datas
 
 | File | Generated by | Rows/Size | Description |
 |------|-------------|-----------|-------------|
-| `compiled_adsorption_data.csv` | compile_results.py | 20,807 rows | Raw merge of all model responses |
-| `classified_adsorption_data.csv` | classify_entries.py | 20,807 rows | Adds HAS_* quality flags |
+| `compiled_adsorption_data.csv` | compile_results.py | 33,226 rows | Raw merge of all model responses |
+| `classified_adsorption_data.csv` | classify_entries.py | 33,226 rows | Adds HAS_* quality flags |
 | `ready_for_bioinformatics.csv` | filter_for_bioinformatics.py | 1,347 rows | (Deprecated) Pre-SMILES filtering |
 | `output/drug_smiles.json` | resolve_smiles.py | 125 entries | Drug → SMILES mapping |
 | `output/polymer_psmiles.json` | resolve_polymer_batch.py + merge_polymer_results.py | ~210 entries | Polymer → PSMILES mapping |
-| `output/training_dataset_deepseek.csv` | build_training_dataset.py | 379 rows | DeepSeek-only, includes KIMI_MATCHED flag |
-| `output/training_dataset_kimi.csv` | build_training_dataset.py | 243 rows | Kimi-only |
-| `output/training_dataset_matched.csv` | match_model_datasets.py | 205 rows | Gold standard: both models agree |
-| `output/training_dataset.csv` | build_training_dataset.py | 469 rows | All models combined |
+| `output/training_dataset_deepseek.csv` | build_training_dataset.py | 252 rows | DeepSeek-only, includes KIMI_MATCHED flag |
+| `output/training_dataset_kimi.csv` | build_training_dataset.py | 123 rows | Kimi-only |
+| `output/training_dataset_gemma4_text.csv` | build_training_dataset.py | 0 rows | Gemma4 (pdf2text) — model could not extract useful data from plain text |
+| `output/training_dataset_gemma4_image.csv` | build_training_dataset.py | 43 rows | Gemma4 (pdf2image) — image mode yielded limited but valid data |
+| `output/training_dataset_matched_deepseek_kimi.csv` | match_model_datasets.py | 94 rows | Gold standard: DeepSeek + Kimi agree (5-field, 10% tolerance) |
+| `output/training_dataset.csv` | build_training_dataset.py | 321 rows | All models combined (deduplicated) |
 | `output/resolve_smiles.log` | resolve_smiles.py | — | Full resolution log |
 | `model_comparison.csv` | compare_models.py | ~120 rows | DeepSeek vs Kimi per-paper agreement |
 
@@ -227,16 +231,45 @@ bash scripts/reanalyze_papers.sh mimo-v2.5
 pixi run python scripts/compare_models.py --new review_mimo-v2_5
 ```
 
-### Agreement (PSMILES-matched)
+### Model Comparison
+
+The pipeline analyzed all 2,241 papers with **3 different models + 2 input modalities**,
+providing a unique opportunity to compare LLM-based data extraction for adsorption
+literature:
+
+| Model | Input mode | Raw CSV rows | Training dataset rows (dedup'd + resolved) |
+|-------|-----------|-------------|-------------------------------------------|
+| DeepSeek V4 Flash | pdf2text | 19,163 | 252 |
+| Kimi K2.6 | pdf2text | 1,405 | 123 |
+| Gemma4:26b | pdf2text | 237 | **0** |
+| Gemma4:26b | pdf2image | 12,421 | 43 |
+
+**Gemma4 (pdf2text) produced zero usable training rows** — the model repeatedly
+answered "NO USEFUL DATA" despite the same papers yielding data from other models.
+This demonstrates that model choice dramatically impacts extraction success even on
+identical inputs.
+
+**Gemma4 (pdf2image) recovered 43 valid rows** by processing PDF pages as images.
+The image modality allowed Gemma4 to read tables and figures that were inaccessible
+via text extraction. However its yield (43 rows from 2,241 papers) is an order of
+magnitude lower than DeepSeek (252 rows), suggesting Gemma4 is less reliable for
+this structured-data extraction task.
+
+This comparison is valuable for the thesis: it provides direct evidence that the
+choice of LLM and input modality significantly affects data extraction quality,
+with DeepSeek V4 Flash (pdf2text) being the most productive model tested.
+
+### Cross-Model Agreement (DeepSeek vs Kimi)
 
 | Model pair | Common papers | Matched rows | Agreement |
 |-----------|--------------|-------------|-----------|
-| DeepSeek V4 Flash vs Kimi K2.6 (SMILES-matched) | 57 | 205 / 469 | 49% |
+| DeepSeek V4 Flash vs Kimi K2.6 (PSMILES-matched) | 26 | 94 / 321 | 33% |
 
-The 49% agreement (vs 24% with raw names) reflects the improvement from matching
-on resolved PSMILES/SMILES rather than free-text polymer names. The 205 matched
-rows in `training_dataset_matched.csv` are the gold standard — both models
-independently extracted the same data point within 10% tolerance.
+The 94 matched rows in `training_dataset_matched_deepseek_kimi.csv` are the gold standard —
+both models independently extracted the same data point within 10% tolerance.
+When PSMILES/SMILES resolution is available, agreement improves over raw
+free-text matching, though substantial model disagreement remains (67% of rows
+are unique to one model).
 
 ## OllamaOptions fields
 
@@ -284,16 +317,16 @@ lele-paper-scraper/
 │   ├── DOWNLOADED_PAPERS/          # 2000+ downloaded PDFs
 │   ├── QUESTIONS/                  # Question prompts
 │   └── extracted_references.json
-├── gemma4_26b-pdf2text-respones/   # 2240 papers (gemma text)
-├── gemma4_26b-pdf2image-respones/  # 2240 papers (gemma image)
-├── opencode_go_deepseek_v4_flash_max_pdf2text_responses/  # 1711 papers (DeepSeek)
+├── gemma4_26b-pdf2text-respones/   # 2241 papers (gemma text)
+├── gemma4_26b-pdf2image-respones/  # 2241 papers (gemma image)
+├── opencode_go_deepseek_v4_flash_max_pdf2text_responses/  # 2241 papers (DeepSeek)
 ├── review_kimi-k2_6/               # 131 papers (Kimi re-analysis)
 ├── output/                         # Generated datasets
 │   ├── drug_smiles.json
 │   ├── polymer_psmiles.json
 │   ├── training_dataset_deepseek.csv
 │   ├── training_dataset_kimi.csv
-│   ├── training_dataset_matched.csv
+│   ├── training_dataset_matched_deepseek_kimi.csv
 │   ├── training_dataset.csv
 │   └── resolve_smiles.log
 ├── opencode-serve-polymers/        # opencode serve config
@@ -307,13 +340,13 @@ lele-paper-scraper/
 │   └── Secrets/                    # API key loading
 ├── scripts/
 │   ├── resolve_smiles.py           # Drug SMILES resolution
-│   ├── resolve_polymer_psmiles_via_opencode.py  # Polymer PSMILES via serve
+│   ├── resolve_polymer_batch_orchestrator.py  # Polymer PSMILES via serve
 │   ├── build_training_dataset.py   # Filter + join + split
 │   ├── match_model_datasets.py     # Cross-model matching
 │   └── ... (see scripts/README.md)
-├── compiled_adsorption_data.csv    # ~20K rows
-├── classified_adsorption_data.csv  # With quality flags
-├── ready_for_bioinformatics.csv    # ~1.3K rows (deprecated)
+├── compiled_adsorption_data.csv    # 33K rows
+├── classified_adsorption_data.csv  # 33K rows, with quality flags
+├── ready_for_bioinformatics.csv    # 1.3K rows (deprecated)
 ├── model_comparison.csv            # DeepSeek vs Kimi
 └── pixi.toml                       # Dependencies
 ```
