@@ -1,0 +1,178 @@
+{
+  "Methylene blue": {
+    "smiles": "CN(C)c1ccc2nc3ccc(=[N+](C)C)cc-3sc2c1.[Cl-]",
+    "iupac_name": "3,7-bis(dimethylamino)phenothiazin-5-ium chloride",
+    "class": "cationic dye",
+    "lambda_max_nm": 664,
+    "papers": [
+      "10.1038/s41598-026-36875-7",
+      "10.1021/acsomega.3c03130",
+      "10.1039/d1ra05464c",
+      "10.1038/s41598-023-32097-3",
+      "10.4236/msce.2024.122001",
+      "10.21203/rs.3.rs-1071501/v1",
+      "10.12692/jbes/28.2.85-98",
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "Rhodamine B": {
+    "smiles": "CCN(CC)c1ccc2c(c1)Oc1cc(N(CC)CC)ccc1c2-c1ccccc1C(=O)O.[Cl-]",
+    "class": "cationic dye",
+    "lambda_max_nm": 555,
+    "papers": [
+      "10.1021/acsomega.3c03130",
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "Crystal violet": {
+    "smiles": "CN(C)c1ccc(cc1)[C+](c1ccc(N(C)C)cc1)c1ccc(N(C)C)cc1.[Cl-]",
+    "iupac_name": "tris(4-(dimethylamino)phenyl)methylium chloride",
+    "class": "cationic dye",
+    "lambda_max_nm": 589,
+    "papers": [
+      "10.1021/acsomega.3c03130"
+    ]
+  },
+  "Malachite green": {
+    "smiles": "CN(C)c1ccc(cc1)[C+](c1ccccc1)c1ccc(N(C)C)cc1.[Cl-]",
+    "class": "cationic dye",
+    "lambda_max_nm": 618,
+    "papers": [
+      "10.1021/acsomega.3c03130"
+    ]
+  },
+  "Congo red": {
+    "smiles": "Nc1ccc2cc(ccc2c1N=Nc1ccc(cc1)-c1ccc(cc1)N=Nc1c(N)ccc2cc(ccc12)S(=O)(=O)[O-])S(=O)(=O)[O-].[Na+].[Na+]",
+    "class": "anionic dye",
+    "lambda_max_nm": 495,
+    "note": "Anionic but adsorbs strongly via H-bonding through its two amine groups.",
+    "papers": [
+      "10.1021/acsomega.3c03130",
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "Methyl orange": {
+    "smiles": "CN(C)c1ccc(cc1)N=Nc1ccc(cc1)S(=O)(=O)[O-].[Na+]",
+    "class": "anionic dye",
+    "lambda_max_nm": 464,
+    "papers": [
+      "10.1021/acsomega.3c03130"
+    ]
+  },
+  "Sunset yellow": {
+    "smiles": "Oc1ccc2cc(ccc2c1N=Nc1ccc(cc1)S(=O)(=O)[O-])S(=O)(=O)[O-].[Na+].[Na+]",
+    "iupac_name": "Sunset Yellow FCF (E110)",
+    "class": "anionic dye",
+    "lambda_max_nm": 482,
+    "papers": [
+      "10.1021/acsomega.3c03130",
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "Quinoline yellow": {
+    "smiles": "O=C1c2ccccc2C(=O)C1c1ccc2ccccc2n1",
+    "iupac_name": "Quinoline Yellow WS (E104) - core structure only",
+    "class": "anionic dye",
+    "lambda_max_nm": 441,
+    "note": "Commercial product is a sulfonation mixture (mono/di-sulfonates of 2-(2-quinolyl)-1,3-indandione). SMILES shown is the unsulfonated core; treat as approximate.",
+    "papers": [
+      "10.1021/acsomega.3c03130"
+    ]
+  },
+  "Reactive Black 5": {
+    "smiles": "OS(=O)(=O)CCOS(=O)(=O)c1ccc(N=Nc2ccc3c(N)c(N=Nc4ccc(S(=O)(=O)CCOS(=O)(=O)O)cc4)c(S(=O)(=O)O)cc3c2S(=O)(=O)O)cc1",
+    "class": "anionic dye (diazo, vinylsulfone reactive)",
+    "note": "C.I. Reactive Black 5. Bis(vinylsulfone) form shown (sulfatoethylsulfone precursor); structure approximate.",
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "Direct Red 80": {
+    "smiles": null,
+    "class": "anionic dye (polyazo, direct)",
+    "note": "C.I. Direct Red 80. Large hexa-sulfonated polyazo dye; canonical SMILES not reliably assigned here.",
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "Acid Blue 93": {
+    "smiles": null,
+    "class": "anionic dye (triarylmethane)",
+    "note": "C.I. Acid Blue 93 (a.k.a. aniline blue-related). Sulfonated triarylmethane; mixture, structure approximate.",
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "Acid green": {
+    "smiles": null,
+    "class": "anionic dye",
+    "note": "Reported only as 'acid green' in review (orig ref 275); specific C.I. index unspecified.",
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "Acid Red 18": {
+    "smiles": "Oc1c(N=Nc2ccc(S(=O)(=O)[O-])c3cc(S(=O)(=O)[O-])ccc23)c(S(=O)(=O)[O-])cc2cccc(c12)",
+    "class": "anionic dye (monoazo)",
+    "note": "C.I. Acid Red 18 (Ponceau 4R, E124). Trisulfonated monoazo; SMILES approximate (charge/counterion Na+ omitted).",
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "Acid Blue 40": {
+    "smiles": null,
+    "class": "anionic dye (anthraquinone)",
+    "note": "C.I. Acid Blue 40. Anthraquinone-based; structure not reliably assigned here.",
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "Reactive Black": {
+    "smiles": null,
+    "class": "anionic dye (reactive)",
+    "note": "Listed as 'Reactive Black' (starch/PANI study, orig ref 278); likely Reactive Black 5 but unspecified in review.",
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "Reactive Violet 4": {
+    "smiles": null,
+    "class": "anionic dye (reactive)",
+    "note": "C.I. Reactive Violet 4 (orig ref 278); structure not reliably assigned.",
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "Reactive Orange 16": {
+    "smiles": null,
+    "class": "anionic dye (monoazo, vinylsulfone reactive)",
+    "note": "C.I. Reactive Orange 16. Vinylsulfone reactive azo dye; structure approximate, not assigned here.",
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "Direct Blue 86": {
+    "smiles": null,
+    "class": "anionic dye (Cu-phthalocyanine)",
+    "note": "C.I. Direct Blue 86. Copper phthalocyanine disulfonate; metal-complex macrocycle, no simple SMILES.",
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "Acid Orange 7": {
+    "smiles": "Oc1ccc2ccccc2c1N=Nc1ccc(S(=O)(=O)[O-])cc1.[Na+]",
+    "class": "anionic dye (monoazo)",
+    "note": "C.I. Acid Orange 7 (Orange II). Monosulfonated monoazo; hydrazone tautomer dominant.",
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "Bromothymol blue": {
+    "smiles": "CC(C)c1cc(C2(c3ccc4ccccc4c3)OS(=O)(=O)c3ccccc32)c(O)c(Br)c1",
+    "class": "anionic dye (sulfonephthalein, pH indicator)",
+    "note": "Bromothymol blue. Sulfonephthalein indicator; SMILES approximate (one tautomer; full dibromo-diisopropyl-dimethyl substitution simplified).",
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  }
+}

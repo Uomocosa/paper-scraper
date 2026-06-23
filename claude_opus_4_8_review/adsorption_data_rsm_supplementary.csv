@@ -1,0 +1,33 @@
+POLYMER_USED,DRUG,WATER_PH,CONCENTRATION,CONTACT_TIME_MIN,CAPACITY,SOURCE,PAPER_DOI,CONFIDENCE,NOTES
+Coconut husk cellulose,Methylene blue,5,65,80,5.883,Table.2,10.4236/msce.2024.122001,medium,RSM design pt; q=C0*RE*0.1 (V/W=0.1)
+Coconut husk cellulose,Methylene blue,5,124,80,11.445,Table.2,10.4236/msce.2024.122001,medium,RSM design pt; conc 124 is axial point
+Coconut husk cellulose,Methylene blue,8.36,65,80,6.149,Table.2,10.4236/msce.2024.122001,medium,RSM design pt; pH axial point
+Coconut husk cellulose,Methylene blue,5,65,80,5.883,Table.2,10.4236/msce.2024.122001,medium,RSM center point replicate
+Coconut husk cellulose,Methylene blue,3,30,120,2.526,Table.2,10.4236/msce.2024.122001,medium,RSM design pt
+Coconut husk cellulose,Methylene blue,5,65,80,5.889,Table.2,10.4236/msce.2024.122001,medium,RSM center point replicate
+Coconut husk cellulose,Methylene blue,7,100,40,9.050,Table.2,10.4236/msce.2024.122001,medium,RSM design pt
+Coconut husk cellulose,Methylene blue,3,100,40,7.590,Table.2,10.4236/msce.2024.122001,medium,RSM design pt
+Coconut husk cellulose,Methylene blue,5,65,13,5.161,Table.2,10.4236/msce.2024.122001,medium,RSM design pt; time axial (low)
+Coconut husk cellulose,Methylene blue,3,100,120,8.440,Table.2,10.4236/msce.2024.122001,medium,RSM design pt
+Coconut husk cellulose,Methylene blue,7,100,120,9.650,Table.2,10.4236/msce.2024.122001,medium,RSM design pt
+Coconut husk cellulose,Methylene blue,1.64,65,80,4.660,Table.2,10.4236/msce.2024.122001,medium,RSM design pt; pH axial (low)
+Coconut husk cellulose,Methylene blue,7,30,120,2.904,Table.2,10.4236/msce.2024.122001,high,Optimum conditions; matches qe,exp 2.9034
+Coconut husk cellulose,Methylene blue,5,65,147,5.954,Table.2,10.4236/msce.2024.122001,medium,RSM design pt; time axial (high)
+Coconut husk cellulose,Methylene blue,5,65,80,5.941,Table.2,10.4236/msce.2024.122001,medium,RSM center point replicate
+Coconut husk cellulose,Methylene blue,5,65,80,5.909,Table.2,10.4236/msce.2024.122001,medium,RSM center point replicate
+Coconut husk cellulose,Methylene blue,5,65,80,5.934,Table.2,10.4236/msce.2024.122001,medium,RSM center point replicate
+Coconut husk cellulose,Methylene blue,7,30,40,2.769,Table.2,10.4236/msce.2024.122001,medium,RSM design pt
+Coconut husk cellulose,Methylene blue,3,30,40,2.334,Table.2,10.4236/msce.2024.122001,medium,RSM design pt
+Coconut husk cellulose,Methylene blue,5,6,80,0.561,Table.2,10.4236/msce.2024.122001,medium,RSM design pt; conc 6 is axial (low)
+Chitosan,Methylene blue,5.2,NaN,80,15.86,Table.3,10.12692/jbes/28.2.85-98,medium,BBD run1; pH/temp/time varied together; not equilibrium; dose 0.1 g/L
+Chitosan,Methylene blue,7.2,NaN,80,16.19,Table.3,10.12692/jbes/28.2.85-98,medium,BBD run2
+Chitosan,Methylene blue,5.2,NaN,80,15.41,Table.3,10.12692/jbes/28.2.85-98,medium,BBD run3; 60C
+Chitosan,Methylene blue,7.2,NaN,80,17.54,Table.3,10.12692/jbes/28.2.85-98,medium,BBD run4; 60C
+Chitosan,Methylene blue,5.2,NaN,20,16.50,Table.3,10.12692/jbes/28.2.85-98,medium,BBD run5; 45C
+Chitosan,Methylene blue,7.2,NaN,20,16.18,Table.3,10.12692/jbes/28.2.85-98,medium,BBD run6; 45C
+Chitosan,Methylene blue,5.2,NaN,140,18.43,Table.3,10.12692/jbes/28.2.85-98,medium,BBD run7; 45C
+Chitosan,Methylene blue,7.2,NaN,140,19.20,Table.3,10.12692/jbes/28.2.85-98,medium,BBD run8; 45C
+Chitosan,Methylene blue,6.2,NaN,20,16.34,Table.3,10.12692/jbes/28.2.85-98,medium,BBD run9; 30C
+Chitosan,Methylene blue,6.2,NaN,20,17.49,Table.3,10.12692/jbes/28.2.85-98,medium,BBD run10; 60C
+Chitosan,Methylene blue,6.2,NaN,140,18.51,Table.3,10.12692/jbes/28.2.85-98,medium,BBD run11; 30C
+Chitosan,Methylene blue,6.2,NaN,140,19.26,Table.3,10.12692/jbes/28.2.85-98,medium,BBD run12; 60C

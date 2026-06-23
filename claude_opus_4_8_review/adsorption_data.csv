@@ -1,0 +1,86 @@
+POLYMER_USED,DRUG,WATER_PH,CONCENTRATION,CAPACITY,SOURCE,PAPER_DOI,CONFIDENCE,NOTES
+Chitosan,Methylene blue,7,50,41.67,Table.3,10.1038/s41598-026-36875-7,high,PSO kinetic qe at single 50 mg/L conc
+Chitosan/EPS composite,Methylene blue,6,50,45.87,Table.3,10.1038/s41598-026-36875-7,high,PSO kinetic qe at single 50 mg/L conc
+Chitosan,Methylene blue,6,NaN,13.6986,Table.2,10.1038/s41598-026-36875-7,high,Langmuir qmax (extrapolated over 10-100 mg/L sweep)
+Chitosan/EPS composite,Methylene blue,6,NaN,14.2552,Table.2,10.1038/s41598-026-36875-7,high,Langmuir qmax (extrapolated over 10-100 mg/L sweep)
+Chitosan-pectinase blend,Methylene blue,7,NaN,16.81,Table.5,10.1038/s41598-026-36875-7,secondhand,Literature comparison value (orig ref 47)
+Magnetic chitosan/organic rectorite,Methylene blue,6,NaN,24.69,Table.5,10.1038/s41598-026-36875-7,secondhand,Literature comparison value (orig ref 48)
+Activated lignin-chitosan pellets,Methylene blue,7,NaN,36.25,Table.5,10.1038/s41598-026-36875-7,secondhand,Literature comparison value (orig ref 49)
+Graphene oxide/chitosan/Fe3O4,Methylene blue,10.5,NaN,30.10,Table.5,10.1038/s41598-026-36875-7,secondhand,Literature comparison value (orig ref 50)
+Chitosan/Activated Carbon,Methylene blue,6.5,NaN,22.52,Table.5,10.1038/s41598-026-36875-7,secondhand,Literature comparison value (orig ref 46)
+BC aerogel,Methylene blue,6.5,10,4.1,Fig.9,10.1021/acsomega.3c03130,high,Label-stated; q=C0*RE*0.5 verified
+BC aerogel,Methylene blue,6.5,50,16.6,Fig.9,10.1021/acsomega.3c03130,high,From RE=66.5%; q=C0*RE*0.5 verified
+BC aerogel,Methylene blue,6.5,100,22.8,Fig.9,10.1021/acsomega.3c03130,high,Label-stated; q=C0*RE*0.5 verified
+BC aerogel,Methylene blue,6.5,200,29.7,Fig.9,10.1021/acsomega.3c03130,high,Label-stated; q=C0*RE*0.5 verified
+BC aerogel,Methylene blue,6.5,350,30.4,Fig.9,10.1021/acsomega.3c03130,high,Label-stated; q=C0*RE*0.5 verified
+BC aerogel,Methylene blue,6.5,400,29.8,Fig.9,10.1021/acsomega.3c03130,high,Label-stated; q=C0*RE*0.5 verified
+BC aerogel,Methylene blue,6.5,NaN,31.1,Fig.10,10.1021/acsomega.3c03130,high,Langmuir qmax (extrapolated over 10-400 ppm sweep)
+BC aerogel,Methylene blue,3.6,50,7.6,Fig.8,10.1021/acsomega.3c03130,medium,Figure label; pH sweep at 50 ppm
+BC aerogel,Methylene blue,4.5,50,13.8,Fig.8,10.1021/acsomega.3c03130,medium,Figure label; pH sweep at 50 ppm
+BC aerogel,Methylene blue,6.5,50,14.8,Fig.8,10.1021/acsomega.3c03130,high,Text-stated; pH sweep at 50 ppm
+BC aerogel,Methylene blue,9.5,50,15.8,Fig.8,10.1021/acsomega.3c03130,medium,Figure label; pH sweep at 50 ppm
+BC aerogel,Methylene blue,11,50,16.3,Fig.8,10.1021/acsomega.3c03130,medium,Figure label; pH sweep at 50 ppm
+BC aerogel,Rhodamine B,6.5,200,28.0,Fig.13,10.1021/acsomega.3c03130,high,Multi-dye comparison; text-stated
+BC aerogel,Crystal violet,6.5,200,33.0,Fig.13,10.1021/acsomega.3c03130,high,Multi-dye comparison; text-stated
+BC aerogel,Malachite green,6.5,200,48.6,Fig.13,10.1021/acsomega.3c03130,high,Multi-dye comparison; text-stated
+BC aerogel,Congo red,6.5,200,101.4,Fig.13,10.1021/acsomega.3c03130,high,Multi-dye comparison; text-stated (anionic but H-bonds via amine groups)
+BC aerogel,Methyl orange,6.5,200,0,Fig.13,10.1021/acsomega.3c03130,high,No measurable uptake (anionic; repulsion)
+BC aerogel,Sunset yellow,6.5,200,0,Fig.13,10.1021/acsomega.3c03130,high,No measurable uptake (anionic; repulsion)
+BC aerogel,Quinoline yellow,6.5,200,0,Fig.13,10.1021/acsomega.3c03130,high,No measurable uptake (anionic; repulsion)
+Cellulose citrate,Methylene blue,6.2,NaN,96.2,Table.5,10.1039/d1ra05464c,high,Langmuir qmax (extrapolated over 10-150 mg/L sweep)
+Cellulose citrate,Methylene blue,6.2,10,9.57,Fig.5,10.1039/d1ra05464c,high,Text-stated q at 10 mg/L
+Cellulose citrate,Methylene blue,6.2,20,18.0,Fig.5,10.1039/d1ra05464c,medium,Digitized from Fig.5A
+Cellulose citrate,Methylene blue,6.2,30,26.86,Fig.3,10.1039/d1ra05464c,high,Text-stated; kinetics plateau at 30 mg/L
+Cellulose citrate,Methylene blue,6.2,40,36.5,Fig.5,10.1039/d1ra05464c,medium,Digitized from Fig.5A
+Cellulose citrate,Methylene blue,6.2,50,45.5,Fig.5,10.1039/d1ra05464c,medium,Digitized from Fig.5A
+Cellulose citrate,Methylene blue,6.2,70,59.0,Fig.5,10.1039/d1ra05464c,medium,Digitized from Fig.5A
+Cellulose citrate,Methylene blue,6.2,100,77.5,Fig.5,10.1039/d1ra05464c,medium,Digitized from Fig.5A
+Cellulose citrate,Methylene blue,6.2,120,82.0,Fig.5,10.1039/d1ra05464c,medium,Digitized from Fig.5A
+Cellulose citrate,Methylene blue,6.2,150,88.0,Fig.5,10.1039/d1ra05464c,medium,Digitized Fig.5A; text says 58% removal ~87
+Cellulose citrate,Methylene blue,3,30,25.55,Fig.6,10.1039/d1ra05464c,medium,Digitized from Fig.6A; pH sweep at 30 mg/L
+Cellulose citrate,Methylene blue,4,30,26.4,Fig.6,10.1039/d1ra05464c,medium,Digitized from Fig.6A; pH sweep at 30 mg/L
+Cellulose citrate,Methylene blue,5,30,26.7,Fig.6,10.1039/d1ra05464c,medium,Digitized from Fig.6A; pH sweep at 30 mg/L
+Cellulose citrate,Methylene blue,6,30,26.85,Fig.6,10.1039/d1ra05464c,medium,Digitized from Fig.6A; pH sweep at 30 mg/L
+Cellulose citrate,Methylene blue,7,30,27.75,Fig.6,10.1039/d1ra05464c,medium,Digitized from Fig.6A; pH sweep at 30 mg/L
+Cellulose citrate,Methylene blue,8,30,27.8,Fig.6,10.1039/d1ra05464c,medium,Digitized from Fig.6A; pH sweep at 30 mg/L
+Cellulose citrate,Methylene blue,9,30,28.0,Fig.6,10.1039/d1ra05464c,medium,Digitized from Fig.6A; pH sweep at 30 mg/L
+Cellulose citrate,Methylene blue,10,30,28.1,Fig.6,10.1039/d1ra05464c,medium,Digitized from Fig.6A; pH sweep at 30 mg/L
+Fe3O4@MOF-PAMAM/cellulose acetate,Methylene blue,8.4,21,36.90,Table.5,10.1038/s41598-023-32097-3,high,Langmuir qm from isotherm fit; agrees w/ reusability cap (33-39)
+Fe3O4@MOF-PAMAM/cellulose acetate,Methylene blue,8.4,21,940.76,Table.7,10.1038/s41598-023-32097-3,low,Operational cap at optimized ultra-low dose (0.005 g/L); conflicts w/ Langmuir qm 36.90
+Fe3O4@MOF-PAMAM/cellulose acetate,Methylene blue,8.4,21,39.40,Table.4,10.1038/s41598-023-32097-3,high,Cycle 1 capacity at optimum conditions (dose 0.005 g/L)
+Coconut husk cellulose,Methylene blue,7,30,2.9034,Table.6,10.4236/msce.2024.122001,high,Experimental qe at equilibrium; pH7/120min/0.5g; matches PSO calc 2.9108
+Coconut husk cellulose,Methylene blue,7,NaN,42.7168,Table.7,10.4236/msce.2024.122001,high,Langmuir qmax from isotherm sweep (20-100 mg/L); note Freundlich fit better (R2 0.9995 vs 0.859)
+poly(MAA-co-AAm) hydrogel,Methylene blue,8,NaN,21.92,Table.3,10.21203/rs.3.rs-1071501/v1,high,Langmuir qmax (extrapolated over 10-100 mg/L sweep); equilibrium followed Langmuir (R2 0.9752)
+poly(MAA-co-AAm)/NCC hydrogel,Methylene blue,8,NaN,32.83,Table.3,10.21203/rs.3.rs-1071501/v1,high,Langmuir qmax (extrapolated over 10-100 mg/L sweep); paper reports NCC best-fit is Freundlich (R2 0.9687) not Langmuir (R2 0.9302) - qmax is slightly worse fit; Cloisite 30B 10wt% nanoclay composite
+Chitosan,Methylene blue,6.2,NaN,17.2,Fig.1,10.12692/jbes/28.2.85-98,high,Text-stated max uptake (saturation plateau of conc sweep 20-60 mg/L); dose 0.1 g/L 30C 60min; pH optimum
+Chitosan,Methylene blue,7.8,NaN,12.2,Fig.1,10.12692/jbes/28.2.85-98,high,Text-stated uptake at pH 7.8 (saturation plateau); dose 0.1 g/L 30C 60min
+Cellulose nanocrystal-reinforced keratin,Reactive Black 5,3,200,1201,Table.3,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 143); Langmuir; bio-adsorbent
+Cellulose nanocrystal-reinforced keratin,Direct Red 80,3,200,1070,Table.3,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 143); Langmuir
+Cellulose-g-poly(acrylic acid-co-acrylamide),Methylene blue,7,200,1814,Table.4,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 204); Freundlich; dose 0.4 g/L
+Cellulose-g-poly(acrylic acid-co-acrylamide),Acid Blue 93,7,200,1602,Table.4,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 204); Freundlich
+Alpha-cellulose/magnetite/polypyrrole,Reactive Black 5,3,NaN,62.31,Table.4,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 282); Langmuir
+PANI,Congo red,6.55,20,250.01,Table.7,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 61); Langmuir; dose 0.4 g/L
+Polypyrrole,Congo red,6.55,20,66.66,Table.7,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 61); Langmuir; dose 1.73 g/L
+Polypyrrole-MWCNT,Sunset yellow,2,NaN,212.1,Table.7,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 272); electrostatic + pi-pi
+Polypyrrole-MWCNT,Congo red,2,NaN,147,Table.7,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 272)
+PANI powder,Methylene blue,NaN,3.9,13.854,Table.7,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 273); Langmuir; crosslinked PANI
+PANI hollow nanotubes,Methylene blue,NaN,NaN,69.44,Table.7,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 275); Langmuir
+PANI hollow nanotubes,Acid green,NaN,NaN,57.87,Table.7,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 275); Langmuir
+PANI nanofibers,Reactive Black 5,6,NaN,434.7,Table.7,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 277); Langmuir qmax at 318K
+PANI/GO,Methylene blue,NaN,50,14.2,Table.7,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 280); Langmuir
+PANI/rGO,Methylene blue,NaN,50,19.2,Table.7,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 280); Langmuir
+PANI-modified rice husk composite,Acid Red 18,NaN,NaN,100,Table.7,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 281); Langmuir
+PANI/Fe3O4,Acid Blue 40,NaN,50,216.9,Table.7,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 263); Freundlich
+Starch/polyaniline,Reactive Black,3,NaN,811.30,Table.7,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 278); Toth model
+Starch/polyaniline,Reactive Violet 4,3,NaN,578.39,Table.7,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 278)
+PANI/TiO2,Methylene blue,NaN,400,458.10,Table.7,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 283); Temkin; dose 2 g/L
+Chitosan/PANI/ZnO,Reactive Orange 16,NaN,NaN,476.2,Table.7,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 296); Langmuir qmax
+Chitosan nanoparticles on fibrous carrier,Direct Blue 86,4,NaN,1097,Table.7,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 297); Langmuir; anionic dye
+Chitosan-Fe(III) spinel ferrite composite,Acid Orange 7,6.2,50,45.019,Table.7,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 64); Sips/Redlich-Peterson
+Fe2O3-chitosan-bamboo sawdust,Bromothymol blue,NaN,NaN,217.39,Table.7,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 298); Langmuir; dose 0.5 g/L
+Chitosan-EDTA-magnetic graphene oxide,Rhodamine B,NaN,NaN,1085.3,Table.7,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 301); Langmuir
+Cross-linked chitosan/sepiolite clay,Methylene blue,9,100,40.986,Table.4,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 194); Freundlich
+Cross-linked chitosan/sepiolite clay,Reactive Orange 16,3,100,190.965,Table.4,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 194)
+PANI-HNTs,Methylene blue,9,NaN,9.21,Table.7,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 276); Langmuir
+Polyvinyl alcohol,Methylene blue,6,NaN,123.3,Table.7,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 300); Langmuir
+Polyvinyl alcohol,Bromothymol blue,6,NaN,276.2,Table.7,10.1039/d1ma00354b,secondhand,Review-cited (orig ref 300); Langmuir

@@ -1,0 +1,359 @@
+{
+  "Chitosan": {
+    "p_smiles": "[*]OC1C(N)C(O[*])OC(CO)C1O",
+    "description": "Linear beta-(1->4)-linked D-glucosamine / N-acetyl-D-glucosamine copolymer. Repeat unit shown is the deacetylated glucosamine unit.",
+    "degree_of_deacetylation": ">=85%",
+    "molecular_weight": "360.8 kDa",
+    "note": "Real material is a copolymer of glucosamine and N-acetylglucosamine. For a more faithful representation, model ~85% glucosamine + ~15% N-acetylglucosamine units. N-acetyl unit P-SMILES: [*]OC1C(NC(C)=O)C(O[*])OC(CO)C1O",
+    "papers": [
+      "10.1038/s41598-026-36875-7",
+      "10.12692/jbes/28.2.85-98",
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "Bacillus subtilis EPS": {
+    "p_smiles": null,
+    "description": "Exopolysaccharide from Bacillus subtilis EA5 (GenBank OR501464). FTIR confirms hydroxyl, amino, methylene, carbonyl, and phosphate groups, but no defined monosaccharide composition or linkage structure is reported in the source paper.",
+    "note": "No canonical P-SMILES available. Monosaccharide composition would need to be sourced from ref 26 (Bashandy et al. 2024, Curr. Microbiol. 81:408). Structurally undefined.",
+    "papers": [
+      "10.1038/s41598-026-36875-7"
+    ]
+  },
+  "Chitosan/EPS composite": {
+    "p_smiles": null,
+    "description": "Physical blend of chitosan and Bacillus subtilis EPS (no covalent cross-linker; chitosan in 1% acetic acid mixed with EPS, heated to 70 C). Two-component material with no single repeat unit.",
+    "note": "Composite/blend - represent as its two components (chitosan + EPS) rather than a single P-SMILES.",
+    "components": [
+      "Chitosan",
+      "Bacillus subtilis EPS"
+    ],
+    "papers": [
+      "10.1038/s41598-026-36875-7"
+    ]
+  },
+  "BC aerogel": {
+    "p_smiles": "[*]OC1OC(CO)C(O[*])C(O)C1O",
+    "description": "Bacterial cellulose (from pineapple peel waste via Acetobacter xylinum fermentation). Pure cellulose: linear beta-(1->4)-linked D-glucose polymer, free of lignin and hemicellulose. High crystallinity (>80%).",
+    "note": "Same backbone as plant cellulose; cellobiose is the true crystallographic repeat. Glucose-unit P-SMILES shown.",
+    "papers": [
+      "10.1021/acsomega.3c03130"
+    ]
+  },
+  "Cellulose citrate": {
+    "p_smiles": "[*]OC1OC(COC(=O)CC(O)(CC(=O)O)C(=O)O)C(O[*])C(O)C1O",
+    "description": "Microcrystalline cellulose esterified with citric acid. Cellulose glucose-unit backbone bearing a citrate ester substituent (one of the citric acid carboxyls forms the ester; the remaining two carboxylic acids are free and provide the cationic-dye binding sites).",
+    "degree_of_substitution": "0.46 citrate groups per glucose unit (from Methods; abstract states avg ~2 citrate groups per glucose unit - figures conflict, DS=0.46 is the measured titration value)",
+    "note": "P-SMILES shown is the fully-substituted glucose unit (one citrate ester per glucose). Real material is a partial ester (DS 0.46), so most glucose units are unsubstituted cellulose. Model as a copolymer of substituted + unsubstituted units for fidelity. Free-acid form shown; deprotonates to carboxylate above pH ~6.",
+    "papers": [
+      "10.1039/d1ra05464c"
+    ]
+  },
+  "Fe3O4@MOF-PAMAM/cellulose acetate": {
+    "p_smiles": null,
+    "description": "Four-component electrospun composite: cellulose acetate nanofiber support + Zr-MOF (UiO-66, from ZrCl4 + terephthalic acid) + Fe3O4 magnetite core + third-generation PAMAM dendrimer (G3) surface functionalization.",
+    "note": "No single P-SMILES. Composite of one linear polymer (cellulose acetate), one crystalline MOF (UiO-66, framework - not a P-SMILES target), one inorganic nanoparticle (Fe3O4), and one hyperbranched dendrimer (PAMAM-G3, also not a linear repeat unit). Represent by components.",
+    "components": {
+      "cellulose acetate": {
+        "p_smiles": "[*]OC1OC(COC(C)=O)C(O[*])C(OC(C)=O)C1OC(C)=O",
+        "note": "Cellulose acetate; glucose-unit backbone with acetyl esters on the hydroxyls. Degree of acetylation varies by grade; fully-acetylated unit shown."
+      },
+      "UiO-66 (Zr-MOF)": {
+        "smiles": null,
+        "note": "Zr6O4(OH)4 nodes bridged by 1,4-benzenedicarboxylate (terephthalate) linkers. 3D framework - no SMILES. Linker = terephthalic acid: OC(=O)c1ccc(C(=O)O)cc1"
+      },
+      "Fe3O4": {
+        "note": "Magnetite nanoparticle core. Inorganic, no SMILES."
+      },
+      "PAMAM-G3": {
+        "note": "Third-generation poly(amidoamine) dendrimer (hyperbranched, ethylenediamine core, amidoamine branches, terminal -NH2 groups). Not a linear repeat unit; no single P-SMILES. Branch motif: NCCC(=O)NCCN"
+      }
+    },
+    "papers": [
+      "10.1038/s41598-023-32097-3"
+    ]
+  },
+  "Coconut husk cellulose": {
+    "p_smiles": "[*]OC1OC(CO)C(O[*])C(O)C1O",
+    "description": "Cellulose extracted from coconut husk (Cocos nucifera) agricultural waste via NaOH alkali pretreatment + sodium hypochlorite bleaching, which removes lignin and hemicellulose. Linear beta-(1->4)-linked D-glucose polymer.",
+    "note": "Pure cellulose backbone, same glucose-unit P-SMILES as other unmodified celluloses (bacterial cellulose). No chemical functionalization.",
+    "papers": [
+      "10.4236/msce.2024.122001"
+    ]
+  },
+  "poly(MAA-co-AAm) hydrogel": {
+    "p_smiles": "[*]CC(C)(C(=O)O)CC([*])C(N)=O",
+    "description": "Poly(methacrylic acid-co-acrylamide) crosslinked hydrogel. Free-radical copolymer of methacrylic acid (MAA) and acrylamide (AAm), crosslinked with N,N'-methylenebisacrylamide. Synthesized at MAA:AAm monomer ratio of 2:1 (optimal); reactivity ratios r(MAA)=1.94, r(AAm)=0.30 give a random copolymer.",
+    "note": "P-SMILES shows one MAA unit + one AAm unit as a representative 1:1 repeat; real material is a random copolymer at ~2:1 MAA:AAm with bisacrylamide crosslinks (not shown). MAA carboxyl deprotonates above pH ~5, giving the anionic sites that bind cationic MB. Crosslinker fragment: C(=O)NCNC(=O).",
+    "papers": [
+      "10.21203/rs.3.rs-1071501/v1"
+    ]
+  },
+  "poly(MAA-co-AAm)/NCC hydrogel": {
+    "p_smiles": null,
+    "description": "Nanocomposite hydrogel: poly(MAA-co-AAm) copolymer matrix with 10 wt% Cloisite 30B nanoclay (organo-modified montmorillonite) exfoliated between polymer chains. XRD shows loss of the clay 001 peak, indicating exfoliation.",
+    "note": "Composite/blend - no single P-SMILES. Represent as its two components: the poly(MAA-co-AAm) copolymer (see its entry) + Cloisite 30B nanoclay. Cloisite 30B = montmorillonite (layered aluminosilicate, inorganic - no SMILES) surface-modified with a quaternary ammonium salt (methyl tallow bis-2-hydroxyethyl ammonium). Quat modifier fragment SMILES: [N+](C)(CCO)(CCO)C.",
+    "components": [
+      "poly(MAA-co-AAm) hydrogel",
+      "Cloisite 30B nanoclay (organo-montmorillonite)"
+    ],
+    "papers": [
+      "10.21203/rs.3.rs-1071501/v1"
+    ]
+  },
+  "PANI": {
+    "p_smiles": "[*]Nc1ccc(N[*])cc1",
+    "description": "Polyaniline (emeraldine). Conducting polymer of aniline; repeat shown is the reduced (leucoemeraldine) amine unit. Real material alternates amine and imine units depending on oxidation/doping state.",
+    "note": "Emeraldine base P-SMILES (amine unit). Imine (quinoid) unit: [*]N=C1C=CC(=[*])C=C1. -NH- groups protonate under acid (doping), giving the cationic sites that bind anionic dyes.",
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "Polypyrrole": {
+    "p_smiles": "[*]c1ccc([*])[nH]1",
+    "description": "Polypyrrole. Conducting polymer of pyrrole, alpha-alpha' linked. The protonatable N-H backbone binds anionic dyes via electrostatic + pi-pi interactions.",
+    "note": "Neutral (undoped) repeat unit shown. Doped/oxidized form carries delocalized positive charge with counter-anions.",
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "PANI nanofibers": {
+    "p_smiles": "[*]Nc1ccc(N[*])cc1",
+    "description": "Polyaniline in nanofiber morphology (50-80 nm diameter). Same chemistry as bulk PANI; high surface area improves dye uptake.",
+    "note": "Same P-SMILES as PANI emeraldine amine unit; difference is morphology, not chemistry.",
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "PANI powder": {
+    "p_smiles": "[*]Nc1ccc(N[*])cc1",
+    "description": "Crosslinked polyaniline powder (sponge-like, porous). Same backbone as PANI.",
+    "note": "Same PANI emeraldine repeat; crosslinked variant. Crosslinker not specified in review.",
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "PANI hollow nanotubes": {
+    "p_smiles": "[*]Nc1ccc(N[*])cc1",
+    "description": "Polyaniline hollow nanotubes (inner dia 50-60 nm). Same PANI chemistry, tubular morphology.",
+    "note": "Same PANI emeraldine repeat unit.",
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "PANI-HNTs": {
+    "p_smiles": null,
+    "description": "Polyaniline-halloysite nanotube composite. PANI deposited on halloysite (Al2Si2O5(OH)4 aluminosilicate nanotubes).",
+    "note": "Composite. Components: PANI (see entry) + halloysite (inorganic aluminosilicate, no SMILES). NOTE: distinct from 'PANI hollow nanotubes' which are pure PANI.",
+    "components": [
+      "PANI",
+      "Halloysite nanotubes (inorganic)"
+    ],
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "Polyvinyl alcohol": {
+    "p_smiles": "[*]CC([*])O",
+    "description": "Poly(vinyl alcohol) (PVA). Linear polymer with pendant hydroxyl on every other carbon; H-bonding hydroxyls drive dye binding.",
+    "note": "Idealized fully-hydrolyzed repeat unit; commercial PVA often partially acetylated.",
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "Starch/polyaniline": {
+    "p_smiles": null,
+    "description": "Starch/polyaniline composite. Blend of amylose/amylopectin starch with conducting PANI.",
+    "note": "Composite. Components: starch (alpha-glucan; glucose unit P-SMILES [*]OC1OC(CO)C(O)C(O)C1[*]) + PANI (see entry).",
+    "components": [
+      "Starch",
+      "PANI"
+    ],
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "Cellulose nanocrystal-reinforced keratin": {
+    "p_smiles": null,
+    "description": "Keratin protein reinforced with cellulose nanocrystals (CNC). Two-biopolymer composite: keratin (protein) + crystalline cellulose.",
+    "note": "Composite. Cellulose unit P-SMILES: [*]OC1OC(CO)C(O[*])C(O)C1O. Keratin = protein (no single repeat); rich in cysteine/charged residues that bind dyes.",
+    "components": [
+      "Cellulose nanocrystals",
+      "Keratin (protein)"
+    ],
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "Cellulose-g-poly(acrylic acid-co-acrylamide)": {
+    "p_smiles": null,
+    "description": "Cellulose backbone graft-copolymerized with poly(acrylic acid-co-acrylamide). Carboxylate + amide functional graft chains provide high-capacity dye binding.",
+    "note": "Graft copolymer. Cellulose backbone unit: [*]OC1OC(CO)C(O[*])C(O)C1O. Graft chain repeat (AA + AAm): [*]CC(C(=O)O)CC([*])C(N)=O. Carboxyls deprotonate above pH ~5.",
+    "components": [
+      "Cellulose",
+      "poly(acrylic acid-co-acrylamide)"
+    ],
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "Alpha-cellulose/magnetite/polypyrrole": {
+    "p_smiles": null,
+    "description": "Alpha-cellulose coated with Fe3O4 magnetite nanoparticles and conducting polypyrrole. Magnetic three-component composite.",
+    "note": "Composite. Cellulose unit: [*]OC1OC(CO)C(O[*])C(O)C1O; polypyrrole unit: [*]c1ccc([*])[nH]1; Fe3O4 inorganic (no SMILES).",
+    "components": [
+      "Alpha-cellulose",
+      "Fe3O4",
+      "Polypyrrole"
+    ],
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "Polypyrrole-MWCNT": {
+    "p_smiles": null,
+    "description": "Polypyrrole composited with multi-walled carbon nanotubes.",
+    "note": "Composite. Polypyrrole unit: [*]c1ccc([*])[nH]1; MWCNT = graphitic carbon nanotube (no molecular SMILES).",
+    "components": [
+      "Polypyrrole",
+      "MWCNT (carbon nanotube)"
+    ],
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "PANI/GO": {
+    "p_smiles": null,
+    "description": "Polyaniline / graphene oxide composite.",
+    "note": "Composite. PANI (see entry) + graphene oxide (oxidized graphene sheet; no single SMILES).",
+    "components": [
+      "PANI",
+      "Graphene oxide"
+    ],
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "PANI/rGO": {
+    "p_smiles": null,
+    "description": "Polyaniline / reduced graphene oxide composite.",
+    "note": "Composite. PANI (see entry) + reduced graphene oxide (no single SMILES).",
+    "components": [
+      "PANI",
+      "Reduced graphene oxide"
+    ],
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "PANI-modified rice husk composite": {
+    "p_smiles": null,
+    "description": "Rice husk (lignocellulosic biomass) modified with polyaniline coating.",
+    "note": "Composite. PANI (see entry) + rice husk (lignocellulose + silica; heterogeneous biomass, no single SMILES).",
+    "components": [
+      "PANI",
+      "Rice husk (lignocellulose)"
+    ],
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "PANI/Fe3O4": {
+    "p_smiles": null,
+    "description": "Polyaniline / magnetite composite (magnetic adsorbent).",
+    "note": "Composite. PANI (see entry) + Fe3O4 (inorganic magnetite, no SMILES).",
+    "components": [
+      "PANI",
+      "Fe3O4"
+    ],
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "PANI/TiO2": {
+    "p_smiles": null,
+    "description": "Polyaniline / titanium dioxide composite.",
+    "note": "Composite. PANI (see entry) + TiO2 (inorganic, no SMILES).",
+    "components": [
+      "PANI",
+      "TiO2"
+    ],
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "Chitosan/PANI/ZnO": {
+    "p_smiles": null,
+    "description": "Chitosan / polyaniline / zinc oxide ternary composite.",
+    "note": "Composite. Chitosan (see entry) + PANI (see entry) + ZnO (inorganic, no SMILES).",
+    "components": [
+      "Chitosan",
+      "PANI",
+      "ZnO"
+    ],
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "Chitosan nanoparticles on fibrous carrier": {
+    "p_smiles": null,
+    "description": "Chitosan nanoparticles immobilized on a fibrous support carrier.",
+    "note": "Chitosan (see Chitosan entry for P-SMILES) on an unspecified fibrous carrier. Treat adsorbent-active component as chitosan.",
+    "components": [
+      "Chitosan",
+      "Fibrous carrier (unspecified)"
+    ],
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "Chitosan-Fe(III) spinel ferrite composite": {
+    "p_smiles": null,
+    "description": "Chitosan crosslinked with glutaraldehyde, dispersed with 15% spinel ferrite. Magnetic chitosan composite.",
+    "note": "Composite. Chitosan (see entry) + spinel ferrite (inorganic, no SMILES); glutaraldehyde crosslinks.",
+    "components": [
+      "Chitosan",
+      "Spinel ferrite"
+    ],
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "Fe2O3-chitosan-bamboo sawdust": {
+    "p_smiles": null,
+    "description": "Fe2O3 / chitosan / bamboo sawdust composite. Magnetic biocomposite.",
+    "note": "Composite. Chitosan (see entry) + bamboo sawdust (lignocellulose) + Fe2O3 (inorganic).",
+    "components": [
+      "Chitosan",
+      "Bamboo sawdust (lignocellulose)",
+      "Fe2O3"
+    ],
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "Chitosan-EDTA-magnetic graphene oxide": {
+    "p_smiles": null,
+    "description": "Chitosan functionalized with EDTA on magnetic graphene oxide.",
+    "note": "Composite. Chitosan (see entry) + EDTA (HOOCCH2)2NCCN(CH2COOH)2 chelator + magnetic GO (Fe3O4 + graphene oxide).",
+    "components": [
+      "Chitosan",
+      "EDTA",
+      "Magnetic graphene oxide"
+    ],
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  },
+  "Cross-linked chitosan/sepiolite clay": {
+    "p_smiles": null,
+    "description": "Chitosan crosslinked and composited with sepiolite clay (Mg-silicate).",
+    "note": "Composite. Chitosan (see entry) + sepiolite (Mg4Si6O15(OH)2; fibrous clay, no SMILES).",
+    "components": [
+      "Chitosan",
+      "Sepiolite clay"
+    ],
+    "papers": [
+      "10.1039/d1ma00354b"
+    ]
+  }
+}
