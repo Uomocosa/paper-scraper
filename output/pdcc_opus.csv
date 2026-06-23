@@ -1,0 +1,61 @@
+POLYMER_USED,DRUG,WATER_PH,CONCENTRATION,CAPACITY,SOURCE
+Chitosan,Methylene blue,7.0,50.0,41.67,Table.3
+BC aerogel,Methylene blue,6.5,10.0,4.1,Fig.9
+BC aerogel,Methylene blue,6.5,50.0,16.6,Fig.9
+BC aerogel,Methylene blue,6.5,100.0,22.8,Fig.9
+BC aerogel,Methylene blue,6.5,200.0,29.7,Fig.9
+BC aerogel,Methylene blue,6.5,350.0,30.4,Fig.9
+BC aerogel,Methylene blue,6.5,400.0,29.8,Fig.9
+BC aerogel,Methylene blue,3.6,50.0,7.6,Fig.8
+BC aerogel,Methylene blue,4.5,50.0,13.8,Fig.8
+BC aerogel,Methylene blue,6.5,50.0,14.8,Fig.8
+BC aerogel,Methylene blue,9.5,50.0,15.8,Fig.8
+BC aerogel,Methylene blue,11.0,50.0,16.3,Fig.8
+BC aerogel,Rhodamine B,6.5,200.0,28.0,Fig.13
+BC aerogel,Crystal violet,6.5,200.0,33.0,Fig.13
+BC aerogel,Malachite green,6.5,200.0,48.6,Fig.13
+BC aerogel,Congo red,6.5,200.0,101.4,Fig.13
+BC aerogel,Methyl orange,6.5,200.0,0.0,Fig.13
+BC aerogel,Sunset yellow,6.5,200.0,0.0,Fig.13
+BC aerogel,Quinoline yellow,6.5,200.0,0.0,Fig.13
+Cellulose citrate,Methylene blue,6.2,10.0,9.57,Fig.5
+Cellulose citrate,Methylene blue,6.2,20.0,18.0,Fig.5
+Cellulose citrate,Methylene blue,6.2,30.0,26.86,Fig.3
+Cellulose citrate,Methylene blue,6.2,40.0,36.5,Fig.5
+Cellulose citrate,Methylene blue,6.2,50.0,45.5,Fig.5
+Cellulose citrate,Methylene blue,6.2,70.0,59.0,Fig.5
+Cellulose citrate,Methylene blue,6.2,100.0,77.5,Fig.5
+Cellulose citrate,Methylene blue,6.2,120.0,82.0,Fig.5
+Cellulose citrate,Methylene blue,6.2,150.0,88.0,Fig.5
+Cellulose citrate,Methylene blue,3.0,30.0,25.55,Fig.6
+Cellulose citrate,Methylene blue,4.0,30.0,26.4,Fig.6
+Cellulose citrate,Methylene blue,5.0,30.0,26.7,Fig.6
+Cellulose citrate,Methylene blue,6.0,30.0,26.85,Fig.6
+Cellulose citrate,Methylene blue,7.0,30.0,27.75,Fig.6
+Cellulose citrate,Methylene blue,8.0,30.0,27.8,Fig.6
+Cellulose citrate,Methylene blue,9.0,30.0,28.0,Fig.6
+Cellulose citrate,Methylene blue,10.0,30.0,28.1,Fig.6
+Coconut husk cellulose,Methylene blue,7.0,30.0,2.9034,Table.6
+PANI,Congo red,6.55,20.0,250.01,Table.7
+Polypyrrole,Congo red,6.55,20.0,66.66,Table.7
+PANI powder,Methylene blue,,3.9,13.854,Table.7
+Coconut husk cellulose,Methylene blue,5.0,65.0,5.883,Table.2
+Coconut husk cellulose,Methylene blue,5.0,124.0,11.445,Table.2
+Coconut husk cellulose,Methylene blue,8.36,65.0,6.149,Table.2
+Coconut husk cellulose,Methylene blue,5.0,65.0,5.883,Table.2
+Coconut husk cellulose,Methylene blue,3.0,30.0,2.526,Table.2
+Coconut husk cellulose,Methylene blue,5.0,65.0,5.889,Table.2
+Coconut husk cellulose,Methylene blue,7.0,100.0,9.05,Table.2
+Coconut husk cellulose,Methylene blue,3.0,100.0,7.59,Table.2
+Coconut husk cellulose,Methylene blue,5.0,65.0,5.161,Table.2
+Coconut husk cellulose,Methylene blue,3.0,100.0,8.44,Table.2
+Coconut husk cellulose,Methylene blue,7.0,100.0,9.65,Table.2
+Coconut husk cellulose,Methylene blue,1.64,65.0,4.66,Table.2
+Coconut husk cellulose,Methylene blue,7.0,30.0,2.904,Table.2
+Coconut husk cellulose,Methylene blue,5.0,65.0,5.954,Table.2
+Coconut husk cellulose,Methylene blue,5.0,65.0,5.941,Table.2
+Coconut husk cellulose,Methylene blue,5.0,65.0,5.909,Table.2
+Coconut husk cellulose,Methylene blue,5.0,65.0,5.934,Table.2
+Coconut husk cellulose,Methylene blue,7.0,30.0,2.769,Table.2
+Coconut husk cellulose,Methylene blue,3.0,30.0,2.334,Table.2
+Coconut husk cellulose,Methylene blue,5.0,6.0,0.561,Table.2

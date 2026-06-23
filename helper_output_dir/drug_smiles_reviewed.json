@@ -1,0 +1,14 @@
+{
+  "methylene blue": "CN(C)c1ccc2nc3ccc(=[N+](C)C)cc-3sc2c1.[Cl-]",
+  "rhodamine b": "CCN(CC)c1ccc2c(c1)Oc1cc(N(CC)CC)ccc1c2-c1ccccc1C(=O)O.[Cl-]",
+  "crystal violet": "CN(C)c1ccc(cc1)[C+](c1ccc(N(C)C)cc1)c1ccc(N(C)C)cc1.[Cl-]",
+  "malachite green": "CN(C)c1ccc(cc1)[C+](c1ccccc1)c1ccc(N(C)C)cc1.[Cl-]",
+  "congo red": "Nc1ccc2cc(ccc2c1N=Nc1ccc(cc1)-c1ccc(cc1)N=Nc1c(N)ccc2cc(ccc12)S(=O)(=O)[O-])S(=O)(=O)[O-].[Na+].[Na+]",
+  "methyl orange": "CN(C)c1ccc(cc1)N=Nc1ccc(cc1)S(=O)(=O)[O-].[Na+]",
+  "sunset yellow": "Oc1ccc2cc(ccc2c1N=Nc1ccc(cc1)S(=O)(=O)[O-])S(=O)(=O)[O-].[Na+].[Na+]",
+  "quinoline yellow": "O=C1c2ccccc2C(=O)C1c1ccc2ccccc2n1",
+  "reactive black 5": "OS(=O)(=O)CCOS(=O)(=O)c1ccc(N=Nc2ccc3c(N)c(N=Nc4ccc(S(=O)(=O)CCOS(=O)(=O)O)cc4)c(S(=O)(=O)O)cc3c2S(=O)(=O)O)cc1",
+  "acid red 18": "Oc1c(N=Nc2ccc(S(=O)(=O)[O-])c3cc(S(=O)(=O)[O-])ccc23)c(S(=O)(=O)[O-])cc2cccc(c12)",
+  "acid orange 7": "Oc1ccc2ccccc2c1N=Nc1ccc(S(=O)(=O)[O-])cc1.[Na+]",
+  "bromothymol blue": "CC(C)c1cc(C2(c3ccc4ccccc4c3)OS(=O)(=O)c3ccccc32)c(O)c(Br)c1"
+}

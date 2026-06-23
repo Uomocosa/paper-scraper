@@ -1,0 +1,23 @@
+Featurization Check Summary
+========================================
+Input: output/training_dataset_reviewed.csv
+Total rows: 60
+OVERALL PASS: 58
+OVERALL FAIL: 2
+All skipped (no real failures): 0
+
+Failures by stage (actual failures, not SKIPPED):
+  Format (ranges/NaN)           :    1/  60 failed (1.7%)
+  SMILES validity               :    1/  60 failed (1.7%)
+  PSMILES validity              :    0/  60 failed (0.0%)
+  PSMILES capping               :    0/  60 failed (0.0%)
+  logP (RDKit)                  :    0/  59 failed (0.0%)
+  Fingerprint (RDKit)           :    0/  59 failed (0.0%)
+  logD (dimorphite_dl)          :    0/  58 failed (0.0%)
+  Net charge (dimorphite_dl)    :    0/  58 failed (0.0%)
+  Polymetrix PSMILES feat.      :    0/  60 failed (0.0%)
+  Polymetrix SMILES feat.       :    0/  59 failed (0.0%)
+
+First failure reasons (top 20):
+     1x  RDKit MolFromSmiles returned None
+     1x  WATER_PH=NaN

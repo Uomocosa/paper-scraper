@@ -1,0 +1,13 @@
+{
+  "chitosan": "[*]OC1C(N)C(O[*])OC(CO)C1O",
+  "bc aerogel": "[*]OC1OC(CO)C(O[*])C(O)C1O",
+  "cellulose citrate": "[*]OC1OC(COC(=O)CC(O)(CC(=O)O)C(=O)O)C(O[*])C(O)C1O",
+  "coconut husk cellulose": "[*]OC1OC(CO)C(O[*])C(O)C1O",
+  "poly(maa-co-aam) hydrogel": "[*]CC(C)(C(=O)O)CC([*])C(N)=O",
+  "pani": "[*]Nc1ccc(N[*])cc1",
+  "polypyrrole": "[*]c1ccc([*])[nH]1",
+  "pani nanofibers": "[*]Nc1ccc(N[*])cc1",
+  "pani powder": "[*]Nc1ccc(N[*])cc1",
+  "pani hollow nanotubes": "[*]Nc1ccc(N[*])cc1",
+  "polyvinyl alcohol": "[*]CC([*])O"
+}
