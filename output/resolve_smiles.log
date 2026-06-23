@@ -1,0 +1,6 @@
+2026-06-23 14:33:15.748 | INFO     | __main__:main:307 - OPENCODE_GO_KEY found. AI polymer resolution available.
+2026-06-23 14:33:15.987 | INFO     | __main__:main:318 - Loaded 33226 rows from C:\Users\acer\Desktop\Samuele\Syncthing\LWF - LightWeigth Folder\[P] Python\lele-paper-scraper\classified_adsorption_data.csv
+2026-06-23 14:33:16.001 | INFO     | __main__:main:326 - Valid rows (all 5 fields): 1604
+2026-06-23 14:33:16.004 | INFO     | __main__:main:340 - Unique drugs: 245
+2026-06-23 14:33:16.005 | INFO     | __main__:main:341 - Unique polymers: 375
+2026-06-23 14:33:16.005 | INFO     | __main__:main:342 - Papers with polymers: 286
