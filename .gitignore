@@ -11,6 +11,8 @@ SEED_PAPERS/*
 !PAPERS/SEED/.gitkeep
 !SEED_PAPERS/.gitkeep
 
+*alvea*
+
 __my_variables__.py
 
 # From minGPT

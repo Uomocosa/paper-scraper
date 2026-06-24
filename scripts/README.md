@@ -63,6 +63,8 @@
 | `reanalyze_papers.sh` | Re-analyze selected papers with a different Go model (requires model argument, e.g., `kimi-k2.6`, `mimo-v2.5`) |
 | `compare_models.py` | Compare two model output directories with 5-field matching (10% numeric tolerance). Usage: `--new review_kimi-k2_6` |
 | `detect_conflicts.py` | Find papers analyzed by 2+ models where the extracted data differs significantly |
+| `check_psmiles_smiles_conflicts.py` | Report `(POLYMER_PSMILES, DRUG_SMILES)` tuples shared by 2+ papers. Takes an optional input CSV; writes `psmiles_smiles_conflicts.csv` |
+| `build_without_conflicts.py` | Emit `output_filtered/` PDCC CSVs with those duplicate tuples removed **globally** (best model wins each tuple, one paper) so concatenating all per-model CSVs is conflict-free |
 | `list_good_papers.py` | Rank papers by data quality, export CSV for re-analysis |
 
 ## Pipeline Execution Order
@@ -110,3 +112,12 @@ All generated datasets live in `output/`:
 | `training_dataset_gemma4_text.csv` | 0 | Gemma4 (pdf2text) — no data extracted |
 | `training_dataset.csv` | 321 | All models combined (deduplicated) |
 | `training_dataset_matched_deepseek_kimi.csv` | 94 | Gold standard — both models agree |
+
+### `output_filtered/` — conflict-free drop-in for bio (`build_without_conflicts.py`)
+
+Per-model PDCC CSVs with `(PSMILES, SMILES)` tuples deduplicated **globally** (best
+model wins each tuple, one paper). Concatenate them all on the bio side
+(`--pdcc-datasets opus deepseek kimi gemma`) for a conflict-free training set; there
+is no combined file. Lower-priority files are thinned where deepseek wins shared
+tuples (e.g. kimi 123→8). `pdcc_matched_*` is standalone (deduped within itself).
+Combined pool ≈ 297 rows. See `removed_rows_report.csv` for what was dropped.

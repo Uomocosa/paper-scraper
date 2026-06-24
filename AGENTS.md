@@ -14,6 +14,8 @@ pixi run python scripts/merge_polymer_results.py          # Merge all parts
 pixi run python scripts/build_training_dataset.py     # Merge all → output/
 pixi run python scripts/match_model_datasets.py       # Cross-model matching
 pixi run python scripts/check_featurization_failures.py  # Check rows that fail bio featurization
+pixi run python scripts/check_psmiles_smiles_conflicts.py  # Find (PSMILES, SMILES) tuples shared by 2+ papers
+pixi run python scripts/build_without_conflicts.py     # Emit output_filtered/ PDCC CSVs with cross-paper dup tuples removed
 pixi run python scripts/convert_to_pdcc_format.py     # Convert CSVs to PDCC format (6 cols)
 pixi run python scripts/build_reviewed_dataset.py     # Build dataset from manual review
 pixi run pytest                                # Run tests (skip slow/external)
@@ -119,6 +121,27 @@ Resume-safe: if a terminal crashes, re-run the same command and it skips already
 ### helper_output_dir/
 
 Intermediate files from the auto pipeline (old CSVs with extra columns, featurization reports, polymer part files, old JSONs, logs). Not consumed by bio directly.
+
+### output_filtered/
+
+Deduplicated drop-in set for bio, built by `build_without_conflicts.py`. The dedup
+is **global across all the per-model CSVs**, because bio concatenates them and has
+no PAPER column to dedup itself. For every `(POLYMER_PSMILES, DRUG_SMILES)` tuple,
+the rows are kept only in the **best model's** CSV under a single paper, and removed
+from every other CSV. Winner = best model (`opus > deepseek > kimi > gemma`), then
+within that model the paper with most rows, ties by paper name. So concatenating all
+the per-model outputs (`--pdcc-datasets opus deepseek kimi gemma`) yields a
+conflict-free training set — there is **no combined output file** (assemble it via
+CLI). Consequence: lower-priority files are heavily thinned (e.g. kimi 123→8) since
+deepseek wins shared tuples — the data isn't lost, it lives in the higher-priority file.
+
+`pdcc_matched_*` is the deepseek∩kimi agreement subset (rows duplicate deepseek/kimi),
+so it is **not** in the cross-model contest — it is emitted standalone, deduped only
+within itself, for separate evaluation.
+
+Also includes a copy of the two name→structure JSON dicts (self-contained) and
+`removed_rows_report.csv` (KEPT_IN, tuple, WINNER_MODEL/PAPER, DROPPED_MODEL/PAPER,
+ROWS_DROPPED).
 
 ### Manual Review (`claude_opus_4_8_review/`)
 

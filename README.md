@@ -213,6 +213,7 @@ or the name is incorrect. Unresolved drugs (23) are dropped from the final datas
 | `output/training_dataset_gemma4_image.csv` | build_training_dataset.py | 43 rows | Gemma4 (pdf2image) — image mode yielded limited but valid data |
 | `output/training_dataset_matched_deepseek_kimi.csv` | match_model_datasets.py | 94 rows | Gold standard: DeepSeek + Kimi agree (5-field, 10% tolerance) |
 | `output/training_dataset.csv` | build_training_dataset.py | 321 rows | All models combined (deduplicated) |
+| `output_filtered/pdcc_*_without_conflicts.csv` | build_without_conflicts.py | ~297 rows (pool) | Per-model PDCC CSVs with `(PSMILES, SMILES)` tuples deduped globally (best model wins). Concatenate all for a conflict-free bio training set; no combined file. |
 | `output/resolve_smiles.log` | resolve_smiles.py | — | Full resolution log |
 | `model_comparison.csv` | compare_models.py | ~120 rows | DeepSeek vs Kimi per-paper agreement |
 

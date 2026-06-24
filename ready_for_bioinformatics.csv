@@ -1079,7 +1079,6 @@ CS/PVA sponge,Diclofenac,3.0,20,4.35,,,C1=CC=C(C(=C1)CC(=O)O)NC2=C(C=CC=C2Cl)Cl
 CS/PVA sponge,Diclofenac,3.0,50,7.82,,,C1=CC=C(C(=C1)CC(=O)O)NC2=C(C=CC=C2Cl)Cl
 CS/PVA sponge,Diclofenac,3.0,100,11.45,,,C1=CC=C(C(=C1)CC(=O)O)NC2=C(C=CC=C2Cl)Cl
 Chitosan,Pb(II),5.0,10,15.2,,,[Pb+2]
-**Polymers (Adsorbents):** Chitosan,Biochar,Activated Carbon,,,,,
 poly(acrylamide-co-maleic acid),Diclofenac,4.0,50,128.5,,,C1=CC=C(C(=C1)CC(=O)O)NC2=C(C=CC=C2Cl)Cl
 poly(acrylamide-co-maleic acid),Ibuprofen,4.0,50,44.2,,,CC(C)CC1=CC=C(C=C1)C(C)C(=O)O
 poly(acrylamide-co-maleic acid),Diclofenac,4.0,100,112.3,,,C1=CC=C(C(=C1)CC(=O)O)NC2=C(C=CC=C2Cl)Cl
@@ -1346,3 +1345,688 @@ Chitosan (crab shells),Methylene blue,NaN,NaN,56.0,Priyanga et al. 2026,,
 Chitosan (crab shells),Methylene blue,NaN,40,21.2,Priyanga et al. 2026,,
 Chitosan (crab shells),Methylene blue,5.2,NaN,15.86,Priyanga et al. 2026,,
 Chitosan (crab shells),Methylene blue,7.2,NaN,16.19,Priyanga et al. 2026,,
+*   **Adsorbents/Polymers:** Chitosan,Graphene oxide,Titanium dioxide (from $\text{TiO}_2$),,,,,
+Polyvinyl Fluoride Derived Porous Carbon,Bisphenol A,,,122.5,,,
+*   **Polymers/Adsorbents:** Metakaolin,Clinoptilolite,Hydrotalcite,Chitosan,Halloysite,Polyvinyl Fluoride Derived Porous Carbon,,
+Chitosan + 50% lignin,Cr(VI),2,20,18,,,
+Chitosan + 50% lignin,Cr(VI),2,40,28,,,
+Chitosan + 50% lignin,Cr(VI),2,60,35,,,
+In2S3-chitosan,Victoria Blue,7,100,683.34,,,
+Ppy/Fe3On,Cr(VI),2,25,202,,,
+rubber waste-based polymeric adsorbent,Methylene Blue,7,15,119,,,
+*   **Polymers/Adsorbents:** PSW-P-500 (acid-activated oil palm kernels),activated carbon from rosemary leaves,neem bark activated carbon.,,,,,
+starch-halloysite nanotube composite,methylene blue,5.5,25,10,,,
+starch-halloysite nanotube composite,methylene blue,5.5,50,12,,,
+starch-halloysite nanotube composite,methylene blue,5.5,75,14,,,
+*   **Polymers/Adsorbents:** $\text{Fe}_3\text{O}_4\text{@PtTarH}$,$\text{Fe}_3\text{O}_4\text{@Cd}$,$\text{Fe}_3\text{O}_4\text{@Al}$,$\text{Fe}_3\text{O}_4$,$\text{BP}$,$\text{IL-MNP-BCD-TDI}$,,
+* **Polymers/Composites:** $\text{PNIPAm-co-LDH}_N$,$\text{PNIPAm-co-LDH}_H$,and $\text{P/S-2}$ (lines 435-438),,,,,
+*   **Adsorbents (Polymers):** Cassia fistula pod,Shell activated carbon,Natural clay,Sugarcane bagasse,Black wattle bark,Cow dung,,
+*   **Polymers (LDM sources):** Taro,Phylloca intima L,agave bagasse,Orange peel,foxtail millet,Sago Bark,,
+The provided page does not contain the full chemical names for the polymers ($\text{TFCO}$,$\text{TFOH}$,$\text{TFPO}$) or the drug/pollutant ($\text{NOR}$); it only provides their abbreviations.,,,,,
+chitosan,CHCl1,6.8,50,50,,,
+*   **Polymers:** chitosan,5:1 REC/CS,3:1 REC/CS,,,,,
+cellulose dinitrobenzoate,creatinine,7.0,100,1.471,,,
+cellulose dinitrobenzoate,creatinine,5,100,1.8,,,
+cellulose dinitrobenzoate,creatinine,6,100,1.6,,,
+cellulose dinitrobenzoate,creatinine,8,100,1.35,,,
+cellulose dinitrobenzoate,creatinine,9,100,1.4,,,
+cellulose dinitrobenzoate,creatinine,10,100,1.6,,,
+cellulose dinitrobenzoate,creatinine,11,100,1.8,,,
+cellulose dinitrobenzoate,creatinine,7.0,225,3.88,,,
+*   **Polymers:** SAA-1,SAA-2,SAA-3 (referred to as hydrogels),,,,,
+Hydrogel (PAA/Starch/MBA 95:5),Methylene Blue,10.0,20,26.7,,,
+*   **Polymer/Components:** Polyacrylic acid (PAA),Starch,N,N'-Methylenebisacrylamide (MBA),,,,
+cross-linked polyimide,orange 10,3,500,599,,,
+poly PI,AO-10,3,100,250,,,
+poly PI,AO-10,3,200,450,,,
+poly PI,AO-10,3,300,600,,,
+poly PI,AO-10,3,400,750,,,
+Cross-linked porous di-poly (amide),Acid orange 10,3,500,599,,,
+Cross-linked quaternary chitosan,Reactive orange 16,4,2000,1060,,,
+*   **Polymers/Adsorbents:** Cross-linked porous di-poly (amide),Cross-linked quaternary chitosan,Modified magnetic silica,,,,,
+PVA/CMC/GEL/ZSM-5,Rhodamine B,10,20,14.0,,,
+PVA/CMC/GEL/ZSM-5,Rhodamine B,10,30,12.0,,,
+PVA/CMC/GEL/ZSM-5,Rhodamine B,10,40,15.0,,,
+PVA/CMC/GEL/ZSM-5,Rhodamine B,10,50,8.0,,,
+PVA/CMC/GEL/ZSM-5,Rhodamine B,2,10,1.5,,,
+PVA/CMC/GEL/ZSM-5,Rhodamine B,4,10,2.0,,,
+PVA/CMC/GEL/ZSM-5,Rhodamine B,6,10,2.8,,,
+PVA/CMC/GEL/ZSM-5,Rhodamine B,8,10,3.5,,,
+*   **Polymer/Membrane Components:** Poly(vinyl alcohol) (PVA),Carboxymethyl cellulose (CMC),Gelatin (GEL),and Zeolite Socony Mobil-5 (ZSM-5).,,,,
+PVA/CMC/GEL/ZSM-5,Rh B,10,10,4.85,,,
+Cellulose,Congo Red,11,50,72.993,,,C1=CC=C2C(=C1)C(=CC(=C2N)N=NC3=CC=C(C=C3)C4=CC=C(C=C4)N=NC5=C(C6=CC=CC=C6C(=C5)S(=O)(=O)[O-])N)S(=O)(=O)[O-].[Na+].[Na+]
+*   **Polymers/Adsorbents:** Alginate beads,Al-TOCNF-PEI beads,Al-TOCNF-CR beads.,,,,,
+SDS-modified chitosan,Cr(III),4,1,0.1,,,
+SDS-chitosan,Cr(III),5,1,1.1,,,
+SDS-chitosan,Cr(III),6,1,1.25,,,
+SDS-chitosan,Cr(III),7,1,1.7,,,
+SDS-chitosan,Cr(III),4,1.0,0.75,,,
+polyacrylic resin,Cr(VI),2,1,142.86,,,
+polyacrylic resin,Cr(VI),2,5,15,,,
+polyacrylic resin,Cr(VI),2,10,60,,,
+polyacrylic resin,Cr(VI),2,20,110,,,
+polyacrylic resin,Cr(VI),2,30,120,,,
+polyacrylic and resin,Cr(VI),2,50,130,,,
+β-chitosan-dextrin conjugate magnetic,Methylene blue,13.0,40,196.2,,,
+Durian Seed Ca-alginate,Hg(II),3,10,0.6,,,
+Durian Seed Ca-alginate,Hg(II),4,10,0.9,,,
+Durian Seed Ca-alginate,Hg(II),5,10,1.3,,,
+Durian Seed Ca-alginate,Hg(II),6,10,1.3,,,
+Durian Seed Ca-alginate,Hg(II),7,10,1.2,,,
+durian seeds immobilized Ca-alginate bead,Hg(II),6,300,74.12,,,
+The provided page image does not contain the full chemical names for the polymers (SSS,SSS-KOHAC,$SSS-H_2PO_4$) or the pollutant (MB).,,,,,
+*   **Polymers:** SSS-H3PO4,SSS-KOHAC,RSSS,,,,,
+immobilized chitosan,Naphtol Blue (NBB),6.0,30,45.45,,,
+f-cellulose,diclofenac,5.5,10,18,,,C1=CC=C(C(=C1)CC(=O)O)NC2=C(C=CC=C2Cl)Cl
+f-cellulose,diclofenac,5.5,20,25,,,C1=CC=C(C(=C1)CC(=O)O)NC2=C(C=CC=C2Cl)Cl
+f-cellulose,diclofenac,5.5,30,30,,,C1=CC=C(C(=C1)CC(=O)O)NC2=C(C=CC=C2Cl)Cl
+f-cellulose,diclofenac,5.5,40,34,,,C1=CC=C(C(=C1)CC(=O)O)NC2=C(C=CC=C2Cl)Cl
+f-cellulose,diclofenac,5.5,50,37,,,C1=CC=C(C(=C1)CC(=O)O)NC2=C(C=CC=C2Cl)Cl
+f-cellulose,diclofenac,5.5,70,39,,,C1=CC=C(C(=C1)CC(=O)O)NC2=C(C=CC=C2Cl)Cl
+f-cellulose,diclofenac,5.5,80,40,,,C1=CC=C(C(=C1)CC(=O)O)NC2=C(C=CC=C2Cl)Cl
+f-cellulose,diclofenac,5.5,90,40,,,C1=CC=C(C(=C1)CC(=O)O)NC2=C(C=CC=C2Cl)Cl
+f-cellulose,diclofenac,5.5,100,40,,,C1=CC=C(C(=C1)CC(=O)O)NC2=C(C=CC=C2Cl)Cl
+CS-PEG-DA hydrogel,Diclofenac sodium,3.0,10,44.2,,,
+CS-PEG-DA hydrogel,Diclofenac sodium,4.0,10,48.1,,,
+CS-PEG-DA hydrogel,Diclofenac sodium,5.0,10,43.8,,,
+CS-PEG-DA hydrogel,Diclofenac sodium,6.0,10,42.9,,,
+CS-PEG-DA hydrogel,Diclofenac sodium,7.0,10,43.6,,,
+cellulose-based sponge (CS),Ibuprofen,4.0,20,15.4,,,CC(C)CC1=CC=C(C=C1)C(C)C(=O)O
+The full chemical names for the polymers ($\beta$-CDzNF,$\beta$-CDCMC,$\beta$-CDMZO) and the drugs/pollutants (CV,BF) are not provided in the provided image. Only the abbreviations are present.,,,,
+The provided image does not contain the full chemical names for the polymers or the drugs; it only uses the abbreviations **$\beta\text{-CDZnF}$**,**$\beta\text{-CDCMC}$**,**$\beta\text{-CDMCZO}$**,**BF**,and **CV**.,,,
+cryogel,As(V),7,100,22.11,,,
+polyacrylamide hydroxide cryogel,As(V),7,100,22,,,
+* **Polymers/Adsorbents:** Anchote peel,Pomoelo peel,Eggshell,Corn leaf,Chitosan,Halloysite,,
+sponge-like polymers,Carbamazepine,7.0,10,1.70,,,C1=CC=C2C(=C1)C=CC3=CC=CC=C3N2C(=O)N
+sponge-like polymers,Diclofenac,7.0,10,1.30,,,C1=CC=C(C(=C1)CC(=O)O)NC2=C(C=CC=C2Cl)Cl
+sponge-like polymers,Ibuprofen,7.0,10,0.90,,,CC(C)CC1=CC=C(C=C1)C(C)C(=O)O
+sponge-like polymers,Naproxen,7.0,10,1.30,,,C[C@@H](C1=CC2=C(C=C1)C=C(C=C2)OC)C(=O)O
+sponge-like polymers,Sulfamethoxazole,7.0,10,1.40,,,CC1=CC(=NO1)NS(=O)(=O)C2=CC=C(C=C2)N
+*   **Polymer/Material:** Fe-C-N composites (Iron,Carbon,Nitrogen),,,,,
+*   **Polymers/Adsorbents:** FCN-0,FCN-400,FCN-500,FCN-600 (referred to as composites/adsorbents in the text),,,,
+*   **Adsorbents (Polymers/Compounds):** *Moringa oleifera* leaves biomass,*Euclara schimperi* leaves,*Acacia albida* barks,Neem leaves,Orange peel,Neem sawdust,,
+* **Polymers (Adsorbents):** *Musas paradisiaca L. leaf*,*Syzgium aromaticum*,*Salvia salvia*,*Grape stalks*,*Walnut shells*,*Bamboo stalks*,,
+PVA/Chitosan,Carbamazepine,7.0,10,3.3,,,C1=CC=C2C(=C1)C=CC3=CC=CC=C3N2C(=O)N
+PVA/Chitosan,Diclofenac,7.0,10,1.6,,,C1=CC=C(C(=C1)CC(=O)O)NC2=C(C=CC=C2Cl)Cl
+PVA/Chitosan,Ibuprofen,7.0,10,1.1,,,CC(C)CC1=CC=C(C=C1)C(C)C(=O)O
+PVA/Chitosan,Naproxen,7.0,10,0.9,,,C[C@@H](C1=CC2=C(C=C1)C=C(C=C2)OC)C(=O)O
+PVA/Chitosan,Sulfamethoxazole,7.0,10,0.4,,,CC1=CC(=NO1)NS(=O)(=O)C2=CC=C(C=C2)N
+PVA/Chitosan,Trimethoprim,7.0,10,0.2,,,COC1=CC(=CC(=C1OC)OC)CC2=CN=C(N=C2N)N
+*   **Polymer/Material (as identified by labels):** Glu-550Z0.5-1st,UrGlu-550Z0.5-1st,Glu-550Z0.5-2nd,UrGlu-550Z0.5-2nd,Glu-550Z0.5-3rd,UrGlu-550Z0.5-3rd,,
+*   **Polymers:** The full chemical names for the polymers are not provided in the provided text; only their abbreviated codes (UrGlu450Z0.6-2nd,UrGlu450M0.6-2nd,and UrGlu450N0.6-2nd) are present.,,,,,
+Fe/Cu CNS-embedded cellulose-chitosan beads,norfloxacin,6.0,20,355,,,CCN1C=C(C(=O)C2=CC(=C(C=C21)N3CCNCC3)F)C(=O)O
+*   **Polymers (Adsorbents):** MagFe/SA,CA/TS-M,CG/IbZn,HAP@CT,Nat-HAP,GOMBr,,
+- **Row 4**: Cellulose,$Cu^{2+}$,pH 5,$C_0$ 100 mg/L,Capacity 298.62 mg/g,,,
+- **Polymers/Materials/Modifiers**: NFC,brushite,Loofah,Cellulose,KH 792,DTPA,,
+* **Polymers/Adsorbents:** PAMAM,PLA/PBAT-MEFB,HPEI (Note: The full chemical names for these abbreviations are not explicitly provided in the text of the provided image).,,,,,
+*   **Polymers:** The specific chemical names for the polymers (SP-1,SP-2,SP-3,SP-5) are not provided on this page.,,,,
+The provided image does not contain the full chemical names for the polymers (Al-PCB,Fe-PCB,Sn-PCB) or the drugs/pollutants (CY,MG); it only contains their abbreviations.,,,,
+Poly(HEMA-GMA)-PLL-Cu(II) cryogel,Acid Blue 113,4.0,2000,501.6,,,
+*   **Polymers (Adsorbents):** CGW400,CGW600,CGW900 (Note: The full chemical names for these adsorbents are not provided in the provided text snippet).,,,,,
+*   **Polymers (Adsorbents):** Moringa peregrina tree shell,Pistachio shell,Rice husk,Rubber seed (RSSC),CAC (activated carbon),Aspergillus niger,,
+Chitosan-based magnetic adsorbent,Tetracycline,7.0,25,103.67,,,C[C@@]1([C@H]2C[C@H]3[C@@H](C(=O)C(=C([C@]3(C(=O)C2=C(C4=C1C=CC=C4O)O)O)O)C(=O)N)N(C)C)O
+Nanocrystalline cellulose,Tetracycline,5.0,25,15.87,,,C[C@@]1([C@H]2C[C@H]3[C@@H](C(=O)C(=C([C@]3(C(=O)C2=C(C4=C1C=CC=C4O)O)O)O)C(=O)N)N(C)C)O
+*   **Polymers/Adsorbents:** Methylcellulose,Chitosan,Cellulose,Nanocrystalline cellulose,Biochar (from fiberboard biomass),,,
+The full chemical names for the polymers (**K**,**UL**,and **KUL**) and the pollutant (**CR**) are not explicitly provided on this page; only their abbreviations are used.,,,,,
+PMMA/RHA/PP,tartrazine,2.83,2.0,165.7,,,
+Chitosan,tartrazine,3.28,700,1065.5,,,
+*   **Adsorbents/Polymers:** PMMA/RHA/PP,Chitosan,CS-CTAB-AL,MWC,Moringa oleifera,KFCNCs,,
+KG-cl-poly(AA-co-NVI) hydrogel,tartrazine,3.0,30,201.5,,,
+RCTW gelatin beads,tartrazine,2.5,200,263.13,,,
+bacterial cellulose aerogel,methylene blue,4,50,16,,,
+aerogel,Methylene Blue,4.0,50,13.8,,,
+aerogel,Methylene Blue,5.0,50,15.8,,,
+aerogel,Methylene Blue,6.0,50,16.3,,,
+aerogel,Methylene Blue,7.0,50,59.3,,,
+aerogel,Methylene Blue,8.0,50,65.2,,,
+aerogel,Methylene Blue,6.5,50,61.0,,,
+aerogel,Methylene Blue,6.5,100,46.5,,,
+aerogel,Methylene Blue,6.5,150,29.7,,,
+aerogel,Methylene Blue,6.5,200,17.4,,,
+aerogel,Methylene Blue,6.5,250,14.9,,,
+aerogel,Methylene Blue,6.5,400,20.8,,,
+*   **Polymers/Compounds/Components:** Cellulose,Carboxymethyl cellulose,Poly(allylamine) hydrochloride,Sodium alginate,Iron hydroxide,Zinc oxide (ZnO),,
+bacterial cellulose aerogel,Sunset yellow,6.5,200,20,,,
+bacterial cellulose aerogel,Quinoline yellow,6.5,200,20,,,
+Synthesized cellulose-based membrane,Methylene Blue,7,5-50,94,,,
+*   **Polymers/Adsorbents:** Chitosan,Graphene Oxide,Coconut Husk Activated Carbon,Cellulose-based membrane.,,,,
+Cs/lig/PEG,Cr(VI),2,20,30,,,
+Cs/lig/PEG,Cr(VI),2,40,45,,,
+Cs/lig/PEG,Cr(VI),2,60,50,,,
+*   **POLYMER_USED and DRUG:** Found in the text and the legend of **Fig. 11**. The pollutant is $\text{Cr(VI)}$,and the polymers include $\text{Cs/lign}$,$\text{Cs/lign/PEG}$,$\text{Cs}$,and $\text{Cs/lign/MWCNTs}$.,,,
+Cs/lign/PEG,Cr(VI),not specified,20-160,63,,,
+*   **Polymers/Materials:** Tomato waste HDCA,Olive waste HDCA,HDCA-TiO2,Yeast biomass,Poplar HDCA.,,,
+*   **Polymers/Adsorbents:** MIL-100/Cell,$\text{Fe}_3\text{O}_4\text{@MIL-100(Fe)}$,MIL-101(NH$_2$),MIL-201,MIL-101-SO$_3$H,MIL-100(Fe)-SBA-15.,,
+Calcium alginate beads with Sp2b biomass,As(III),9,200,3.5,,,
+Chitosan Doped Graphite Novel Composite,Fluoride,6.5,1.5,3.7,,,
+Metal-alginate particles crosslinked with Fe2+,Ciprofloxacin,7.0,0.1-1.5,356.5,,,C1CC1N2C=C(C(=O)C3=CC(=C(C=C32)N4CCNCC4)F)C(=O)O
+Metal-alginate particles crosslinked with Fe2+,Doxycycline,7.0,0.1-2.5,90.0,,,C[C@@H]1[C@H]2[C@@H]([C@H]3[C@@H](C(=O)C(=C([C@]3(C(=O)C2=C(C4=C1C=CC=C4O)O)O)O)C(=O)N)N(C)C)O
+Metal-alginate particles crosslinked with Fe2+,Amoxicillin,7.0,0.05-1,11.0,,,CC1([C@@H](N2[C@H](S1)[C@@H](C2=O)NC(=O)[C@@H](C3=CC=C(C=C3)O)N)C(=O)O)C
+Bacterial cellulose/chitosan-MIL-100(Fe),Dacarbase,4.2,25,340.0,,,
+Chitosan,magnetite,and Arthrospira platensis,Tetracycline,8.0,25,,
+Chitosan,magnetite,and Arthrospira platensis,Ciprofloxacin,8.0,25,,
+Chitosan,magnetite,and Arthrospira platensis,Amoxicillin,8.0,25,,
+Chitosan,magnetite,and Chlorella vulgaris,Tetracycline,8.0,25,,
+Chitosan,magnetite,and Chlorella vulgaris,Ciprofloxacin,8.0,25,,
+Chitosan,magnetite,and Chlorella vulgaris,Amoxicillin,8.0,25,,
+Calcium phosphate-chitosan hybrid spheres,Tetracycline,11.0,0-50,223.8,,,C[C@@]1([C@H]2C[C@H]3[C@@H](C(=O)C(=C([C@]3(C(=O)C2=C(C4=C1C=CC=C4O)O)O)O)C(=O)N)N(C)C)O
+Calcium alginate/chitosan hybrid spheres,Norfloxacin,6.5,25,220.0,,,CCN1C=C(C(=O)C2=CC(=C(C=C21)N3CCNCC3)F)C(=O)O
+Polyethylene-grafted chitosan/chitosan spheres,Sodium diclofenac,5.0,50-200,253.3,,,
+Amino adipto/chitosan/chitosan crosslinked with glutaraldehyde,Sodium diclofenac,6.0,25,139.5,,,
+Metal-alginate particles crosslinked with $\text{Zn}^{2+}$,Metal-alginate particles crosslinked with $\text{Fe}^{2+}$,Bacterial cellulose,Chitosan,$\text{MIL-100(Fe)}$,Magnetite,,
+NH2-PAA/Alginate,Cd(II),6.0,100,45,,,[Cd+2]
+NH2-PAA/Alginate,Cd(II),200,85,,,,[Cd+2]
+NH2-PAA/Alginate,Cd(II),300,110,,,,[Cd+2]
+NH2-PAA/Alginate,Cd(II),400,130,,,,[Cd+2]
+NH2-PAA/Alginate hydrogel,Pb(II),6.0,50,39.91,,,[Pb+2]
+NH2-PAA/Alginate hydrogel,Mn(II),6.0,50,17.07,,,
+NH2-PAA/Alginate hydrogel,Cu(II),6.0,50,15.82,,,
+NH2-PAA/Alginate hydrogel,Ni(II),6.0,50,13.51,,,
+NH2-PAA/Alginate hydrogel,Cd(II),6.0,50,12.02,,,[Cd+2]
+NH2-PAA/Alginate hydrogel,Zn(II),6.0,50,9.78,,,
+NH2-PAA/Alginate,Cd(II),6.0,50,26.3,,,[Cd+2]
+chitosan/poly(ethyleneimine),Hg(II),5,200,180,,,
+chitosan/poly(ethyleneimine),Hg(II),400,300,300,,,
+chitosan/poly(ethyleneimine),Hg(II),600,400,400,,,
+chitosan/poly(ethyleneimine),Hg(II),800,450,450,,,
+*   **Adsorbents (Polymers/Materials):** CDC,Commercial graphene,Hydrogen peroxide oxidized graphene,Thermally activated graphene,Multi-walled carbon nanotubes (MWCNT),Mesoporous Artemisia,,
+Chitosan-walnut shells composite (Ch-W),Levofloxacin,4,10,4.23,,,C[C@H]1COC2=C3N1C=C(C(=O)C3=CC(=C2N4CCN(CC4)C)F)C(=O)O
+*   **Polymers/Compounds:** Chitosan,Walnut shells,Iron(III) oxide (from $\text{Fe}_3\text{O}_4$),Bentonite,Iron oxide.,,,
+*   **Adsorbents/Polymers:** ACF,ZnI,ACPs,,,,,
+TEMPO-oxidized cellulose,Cd(II),7,50,5.83,,,[Cd+2]
+cellulose,methylene blue,10,10,28.0,,,
+*   **Polymers:** $\text{N}_2\text{-CL}$,$\text{N}_3\text{-CL}$,"and $\text{N}_4\text{-CL}$ (identified in the text as ""three reactive cellulose derivatives"").",,,,,
+*   **Polymers:** The image only provides abbreviations for the cellulose derivatives ($\text{N}_2\text{-CL}$,$\text{N}_3\text{-CL}$,"$\text{N}_4\text{-CL}$) and ""Native cellulose""; full chemical names for these derivatives are not present in the provided text.",,,,,
+Cerium(IV) chitosan-based hydrogel,phosphate(V),7,9.76,7.6,,,
+Ce-CTS hydrogel,phosphate(V),7,9.3,7.17,,,
+cerium-chitosan hydrogel,phosphate(V),7,500,45,,,
+cerium-chitosan hydrogel,phosphate(V),7,250,30,,,
+cerium-chitosan hydrogel,phosphate(V),7,100,15,,,
+cerium-chitosan hydrogel,phosphate(V),7,50,10,,,
+cerium-chitosan hydrogel,phosphate(V),7,25,5,,,
+Chitosan/MCM-48,Phenol,3-10,5-100,142.5,,,
+CNC-alginate,Cr(VI),2,50,265,,,
+modified cellulose nanocrystals,Cr(VI),6.4,175,350,,,
+Cellulose and nanocrystals,Cr(VI),6,175,270.5,,,
+sodium alginate,Cr(VI),6,175,270,,,
+* **Polymers/Adsorbents:** Cmc-g-AM/CFe/PC,PCM/AA/AM/GO,PVA/CMC/bentonite,Fe3O4/CMC/poly(AA-co-AM),CMC-Alg/GO hydrogel beads,CMC/GOOH hydrogel,,
+*   **Polymers**: BC,BC/CoFe$_2$O$_4$,and BC/CoFe$_2$O$_4$@Mn-Fe LDH,,,,,
+GO_3@PVA,Methylene Blue,9,50,247,,,
+GO_3@PVA,Methylene Blue,9,100,448,,,
+*   Chitosan (including $\text{Chi-Aa}$,$\text{Chi-Aa-IS}$,$\text{CS/SiO}_2$,$\text{CS/MnO}_2$,$\text{CCH}$,$\text{GCCH}$),,
+*   **Polymers/Adsorbents:** Sawdust,Rattan sawdust,Durian shell,Waste newspaper,Sewage sludge,Waste tyre,,
+*   **Polymers/Materials:** Boron Nitride Nanotubes (BNNT/NBnt),Titanium Dioxide ($\text{TiO}_2$),Chitosan (Chit/Cs),Yttrium,Calcium,Titanium Dioxide,,
+Amino Ethyl Chitosan Hydrogel (CS-NH2-4),Methyl Orange,7.0,25,5.0,,,
+* **Polymers (Biosorbents):** RAFI-RAW,RAFI-C,RAFI-NCC-Xan (identified in the text as rafinia-derived biosorbents),,,,,
+*   **Note:** The chemical names for the polymers/adsorbents (RFI-C,RFI-Activated,RFI-NCC,and ZC/BC composite) are not explicitly provided on this page of the paper.,,,,
+* **Polymers/Sorbents:** RFI-RAW,RFI-NCC,RFI-NCC-Xan,,,,,
+*   **Polymers/Biosorbents:** RFI-RAW,RFI-NCC,RFI-NCC-Xan,,,,,
+Polyamine/XanthanGum,Methylene Blue,6,1.5,22.52,,,
+* **Polymers/Compounds:** Carboxymethyl cellulose (CMC),Sodium Montmorillonite (Na-MMT),Xanthan Gum (XG),Alginate (Alg),Polyacrylic acid (PAA),Graphene oxide (GO),,
+*   **Polymer:** nano-cellulose beads (specifically TOCNB1,TOCNB2,TOCNB3,and TOCNB4),,,,
+PVA-ch,Acid Orange 7,2.5,400,600,,,
+PVA-Ch,Acid Orange 7,2.5,170,170,,,
+PVA-Ch,Acid Orange 7,4.0,170,170,,,
+trimellic anhydride isothiocyanate-linked chitosan hydrogel (H1),BR 12,7,39.3,8.21,,,
+PVA/SA-2.8,Cu(II),5,500,80,,,
+*   **Polymers:** Sodium Alginate (SA),PVA/SA-2.8,PVA/SA@ZIF-67,,,,,
+*   **Materials (Polymers/Carbon structures):** Hierarchically macro/mesoporous carbon,Hierarchical 3D interconnected micro-mesoporous carbon,Hierarchical porous carbons (nano-size microporous),,,,,
+*   **Polymers/Components:** Chitosan (CTS),Biochar (BC),PEI (Polyethylenimine),CdS (Cadmium sulfide),,,,
+*   **Polymers/Adsorbents:** $\text{TNTs@Cs}_{7.6}$,Hollow carbon/graphene hybrid,Activated carbon spheres from disordered maize cobs,Carbon spheres,Hierarchically porous graphitic spheres,Modified carbon spheres,,
+Ungrafted chitosan,Orange G,3,300,34,,,
+*   **Polymers/Compounds:** Chitosan,Graphene oxide,CTAB (Cetyltrimethylammonium bromide),,,,,
+*   **Polymers (Adsorbents):** Algae magnetic AC,Peganum halia seeds AC,nFe3O4@AC,Typpa MAC,Phosphoric acid treated Af-MAC,,,
+Zr-impregnated chitosan beads,phosphate,6.7,100-150,42.02,,,
+Zr-loaded pectin/polysaccharide/alginate,phosphate,1.0,10-30,50.76,,,
+Chitosan beads modified by zirconium,phosphate,0.2,5-50,60.6,,,
+Zr-loaded cross-linked chitosan particles,phosphate,3.7,10-30,23.37,,,
+Chitosan Modified Zr-based CMC,phosphate,9.4,5-500,33.89,,,
+*   **Polymers/Polysaccharides identified:** Lignin,Lignocellulose,Chitosan,Pectin,Polysaccharide,Alginate,,
+*   **Polymers:** HFO-CS/CA,CS/CA,"chitosan (referenced as ""chitosan beads"")",,,,,
+Chitosan,4-Nitrophenol,6.8,1.0,40,,,
+* **Polymers:** Chitosan,Hydrophobically modified chitosan ($\text{HMC}_1$,$\text{HMC}_2$,$\text{HMC}_3$),,,,
+Chitosan/BCA,Pb(II),6,2,368.3,,,[Pb+2]
+*   **Polymers/Materials:** Cellulose,Guar gum,Ti-MOF,TiO2,WAF,BCA,,
+PVA-ch,Cr(III),1,200,35042,,,
+* **Polymers (as listed in table):** CS,Fe-SA,MBGC,BPA,BCG-SA,PAM-derv,,
+Bische-Hydrogels,Cu(II),2,50,170,,,
+*   **Polymers:** Zn-Al-PO,3% nZVI/Zn-Al-PO,5% nZVI/Zn-Al-PO,,,,,
+- **POLYMER_USED,WATER_PH,"and CAPACITY:** Found in **Table 5** (""Comparative performance of COF-Based and magnetic adsorbents for $\text{Cd}^{2+}$ removal"").",,,,,
+Composito extrudido de CS y PCL,Cu(II),6,57.75,17.54,,,
+Composito extrudido de CS y PCL,Pb(II),12.24,4.69,1.27,,,[Pb+2]
+Composito extrudido de CS y PCL,Zn(II),6,334.518,133.25,,,
+Composito extrudido de CS y PCL,Fe(II),6,22.43,5.22,,,
+Composito extrudido de CS y PCL,Cd(II),6,90.54,162.06,,,[Cd+2]
+Composito extrudido de CS y PCL,Al(III),6.32,4.93,1.58,,,
+*   **Polymers/Adsorbents:** Magnesium-Iron Layered Double Hydroxide (MgFe/LDH),MgFe/LDH-Eb,and MgFe/LDH-Eb_EDTA (containing EDTA,which is Ethylenediaminetetraacetic acid).,,,,
+*   **Adsorbents (Polymers/Composites):** Magnesium-Iron Layered Double Hydroxide (MgFe LDH),MgFeLDH-Eb,and MgFeLDH-EDTA (EDTA functionalized MgFe LDH double hydroxide/carbon fiber composites).,,,,,
+PPy,metronidazole,6.17,50,3.0,,,CC1=NC=C(N1CCO)[N+](=O)[O-]
+PPy,metronidazole,6.17,100,3.8,,,CC1=NC=C(N1CCO)[N+](=O)[O-]
+PPy,metronidazole,6.17,150,4.2,,,CC1=NC=C(N1CCO)[N+](=O)[O-]
+PPy,metronidazole,6.17,200,4.5,,,CC1=NC=C(N1CCO)[N+](=O)[O-]
+Alginate,Congo Red,2.0,200,355.4,,,C1=CC=C2C(=C1)C(=CC(=C2N)N=NC3=CC=C(C=C3)C4=CC=C(C=C4)N=NC5=C(C6=CC=CC=C6C(=C5)S(=O)(=O)[O-])N)S(=O)(=O)[O-].[Na+].[Na+]
+Alginate,Congo Red,3.0,200,371.2,,,C1=CC=C2C(=C1)C(=CC(=C2N)N=NC3=CC=C(C=C3)C4=CC=C(C=C4)N=NC5=C(C6=CC=CC=C6C(=C5)S(=O)(=O)[O-])N)S(=O)(=O)[O-].[Na+].[Na+]
+Alginate,Congo Red,4.0,200,343.1,,,C1=CC=C2C(=C1)C(=CC(=C2N)N=NC3=CC=C(C=C3)C4=CC=C(C=C4)N=NC5=C(C6=CC=CC=C6C(=C5)S(=O)(=O)[O-])N)S(=O)(=O)[O-].[Na+].[Na+]
+Alginate,Congo Red,5.0,200,284.3,,,C1=CC=C2C(=C1)C(=CC(=C2N)N=NC3=CC=C(C=C3)C4=CC=C(C=C4)N=NC5=C(C6=CC=CC=C6C(=C5)S(=O)(=O)[O-])N)S(=O)(=O)[O-].[Na+].[Na+]
+Alginate,Congo Red,6.0,200,233.4,,,C1=CC=C2C(=C1)C(=CC(=C2N)N=NC3=CC=C(C=C3)C4=CC=C(C=C4)N=NC5=C(C6=CC=CC=C6C(=C5)S(=O)(=O)[O-])N)S(=O)(=O)[O-].[Na+].[Na+]
+Chitosan,Methylene Blue,6,200,38.2,,,
+* **Polymers/Materials:** cellulose nanocrystals,carboxymethyl cellulose,zeolite,citric acid,,,,
+Polyacrylic acid/Chitosan,Methylene blue,2.5-4.5,200,78.15,,,
+*   **Polymers/Materials (Adsorbents):** MNPs (Undecenoic acid-created),MIL-101(HCI),Activated sludge,Activated carbon Sorbo Norit,Activated carbon Merck,Cyclodextrin Polymer,,
+$\text{Alginate/BiDC,Methylene blue,7.25,20,8.53}$,,,
+The full chemical names for the polymers (CYP,PPy,CPPy) and the drug/pollutant (CR) are **not provided** in the provided image. Only their abbreviations are present.,,,,,
+SA-PVA (0% PVA),Pb(II),5.0,1150,725,,,[Pb+2]
+SA-PVA (10% PVA),Pb(II),5.0,1150,775,,,[Pb+2]
+SA-PVA (20% PVA),Pb(II),5.0,1150,740,,,[Pb+2]
+SA-PVA (30% PVA),Pb(II),5.0,1150,730,,,[Pb+2]
+Polysalic acid grafted chitosan,Pb(II),5.48,0.5,204.89,,,[Pb+2]
+Alginate adsorbent,Pb(II),5.0,0.2,105.21,,,[Pb+2]
+Alginate (AAa),Pb(II),5.0,0.8,536.87,,,[Pb+2]
+AFPA/NS hydrogel,Eu(III),1,10,190,,,
+AFPA/NS hydrogel,Eu(III),2,10,175,,,
+AFPA/NS hydrogel,Eu(III),3,10,170,,,
+AFPA/NS hydrogel,Eu(III),4,10,100,,,
+AFPA/NS hydrogel,Eu(III),5,10,80,,,
+AFPA/NS hydrogel,Ti(IV),1,10,10,,,
+AFPA/NS hydrogel,Ti(IV),2,10,30,,,
+AFPA/NS hydrogel,Ti(IV),3,10,40,,,
+AFPA/NS hydrogel,Ti(IV),4,10,100,,,
+AFPA/NS hydrogel,Ti(IV),5,10,100,,,
+AFPA/NS hydrogel,Eu(III),4,200,150,,,
+AFPA/NS hydrogel,Eu(III),4,400,250,,,
+AFPA/NS hydrogel,Eu(III),4,600,350,,,
+AFPA/NS hydrogel,Eu(III),4,800,450,,,
+AFPA/NS hydrogel,Eu(III),4,1000,550,,,
+AFPA/NS hydrogel,Ti(IV),4,200,30,,,
+AFPA/NS hydrogel,Ti(IV),4,400,80,,,
+AFPA/NS hydrogel,Ti(IV),4,600,120,,,
+AFPA/NS hydrogel,Ti(IV),4,800,160,,,
+AFPA/NS hydrogel,Ti(IV),4,1000,200,,,
+FeS/chitosan-g-poly(acrylamide),Eosin Y,2,100,79,,,
+FeS/chitosan-g-poly(acrylamide),Eosin Y,4,100,81,,,
+FeS/chitosan-g-poly(acrylamide),Eosin Y,6,100,83,,,
+FeS/chitosan-g-poly(acrylamide),Eosin Y,8,100,84,,,
+FeS/chitosan-g-poly(acrylamide),Eosin Y,10,100,86,,,
+pNIPAM-based hydrogel,caffeine,7.0,2,1.5,,,
+pNIPAM-based hydrogel,caffeine,7.0,4,2.5,,,
+pNIPAM-based hydrogel,caffeine,7.0,6,3.5,,,
+pNIPAM-based hydrogel,caffeine,7.0,8,4.5,,,
+pNIPAM-based hydrogel,caffeine,7.0,10,5.0,,,
+*   **Adsorbents (referred to as polymers):** p-Hy,Hly-SH,Hly-NH2 (Note: The paper identifies these as clay-based materials,not polymers).,,,,
+*   **Polymers/Adsorbents:** GL-CS/G,EDTA-CS/G,SDS-CS/G,CTAB-CS/G (the paper provides these as abbreviations; full chemical names for these specific polymers are not present on this page).,,,,
+PCL,glyphosate,4.0,100,23.0,,,
+- **Polymers:** DMSO/SP,DMF/SP,U/SP (described as chemically modified serpinte-based materials),,,,,
+Cellulose@Fe4O6,Methylene Blue,8,180,3.7113,,,
+Cu/PANI composite,Pb(II),6,25,100,,,[Pb+2]
+Cu/PANI composite,Pb(II),6,50,75,,,[Pb+2]
+Cu/PANI composite,Pb(II),6,75,50,,,[Pb+2]
+Cu/PANI composite,Pb(II),6,100,35,,,[Pb+2]
+Cu/PANI composite,Pb(II),6,125,20,,,[Pb+2]
+*   **Polymers/Adsorbents:** The paper does not provide specific chemical names (e.g.,cellulose,pectin) for the bio-adsorbents,only the names of the biological sources (e.g.,Watermelon Rind,Papaya Seed,,
+poly(hydroxyethyl methacrylate),Cd,1,2.0556,270.2,,,
+poly(hydroxyethyl methacrylate),Pb,0.528,4.4,909.09,,,
+poly(hydroxyethyl methacrylate),Cu,0.886,3,161.29,,,
+*   **Polymers:** PANI,Ti/PANI,Ti(Cu)/PANI,Ti(N)/PANI,,,,
+Ti/N/PANI,Methyl Orange,7,120,95,,,
+Ti/Cu/PANI,Methyl Orange,7,120,105,,,
+Chitosan/alginate,Zirconium,2,3.10,1.64,,,
+Cyclodextrin polymer,Chitosan/MWCNTs,Chitosan/alginate,HCs with chemically modified bios,HCs adsorbent,Sulfonated HCs,,
+*   **Polymers:** CS-FM,SLS-CS-FM,CS@ZIF-8,SLS@CS@ZIF-8,,,,
+*   **Polymers:** HA-100,HA-500,HA-900 (The specific chemical names for these polymers are not provided in the provided text,only their designation codes).,,,,
+The chemical names for the polymers (adsorbents) and the drug/pollutant are not present in the provided image. The text only refers to the adsorbent materials by their common names (Golden shower pod,Orange peel,"Coconut shell) and uses the label ""MG5"" which",based on the caption,appears to refer to the experimental subject or adsorbent,but does not provide a specific chemical structure or name for a drug.,,
+*   **Polymers:** R.C,N.C,S.C,,,,,
+*   **Polymers/Precursors:** Melamine,Panoram,Silica,,,,,
+*   **Polymers/Crosslinkers:** Chitosan (CTS),Polyacrylamide (PAM),Ethylenediaminetetraacetic acid (EDTA),N-methylenebisacrylamide,,,,
+*   **Polymer/Adsorbent components:** polyanite,polyethylene glycol,tasses biocarb,,,,,
+* **Adsorbent/Polymer:** Sep-MnO2,Sep,MnO2,magnetite (Fe3O4),,,,
+Chitosan,Reactive Red 198,5,150,97.41,,,
+Chitosan,Reactive Red 198,2,150,187,,,
+Chitosan,Reactive Red 198,3,150,193,,,
+Chitosan,Reactive Red 198,4,150,196,,,
+Chitosan,Reactive Red 198,6,150,196,,,
+Chitosan,Reactive Red 198,7,150,194,,,
+Chitosan,Reactive Red 198,8,150,192,,,
+Chitosan,Reactive Red 198,9,150,190,,,
+Chitosan,Reactive Red 198,10,150,188,,,
+under-size chitosan,Reactive Red 198,5,100,100,,,
+under-size chitosan,Reactive Red 198,5,200,150,,,
+over-size chitosan,Reactive Red 198,5,100,100,,,
+over-size chitosan,Reactive Red 198,5,200,150,,,
+chitosan flakes,Methylene Blue,N/A,10,0.9641,,,
+chitosan flakes,Methylene Blue,N/A,60,3.67,,,
+crosslinked cellulose,safranin,7,300,1395,,,
+*   **Polymers (Sorbents):** Vine shoots,Grape stalks,Exhausted pomace,Alkaline-treated coconut shell,Pomelo peel,and Modified sugarcane bagasse.,,
+"*   **Polymers/Adsorbents:** EP""HMO""","PVOH""HMO""",HMOVA,HMO,HMO-BA5,,,
+* **POLYMER_USED (Adsorbents):** Figure 6 legend and text (rambutan peel,Hc,Ni/Al-Hc,Cu/Al-Hc,Zn/Al-Hc).,,,
+* **Adsorbents (Polymers):** Hydrotalcites (specifically Ni/Al-Hc,Cu/Al-Hc,Zn/Al-Hc,and Hc) and Rambutan Peel.,,,,
+CK-NF-Fe Cryogel composite,Methylene Blue,2,150,90,,,
+CK-NF-Fe Cryogel composite,Methylene Blue,3,150,100,,,
+CK-NF-Fe Cryogel composite,Methylene Blue,4,150,115,,,
+CK-NF-Fe Cryogel composite,Methylene Blue,5,150,130,,,
+CK-NF-Fe Cryogel composite,Methylene Blue,6,150,140,,,
+CK-NF-Fe Cryogel composite,Methylene Blue,7,150,145,,,
+CK-NF-Fe Cryogel composite,Methylene Blue,8,150,145,,,
+CK-NF-Fe Cryogel composite,Methylene Blue,9,150,145,,,
+CK-NF-Fe Cryogel composite,Methylene Blue,10,150,145,,,
+CK-NF-Fe Cryogel composite,Methylene Blue,11,150,145,,,
+CK-CNF-Fe cryogel,Methylene Blue,7,7.39,97.61,,,
+CK-CNF-Fe cryogel,Methylene Blue,7,20.09,130.71,,,
+CK-CNF-Fe cryogel,Methylene Blue,7,54.60,175.03,,,
+$\text{Fe}^{3+}$-stabilized magnetic polycomposite,methylene blue,4-10,10,20.8,,,
+*   **CAPACITY and POLYMER_USED:** Found in **Table 2**,row 6,"under the columns ""Adsorbent"" ($q_e$ value) and ""$q_e$ (mg)"". (Note: While the table header says ""mg""",in the context of adsorption capacity $q_e$,this represents $\text{mg/g}$).,,,
+Polyvinyl Alcohol (PVA),Congo red,1,75,14.31,,,C1=CC=C2C(=C1)C(=CC(=C2N)N=NC3=CC=C(C=C3)C4=CC=C(C=C4)N=NC5=C(C6=CC=CC=C6C(=C5)S(=O)(=O)[O-])N)S(=O)(=O)[O-].[Na+].[Na+]
+*   **Adsorbents/Polymers:** HPO$_2$ modified Silk worms fates,HPO$_2$ modified Rice husk,HPO$_2$ modified Moringa oleifera pod,HPO$_2$ modified Sugar cane bagasse.,,,,
+*   **Polymers:** Azeh2,Azeh10,and Azeh-TDI (or CNC-TDI) (The paper only provides these identifiers; no full chemical names for the polymers are present on this page).,,,,,
+* **Polymers:** The full chemical names for the polymers (Azeh2,Azeh-TDI,and Azeh10) are not provided in the provided image text.,,,,,
+*   **Polymers:** ABC_MIP,NVP_MIP,EFV_MIP (Molecularly Imprinted Polymers for Abacavir,Nevirapine,and Efavirenz respectively).,,,
+Poly(DMAEMA/HDNCS),AR GR light yellow,1,5,1250.9,,,
+*   **Polymer components:** Chitosan,Poly(vinyl alcohol),Titanium dioxide,,,,,
+Chitosan/PEO,Fluoxetine,7,50,82.11,,,CNCCC(C1=CC=CC=C1)OC2=CC=C(C=C2)C(F)(F)F
+Chitosan/PEO,Venlafaxine,7,50,54.02,,,
+Chitosan/PEO,Carbamazepine,7,50,47.51,,,C1=CC=C2C(=C1)C=CC3=CC=CC=C3N2C(=O)N
+Chitosan/PEO,Ibuprofen,7,50,25.98,,,CC(C)CC1=CC=C(C=C1)C(C)C(=O)O
+*   **Polymers/Monomers:** alpha-cyclodextrin,beta-cyclodextrin,gamma-cyclodextrin,1,4-bisacryloylpiperazine,2,,
+- **POLYMER_USED:** Identified in the text and legends of Figures 5,6,and 7 (AMPS90,AMPS50,AMPS10).,,,
+*   **Polymers/Adsorbents**: $\text{Si-NO}_2$,$\text{Si-MNO}_2$,$\text{Si-PNO}_2$ (as identified in the text),,,,,
+*   **Polymers:** $\text{Si-o-NO}_2$,$\text{Si-m-NO}_2$,$\text{Si-p-NO}_2$ (Full chemical names are not provided on this page).,,,,,
+*   **Polymers:** AECMC-1,AECMC-2,AECMC-3,AECMC-4,,,,
+carboxylated chitosan,Alura Red,7.0,0.1,5.0,,,
+carboxylated chitosan,Alura Red,7.0,0.2,10.0,,,
+carboxylated chitosan,Alura Red,7.0,0.3,15.0,,,
+DEB-carboxylated chitosan,Alura Red,7.0,0.1,3.0,,,
+DEB-carboxylated chitosan,Alura Red,7.0,0.2,6.0,,,
+DEB-carboxylated chitosan,Alura Red,7.0,0.3,9.0,,,
+* **Adsorbents (Polymers):** $\text{Fe}_3\text{O}_4\text{ NPs@C}_8\text{H}_8\text{SO}_3\text{H}$ (Iron(II,III) oxide nanoparticles at sulfated carbon),Nanocarbon,FMBC.,,,,
+Palm tree-derived polymer,Methylene blue,1,34.6,26.08,,,
+*   **Polymers/Adsorbents:** Palm textile-derived,Palm bark-derived,Palm leaves powder,Oil palm fried magnetic,Palm tree-derived polymer (referred to in text as PP).,,,
+*   **Polymers (Adsorbents):** Ordered Mesoporous Carbon (OMC),Fe-modified OMC (FeOMC),and Tri-Fe-modified OMC (TriFeOMC).,,,,,
+*   **Adsorbents (Polymers):** Miswak,Walnut,Reed,Rapana ferreena,Stem,Sheath palm,,
+Chitosan/polyacrylamide/imidazole Framework-8,Pyrocatechol,5,25,30.75,,,
+Chitosan/polyacrylamide/imidazole Framework-8,p-Cresol,5,25,30.03,,,
+*   **Polymers:** Chitosan,Polyacrylamide,Imidazole Framework-8,,,,,
+chitosan composite,azithromycin,6.7,20,66.1,,,
+Fe3+/Ni3+/alginate beads,2,4,6-TCP,2,10,,
+Fe0/Ni0/alginate beads,2,4,6-TCP,2,10,,
+TLAC:Chitosan Composite,crystal violet,9,5,12.5,,,
+*   **Polymers:** Cellulose (from HFCM),Chitosan,Poly(acrylamide),Dextran,,,,
+*   **Polymer/Adsorbent:** The adsorbents are listed by their material composition (e.g.,**AC from coffee waste (CWAC-NaOH-800)**,**Biochar from excess sludge**,etc.) as shown in Table 5.,,,,
+poly(vinyl alcohol),Carbamazepine,7.0,10,3.22,,,C1=CC=C2C(=C1)C=CC3=CC=CC=C3N2C(=O)N
+poly(vinyl alcohol),Diclofenac,7.0,10,0.77,,,C1=CC=C(C(=C1)CC(=O)O)NC2=C(C=CC=C2Cl)Cl
+*   **Adsorbents/Polymers:** FSBM,ATFSBC,Cu/FS Nc,,,,,
+Polyacrylamide-grafted Actiniadelicia peels powder (PGADP),Crystal Violet,7,20,75.19,,,
+*   **Polymers/Compounds:** Polyacrylamide,Sodium alginate,Chitin,Zinc oxide,Graphite oxide,Biosilica,,
+G3 hydrogel (poly(Acr/Sty)),Cr(III),,10,20,,,
+G3 hydrogel (poly(Acr/Sty)),Cr(III),,50,50,,,
+G3 hydrogel (poly(Acr/Sty)),Cr(III),,100,75,,,
+G3 hydrogel (poly(Acr/Sty)),Cr(III),,200,230,,,
+G3 hydrogel (poly(Acr/Sty)),Cr(III),,350,330,,,
+G3 hydrogel (poly(Acr/Sty)),Cr(III),,500,360,,,
+poly(Acr/Sty) G13,Cr(III),,,51.8,,,
+poly(Acr/Sty) G14,Cr(III),,,63.4,,,
+poly(Acr/Sty) G15,Cr(III),,,49.6,,,
+poly(Acr/Sty) G16,Cr(III),,,49.8,,,
+poly(Acr/Sty) G17,Cr(III),,,57.76,,,
+poly(Acr/Sty) G18,Cr(III),,,58.25,,,
+poly(Acr/Sty) G19,Cr(III),,,54.95,,,
+poly(Acr/Sty) G20,Cr(III),,,56.8,,,
+poly(Acr/Sty) G21,Cr(III),,,50.39,,,
+poly(Acr/Sty) G22,Cr(III),,,53.7,,,
+poly(Acr/Sty) G23,Cr(III),,,56.3,,,
+chitosan-PIAA-co-AMPS hydrogel,violet,2.0,1000,100,,,
+chitosan-PIAA-co-AMPS hydrogel,violet,4.0,1000,600,,,
+chitosan-PIAA-co-AMPS hydrogel,violet,6.0,1000,1000,,,
+chitosan-PIAA-co-AMPS hydrogel,violet,8.0,1000,1100,,,
+chitosan-PIAA-co-AMPS hydrogel,violet,10.0,1000,700,,,
+*   **Polymers/Composites:** $\text{Fe}_3\text{O}_4\text{@SiO}_2\text{-G1}$,$\text{Fe}_3\text{O}_4\text{@SiO}_2\text{-G3}$,$\text{Fe}_3\text{O}_4\text{@SiO}_2\text{-G5}$ (Magnetite @ Silica),,,,,
+PVP/Chitosan/ZnFe2O4,Amoxicillin,7,40,384.6,,,CC1([C@@H](N2[C@H](S1)[C@@H](C2=O)NC(=O)[C@@H](C3=CC=C(C=C3)O)N)C(=O)O)C
+PVA/KHUST,Cefixime,8,20,282.5,,,
+*   **Polymers/Materials:** Poly(vinyl alcohol) (for PVA),linoptilite zeolite,Chitosan,Bentonite,Fe3O4,Hyper-Cross-linked Polymer,,
+Polyurethane,Congo Red,7.0,1,1.5,,,C1=CC=C2C(=C1)C(=CC(=C2N)N=NC3=CC=C(C=C3)C4=CC=C(C=C4)N=NC5=C(C6=CC=CC=C6C(=C5)S(=O)(=O)[O-])N)S(=O)(=O)[O-].[Na+].[Na+]
+Polyurethane,Congo Red,7.0,2,5,,,C1=CC=C2C(=C1)C(=CC(=C2N)N=NC3=CC=C(C=C3)C4=CC=C(C=C4)N=NC5=C(C6=CC=CC=C6C(=C5)S(=O)(=O)[O-])N)S(=O)(=O)[O-].[Na+].[Na+]
+Polyurethane,Congo Red,7.0,3,6,,,C1=CC=C2C(=C1)C(=CC(=C2N)N=NC3=CC=C(C=C3)C4=CC=C(C=C4)N=NC5=C(C6=CC=CC=C6C(=C5)S(=O)(=O)[O-])N)S(=O)(=O)[O-].[Na+].[Na+]
+Polyurethane,Congo Red,7.0,4,9.5,,,C1=CC=C2C(=C1)C(=CC(=C2N)N=NC3=CC=C(C=C3)C4=CC=C(C=C4)N=NC5=C(C6=CC=CC=C6C(=C5)S(=O)(=O)[O-])N)S(=O)(=O)[O-].[Na+].[Na+]
+Polyurethane,Congo Red,7.0,5,11,,,C1=CC=C2C(=C1)C(=CC(=C2N)N=NC3=CC=C(C=C3)C4=CC=C(C=C4)N=NC5=C(C6=CC=CC=C6C(=C5)S(=O)(=O)[O-])N)S(=O)(=O)[O-].[Na+].[Na+]
+Polyurethane,Congo Red,7.0,6,11.5,,,C1=CC=C2C(=C1)C(=CC(=C2N)N=NC3=CC=C(C=C3)C4=CC=C(C=C4)N=NC5=C(C6=CC=CC=C6C(=C5)S(=O)(=O)[O-])N)S(=O)(=O)[O-].[Na+].[Na+]
+*   **POLYMER_USED**: Identified by the labels **K,1,$\lambda$** and the legend (**Non-activated,Activated**) in **Figure 6**.,,,,
+"""Chauhan et al. used the nitrogen oxide ($\text{NO}_3^-$) and $-\text{COOH}$ groups that are introduced to $\text{C-}6$ through acid hydrolysis. Resulting hydrogels adsorbed $\text{Cu}^{\text{T+}}$ io",reaching extreme capacity of $128.2 \text{mg/g}$ in $\text{h}$ at neutral $\text{pH}$ (7),$50\text{ ppm } \text{Cu}^{2+}$,"at $25^\circ\text{C}$ [122]""",,,,
+*   **Polymers:** $\text{StFe}_3\text{O}_4\text{-g-PAA}$,$\text{StFe}_3\text{O}_4\text{-g-PGMA}$,$\text{StFe}_3\text{O}_4\text{-g-PHEMA}$,,,,,
+*   **Polymers/Adsorbents:** BC,$Fe_3O_4@BC$,AG,,,,,
+Polymer modified by esterified starch,Not specified,10,300,62.52,,,
+Starch biocomposite,Not specified,15,50,34.84,,,
+Cyanocrystal-starch nanocrystals,Not specified,9,200,84,,,
+Cellulose acetate nanofibrous membranes modified by polydopamine,Not specified,15,200,88.2,,,
+*   **Adsorbents/Polymers:** chitin,Nano-ZnO/CT-CB,walnut wood activated carbon,crosslinked-chitosan,Thiourea-formaldehyde Alginate,,,
+The provided page does not contain the full chemical names for the polymer or the drug/pollutant; it only refers to them using abbreviations (e.g.,PNPs,CNPs,"and a fragment ""DS""). Therefore",I cannot provide the P-SMILES or SMILES strings.,,,
+*   **Polymers/Materials:** EH-lignin,lignophol,lignin-aminophenol,,,,,
+"Regarding the chemical names: The provided image only refers to the polymer as ""**MAERs**"" (or MAER-1",MAER-2,"MAER-3) and the pollutant as ""**HA**"". The full chemical names for these abbreviations are not present in the provided page.",,,,,
+*   **Adsorbents (Polymers/Compounds):** HW,HNa,HK,,,,,
+*   **Polymer/Adsorbent:** Banana fiber (which contains Cellulose,Lignin,and Polysaccharides),,,,,
+*   **Polymer (Biomass):** *Aspergillus niger* (Note: This is a biological organism,not a chemical polymer,and therefore does not have a SMILES string).,,,,,
+XBD polymer,Cr(VI),5,300,714.2,,,
+AES/Fe/PAN,Cr(VI),0.2,31,123.8,,,
+Poly(methacrylate-co-GMA),Nylred N-2RBL,7,100,309.6,,,
+Chitosan/EGDE/organo-nano-composite,Brilliant Blue R,4,1000,229.34,,,
+Chitosan/EGDE/organo-nano-composite,Malachite green,8.3,50,168,,,
+Chitosan/grafted nano-composite,Methyl orange,7,50,89.98,,,
+Chitosan/grafted nano-composite,Congo red,5,350,99.7%,,,C1=CC=C2C(=C1)C(=CC(=C2N)N=NC3=CC=C(C=C3)C4=CC=C(C=C4)N=NC5=C(C6=CC=CC=C6C(=C5)S(=O)(=O)[O-])N)S(=O)(=O)[O-].[Na+].[Na+]
+Grafted starch with octenyl succinate anhydride,Cephalexin,6,0.92,37,,,CC1=C(N2[C@@H]([C@@H](C2=O)NC(=O)[C@@H](C3=CC=CC=C3)N)SC1)C(=O)O
+Grafted starch with P(MAA-g-EG) and AMPs,Tetracycline,5,20,,,,C[C@@]1([C@H]2C[C@H]3[C@@H](C(=O)C(=C([C@]3(C(=O)C2=C(C4=C1C=CC=C4O)O)O)O)C(=O)N)N(C)C)O
+Grafted starch with chitosan,Tetracycline,5.1,169.7,150,,,C[C@@]1([C@H]2C[C@H]3[C@@H](C(=O)C(=C([C@]3(C(=O)C2=C(C4=C1C=CC=C4O)O)O)O)C(=O)N)N(C)C)O
+Carboxymethyl starch,Tetracycline,9.9,30,,,,C[C@@]1([C@H]2C[C@H]3[C@@H](C(=O)C(=C([C@]3(C(=O)C2=C(C4=C1C=CC=C4O)O)O)O)C(=O)N)N(C)C)O
+*   **Polymers/Materials:** Grafted starch with octenyl succinate anhydride,Grafted starch with P(MAA-g-EG) and AMPs,Grafted starch with chitosan,Carboxymethyl starch,Nanocomposites.,,,
+Cellulose and poly(acrylic acid-co-acrylamide),Acid blue (93) AB,7,200,1602,,,
+Cross-linked dots of activated oil．oil palm chitosan,Acid blue 29,3-13,50,207.27,,,
+*   **Table 7**: Contains data for PANI,PPy,PANI HNTs,PANU,PANI/GO,PANI/Fe₃O₄,,
+PANI HNTs,acid green,6.64,660,57.87,,,
+PANU/Starch,Reactive Black 5,5.0,577,811.30,,,
+PANI/Starch,Reactive Violet 4,N/A,577,6.8,,,
+Miscellaneous polymers,Bromothymol blue,6,66,276.2,,,
+Miscellaneous polymers,Methylene blue,6,664,123.3,,,
+CS/QS aerogel,methylene blue,4,5,342,,,
+chitosan aerogel,ibuprofen,6,3,5,,,CC(C)CC1=CC=C(C=C1)C(C)C(=O)O
+Modified chitosan,Nitrate,7,40-200,21.35,,,
+*   **Polymers/Materials:** Amine-modified cocoa shell,Modified carbon aerogels,Modified chitosan,Magnetic iron oxide embedded chitosan beads.,,,,
+polyamine (PEI),Amaranth,2,1400,700,,,
+polyamine (PEI),Sunset yellow,2,1400,680,,,
+*   **Polymers:** The full chemical names for the polymers (ANA-MK,ANA 2,ANA 3,ANA-MK 4,and ANA-MK 5) are not listed in the provided image.,,,
+- **Polymers:** $\alpha\text{-CD/EPI}$,$\beta\text{-CD/EPI}$,$\gamma\text{-CD/EPI}$ (where CD refers to Cyclodextrin),,,,,
+* **Polymers/Materials:** polyvinyl alcohol,sodium alginate,ZSM-5 zeolite,,,,,
+PVA/SA/ZSM-5,Congo red,2.0,10,5.4,,,C1=CC=C2C(=C1)C(=CC(=C2N)N=NC3=CC=C(C=C3)C4=CC=C(C=C4)N=NC5=C(C6=CC=CC=C6C(=C5)S(=O)(=O)[O-])N)S(=O)(=O)[O-].[Na+].[Na+]
+PVA/SA/ZSM-5,Congo red,4.0,10,5.1,,,C1=CC=C2C(=C1)C(=CC(=C2N)N=NC3=CC=C(C=C3)C4=CC=C(C=C4)N=NC5=C(C6=CC=CC=C6C(=C5)S(=O)(=O)[O-])N)S(=O)(=O)[O-].[Na+].[Na+]
+PVA/SA/XSM-5,Congo red,6.0,10,4.6,,,C1=CC=C2C(=C1)C(=CC(=C2N)N=NC3=CC=C(C=C3)C4=CC=C(C=C4)N=NC5=C(C6=CC=CC=C6C(=C5)S(=O)(=O)[O-])N)S(=O)(=O)[O-].[Na+].[Na+]
+PVA/SA/ZSM-5,Congo red,8.0,10,4.0,,,C1=CC=C2C(=C1)C(=CC(=C2N)N=NC3=CC=C(C=C3)C4=CC=C(C=C4)N=NC5=C(C6=CC=CC=C6C(=C5)S(=O)(=O)[O-])N)S(=O)(=O)[O-].[Na+].[Na+]
+PVA/SA/ZSM-5,Congo red,10.0,10,2.6,,,C1=CC=C2C(=C1)C(=CC(=C2N)N=NC3=CC=C(C=C3)C4=CC=C(C=C4)N=NC5=C(C6=CC=CC=C6C(=C5)S(=O)(=O)[O-])N)S(=O)(=O)[O-].[Na+].[Na+]
+*   **Polymers/Components:** Polyvinyl alcohol (PVA),Sodium alginate (SA),and ZSM-5 zeolite.,,,,,
+- **Polymers:** (GA/Aam),(GA/Aam)-ES,(GA/Aam)-ES/GO,,,,,
+"The provided image contains the drug abbreviation ""**AR**"" and the polymer abbreviations ""**(GA)(AAm)**""",**(GA)(AAm)-ES**,"and ""**(GA)(AAm)-ES/GO**""",but it does not contain the full chemical names for the drug or the constituent components of the polymers.,,,,
+*   **Polymers:** `quart(AN-co-VI)`,`amid(AN-co-VI)`,`p(VI)` (as identified in the Figure 4 legends).,,,,,
+* **DRUG and POLYMER identification:** Found in the text (e.g.,ciprofloxacine,GO/PVA,"""poly(vinyl alcohol)"").",,,,
+*   **Polymers:** The chemical names for the acronyms **GPA**,**GPB**,**GPC**,and **MWFA** are not provided on this page; only their acronyms are present.,,,,
+*   **Polymers/Adsorbents:** black tea leaf powder,DPA (as mentioned in text),MgAl-layered double hydroxide (LDH),Persa Americana,sawdust,,,
+*   **Adsorbents (Polymers/Materials):** fatdef Jojoba residues,defatted Jojoba residues,activated tea waste,synthesized date palm,activated carbon from monotheca buxifolia seeds.,,,
+*   **Adsorbents (referred to as polymers in your request):** native garlic powder,washed garlic powder,durian fruit powder,feava bean powder.,,,,
+Alginate,Hexavalent chromium,2.0,10-300,370.4,,,
+poly (diallyl dimethyl ammonium chloride),Methylene blue,10,10,4.31,,,
+Fly ash polymer powder,Methylene Blue,NaN,75,50.7,,,
+geopolymer,methylene blue,8,10,1.42,,,
+geopolymer,methylene blue,8,20,2.8,,,
+geopolymer,methylene blue,8,30,4.2,,,
+geopolymer,methylene blue,8,40,5.4,,,
+geopolymer,methylene blue,8,50,6.7,,,
+Fly ash geopolymer monolith,Methylene Blue,2-12,1-50,13.4,,,
+Fly ash-based geopolymer spheres,Methylene Blue,2,10-250,30.1,,,
+* **Polymer components:** Kappa carrageenan,Polyvinyl alcohol,and Bentonite clay (used to form the KPB hydrogel).,,,,,
+MNPs hydrogel,Pb(II),0,150,0,,,[Pb+2]
+MNPs hydrogel,Pb(II),1,150,15,,,[Pb+2]
+MNPs hydrogel,Pb(II),2,150,28,,,[Pb+2]
+MNPs hydrogel,Pb(II),3,150,42,,,[Pb+2]
+MNPs hydrogel,Pb(II),4,150,78,,,[Pb+2]
+MNPs hydrogel,Pb(II),5,150,98,,,[Pb+2]
+MNPs hydrogel,Pb(II),6,150,132,,,[Pb+2]
+MNPs hydrogel,Pb(II),7,150,122,,,[Pb+2]
+MNPs hydrogel,Cd(II),0,150,0,,,[Cd+2]
+MNPs hydrogel,Cd(II),1,150,10,,,[Cd+2]
+MNPs hydrogel,Cd(II),2,150,20,,,[Cd+2]
+MNPs hydrogel,Cd(II),3,150,32,,,[Cd+2]
+MNPs hydrogel,Cd(II),4,150,65,,,[Cd+2]
+MNPs hydrogel,Cd(II),5,150,95,,,[Cd+2]
+MNPs hydrogel,Cd(II),6,150,126,,,[Cd+2]
+MNPs hydrogel,Cd(II),7,150,122,,,[Cd+2]
+MNPs hydrogel,Pb(II),6,25,20,,,[Pb+2]
+MNPs hydrogel,Pb(II),6,50,42,,,[Pb+2]
+MNPs hydrogel,Pb(II),6,75,65,,,[Pb+2]
+MNPs hydrogel,Pb(II),6,100,85,,,[Pb+2]
+MNPs hydrogel,Pb(II),6,125,105,,,[Pb+2]
+MNPs hydrogel,Pb(II),6,200,128,,,[Pb+2]
+MNPs hydrogel,Pb(II),6,250,118,,,[Pb+2]
+MNPs hydrogel,Cd(II),6,25,18,,,[Cd+2]
+MNPs hydrogel,Cd(II),6,50,40,,,[Cd+2]
+MNPs hydrogel,Cd(II),6,75,60,,,[Cd+2]
+MNPs hydrogel,Cd(II),6,100,85,,,[Cd+2]
+MNPs hydrogel,Cd(II),6,125,95,,,[Cd+2]
+MNPs hydrogel,Cd(II),6,200,120,,,[Cd+2]
+MNPs hydrogel,Cd(II),6,250,118,,,[Cd+2]
+PVA-Fe granules,Sb(III),7,20,6.99,,,
+* **Polymers (Adsorbents):** Seaward hydrochar,Coconut shell hydrochar,Oak wood hydrochar,,,,,
+*   **Polymers (Adsorbents):** Hydrochars produced from *F. Serratus* (FS-HC),coconut shell (CS-HC),and oak (Oak-HC).,,,,,
+microcrystalline cellulose,Prometryn,2-14,30-150,97.80,,,
+*   **Polymers/Components:** Chitosan,Polyacrylamide,ZIF-8,,,,,
+*   **Polymers/Adsorbent components:** Chitosan,Polyacrylamide,ZIF-8 (Zeolitic Imidazolate Framework-8),,,,,
+- **Polymers/Adsorbents:** Chitosan,Polyacrylamide,ZIF-8,,,,,
+polyacrylate,Pb(II),8,300,11,,,[Pb+2]
+polyacrylate,Pb(II),7,300,8.5,,,[Pb+2]
+polyacrylate,Pb(II),4,300,5.5,,,[Pb+2]
+polyacrylate,Pb(II),3,300,2,,,[Pb+2]
+polyacrylate,Pb(II),2,300,1,,,[Pb+2]
+polyacrylamide grafite husk,Pb(II),5,300,11.66,,,[Pb+2]
+PSS-chitosan membrane,phenols,8,1.0,3.97,,,
+*   **Polymers/Adsorbents:** Sulfated Lapindo mud (SLM),PSS-chitosan membrane,Chitosan-CNT hydrogel beads,Covalent organic frameworks (COFs),NH2 @ COF,Vinyl COF,,
+AL-PVA nanofibres,fluoxetine,7.0,250,78.24,,,CNCCC(C1=CC=CC=C1)OC2=CC=C(C=C2)C(F)(F)F
+Polymer I,Co(II),,15,5.899,,,
+Polymer II,Co(II),,15,7.651,,,
+PABA polymer,Pt(IV),0,30,1.5,,,
+PABA polymer,Pt(IV),6,30,1.93,,,
+Cross-linked chitosan diepoxyoctane beads,Cr(VI),2,500,325.2,,,
+Arginine cross-linked chitosan-carboxymethyl cellulose beads,Pb(II),6.5,325,182.5,,,[Pb+2]
+Arginine cross-linked chitosan-carboxymethyl cellulose beads,Cd(II),6.5,325,168.5,,,[Cd+2]
+sulfate-crosslinked chitosan,Cr(VI),6,400,156.8,,,
+sulfate-crosslinked chitosan,Zn(II),6,400,21.27,,,
+Sodium tripolyphosphate crosslinked chitosan,Ni(II),6.5,50,52.4,,,
+Sodium tripolyphosphate crosslinked chitosan,Cd(II),6.5,50,68.5,,,[Cd+2]
+Chitosan-pectin gels,Cu(II),7,400,169.4,,,
+Chitosan-pectin gels,Cd(II),7,400,177.6,,,[Cd+2]
+Chitosan-prectin gels,Hg(II),7,400,208.5,,,
+Chitosan-pectin gels,Pb(II),7,400,266.5,,,[Pb+2]
+Chitosan citrate microspheres,Cr(VI),5,100,172,,,
+5-HMF grafted chitosan,Cu(II),5,100,133,,,
+5-HMF grafted chitosan,Cd(II),5,100,125,,,[Cd+2]
+EDTA grafted chitosan,Co(II),7,40,61,,,
+EDTA grafted chitosan,Sr(II),3,40,8.8,,,
+Poly (N-vinyl imidazole) grafted chitosan,Hg(II),5,300,112.35,,,
+Methyl acrylate and tetraethylene pentamine grafted chitosan (MCS-MA-TEPA),Cd(II),5,250,251.22,,,[Cd+2]
+Polyacrylic acid grafted chitosan (MCS-PAA),Pb(II),6,100,204.89,,,[Pb+2]
+2-Hydroxy ethyl methacrylate (HEMA) and 4-Sodium Styrene Sulphate (SSS) grafted chitosan,As(V),4,100,16.8,,,
+Lignosulfonate grafted chitosan,Cu(II),6,100,283,,,
+Lignosulfonate grafted chitosan,Co(II),6,100,386,,,
+Benzothiazole functionalized chitosan,Cu(II),6,200,1439.7,,,
+*   **HEMA and SSS grafted chitosan:** 2-hydroxyethyl methacrylate,4-sodium styrene sulphate,and Chitosan,,,,,
+Triphodphsate crosslinked and salicyldehhyde grafted chitosan,Pb (II),7,100,123.67,,,
+Triphodphsate crosslinked and salicyldehhyde grafted chitosan,Cu (II),7,100,84.6,,,
+Triphodphsate crosslinked and salicyldehhyde grafted chitosan,Cd (II),7,100,63.71,,,
+Glutaraldehyde-cross-linked chitosan grafted with 8-hydroxyquinoline-2-carboxaldehyde (ChGA-HQ),Pd (II),3,25,340.3,,,
+Glutaraldehyde-cross-linked chitosan grafted with 8-hydroxyquinoline-2-carboxaldehyde (ChGA-HQ),Pt (IV),3,25,203.9,,,
+Chitosan grafted with methyl methacrylate (CMTA-CTS),Cu (II),4,50,192.31,,,
+functionalized chitosan-based adsorbent (CS-PAN),Cu (II),5,300,17.03,,,
+*   **Polymer/Adsorbent components:** Polyacrylamide ($\text{PAM}$),Magnetite ($\text{Fe}_3\text{O}_4$),Silica ($\text{SiO}_2$),,,,,
+*   **Polymer (components of the bean peel biosorbent):** Cellulose,Lignin,Hemicellulose,,,,,
+chitosan-glutaraldehyde,Direct\_Blue 71,4,30,209.81,,,
+*   **Figure 14:** Provides adsorption capacity ($\text{mg/g}$) for the polymer **R2M1D** at various pH levels (4,6,8,10,12) for a concentration of $50\text{ mg/L}$ (as specified in section 3.2.3).,,,
+*   **Figure 15:** Provides adsorption capacity ($\text{mg/g}$) for the polymer **C1M1C** at various pH levels (4,6,8,10,12) for a concentration of $50\text{ mg/L}$ (as specified in section 3.2.3).,,,
+FDU-12-MA/PMMA,Pb(II),4.0,50,10.0,,,[Pb+2]
+FDU-12-MA/PMMA,Pb(II),6.0,50,30.0,,,[Pb+2]
+FDU-12-MA/PMMA,Pb(II),8.0,50,42.5,,,[Pb+2]
+FDU-12-PMMA,Pb(II),9.0,70.0,2.2,,,[Pb+2]
+PET,Pb(II),2.0,400,13.16,,,[Pb+2]
+IDA-NaOH/GMA-PET,Pb(II),3.0,400,13.99,,,[Pb+2]
+IDA-NaOH-CS2/GMA-PET,Pb(II),4.0,400,20.22,,,[Pb+2]
+IDA-CS2/GMA-PET,Pb(II),5.0,400,13.77,,,[Pb+2]
+* **Polymers/Modifications:** PET,IDA-NaOH/GMA-PET,IDA-NaOH-CS2/GMA-PET,IDA-CS2/GMA-PET,IDA/GMA,,,
+`IDA-NaOH-CS2/GMA-PET fibers,Pb(II),5,400,94.14`,,,[Pb+2]
+IDA/GMA-PET,Pb(II),5.0,90,13.78,,,[Pb+2]
+IDA-NaOH/GMA-PET,Pb(II),5.0,90,80.12,,,[Pb+2]
+IDA-NaOH-CS2/GMA-PET,Pb(II),5.0,90,94.14,,,[Pb+2]
+* **Polymers:** $IDA/GMA-PET$ fibers,$IDA-NaOH/GMA-PET$ fibers,and $IDA-NaOH-CS_2/GMA-PET$ fibers.,,,,,
+IDA-NaOH-CS/GMA-PET,Pb(II),2,400,85,,,[Pb+2]
+IDA-NaOH-CS/GMA-PET,Pb(II),3,400,90,,,[Pb+2]
+IDA-NaOH-CS/GMA-PET,Pb(II),4,400,93.5,,,[Pb+2]
+IDA-NaOH-CS/GMA-PET,Pb(II),5,400,94.5,,,[Pb+2]
+IDA-NaOH-CS/GMA-PET,Pb(II),5,100,20,,,[Pb+2]
+IDA-NaOH-CS/GMA-PET,Pb(II),5,200,50,,,[Pb+2]
+IDA-NaOH-CS/GMA-PET,Pb(II),5,300,85,,,[Pb+2]
+*   **Polymers:** The text only provides abbreviations/codes for the polymers (**MIN**,**HGA**,and **HGA-MIN**) and does not explicitly state their full chemical names in the provided image.,,,,,
+*   **Polymers/Materials:** The full chemical names for **HGA**,**MIN**,and **HGA-MIN** are not provided in the provided image.,,,,,
+*   **Polymers (Biosorbents):** Tannin biosorbents (specifically: pristine tannin biosorbent,carboxyl-functionalized tannin biosorbent,and amino-functionalized tannin biosorbent).,,,,,
+*   **Polymers:** Pristine tannin (TH-OH),Carboxyl-functionalized tannin (TH-COOH),Amino-functionalized tannin ($\text{TH-NH}_2$).,,,,,
+*   **Polymers/Adsorbents:** Banana,Orange,Pomegranate,,,,,
+magnetic silicon poly-N,N'-methylenebisacrylamide nanocomposite,Copper (Cu2+),5,50,38.35,,
+MLDH-NHx@PANI,Cr(VI),3,1.0,0.1,,,
+MLDH-NHx@PANI,Cr(VI),4,1.0,0.15,,,
+MLDH-NHx@PANI,Cr(VI),5,1.0,0.2,,,
+MLDH-NHx@PANI,Cr(VI),6,1.0,0.3,,,
+MLDH-NHx@PANI,Cr(VI),7,1.0,0.4,,,
+MLDH-NHx@PANI,Cr(VI),8,1.0,0.5,,,
+MLDH-NHx@PANI,Cr(VI),9,1.0,0.6,,,
+MLDH-NHx@PANI,Cr(VI),10,1.0,0.7,,,
+LDH-NH2@PANI,Cr(VI),3,50,205.3,,,
+*   **Polymers/Adsorbents:** Cellulose,$\text{ACP}$,$\text{ZnO@ACP}$,,,,,
+Polyaniline carbon,Remazol brilliant blue,2.54,100,370.86,,,
+Alginate beads functionalized with SSCDs,Cr(VI),4,5,4.38,,,
+Alginate beads functionalized with SSCDs,Cr(VI),4,10,5.96,,,
+Alginate beads functionalized with SSCDs,Cr(VI),4,250,132.14,,,
+Alginate beads functionalized with SSCDs,Cr(VI),4,500,124.82,,,
+*   **Polymers/Composites:** CFHp,NHlp,CFe (Note: These are provided as abbreviations in the text/caption).,,,,,
+- **Polymers/Composites:** CFe,NHp,and CFHp (Full chemical names not provided in the image).,,,,,
+*   **Polymers/Compounds (Adsorbents):** LDO-PC,(MgFe)2DO-ASB,Mag-LDO-C,S-FLDO,MagLDO-AS,SA-GCN-LDO,,
+*   **$\text{Fe}_2\text{O}_3/\text{SiO}_2/\text{PEG}$ (Polymer/Adsorbent):** Iron(III) oxide,Silicon dioxide,Polyethylene glycol,,,,,
+Alginate templated MMT/Si composite,RhB,7,5,5,,,
+Alginate templated MMT/Si composite,RhB,7,10,10,,,
+Alginate templated MMT/Si composite,RhB,7,25,18,,,
+*   **Polymer/Adsorbent components:** Alginate,Montmorillonite (from MMT),and Silicon (from Si),,,,,
+MgFe2O4@Schiff base/chitosan,Pb(II),5.5,150,86.4,,,[Pb+2]
+*   **Polymers**: GP-0,GP-10,GP-20,GP-30,,,,
+quaternized chitosan,methyl orange,4,125,486.13,,,
+The full chemical name for the polymer (**CSMA-HPC**) is not provided on the provided page. The pollutants listed are metal ions: **$\text{Cu(II)}$** (Copper(II)),**$\text{Zn(II)}$** (Zinc(II)),and **$\text{Pb(II)}$** (Lead(II)).,,,,,
+NCC/sodium alginate/k-carrageenan,Pb(II),5.0,500,351.0,,,[Pb+2]
+Nanocellulose grafted molecularly imprinted polymers,Pb(II),6.0,500,27.6,,,[Pb+2]
+Carboxylated chitosan/carboxylated nanocellulose hydrogel beads,Pb(II),4.0,1000,334.9,,,[Pb+2]
+Nanocellulose/PDMAEMA hydrogels,Pb(II),5.0,100,82.0,,,[Pb+2]
+Poly(allylamine)chitosan,Cr(VI),4.5,100,324.48,,,
+PANI,Cr(MAX),1.33,20,55.55,,,
+PANI,Cr(VI),2,10,236.36,,,
+Poly(propylamine) hydrous zirconium oxide,Cr(VI),2,200,110.85,,,
+- **Polymers/Adsorbents:** Poly(allylamine)chitosan,PANI (Polyaniline),$Fe_3O_4@CyS-PANI$,$ZnCl_2$ modified virgina residue bichar,Poly(propylamine) hydrous zirconium oxide,$Fe_3O_4$ CyS-PANI.,,
+gma-g-PAN,Mo(VI),3.5,0.06,53.02,,,
+gma-g-PAN,Mo(VI),6.875,0.0652,50.75,,,
+polypropylene,Hg(II),5,20,75.21,,,
+Bamboo-like PPy nanotube,Cr(VI),2.0,100,482.6,,,
+PPy/ferric oxide composites,Cr(VI),2.0,10,209,,,
+PPy/ferric oxide composites,Cu(II),5.5,10,171,,,
+PPY coated Fe2O3,Cr(VI),2.0,20,80-89,,,
+PAN/PPY-HMS,Cd(II),8.0,50,384.61,,,[Cd+2]
+beta-cyclodextrin-chitosan polymer,Ibuprofen,4.9,20,4.8,,,CC(C)CC1=CC=C(C=C1)C(C)C(=O)O
+The provided page only contains the abbreviations for the drug/pollutant (**MB**) and the polymer materials (**RBF**,**BBF**,and **ABF**); the full chemical names are not mentioned on this page.,,,,,
+*   **Polymer(s):** PMC (Full name not provided in text),Chitosan,Graphene,,,,,
+"*   **Polymer:** Ts/Car/Alg beads (the full chemical names for the components ""Ts""",Car,"and ""Alg"" are not provided in the text of the provided page).",,,,,
+*   **Adsorbents (Polymers):** Citrus maxima (Pomelo),Pokan,Passion fruit (*Passiflora edulis*),Pomegranate (*Punica granatum*),Mango (*Mangifera indica*),P/pomegranate (Pomegranate peel),,
+*   **Adsorbents (Polymers):** The provided text identifies the adsorbents by their biological source (e.g.,Yellow fruit peel,African mango,etc.) rather than their chemical polymer names. No specific chemical names for the polymer structures of these materials are present in the provided image.,,,,
+*   **Adsorbents (Polymers):** Labassa fruit peel,Plum stone,Apricot shell,Grape melon,Litchi,Pomegranate,,
+HAP-chitosan composite,Malachite green,10,20,285.7,,,
+HAP-Alginate beads,Malachite green,6.8-7.3,5-200,900,,,
+Chitosan-Functionalized HAP-Cerium Oxide,Congo Red,7,100,289.2,,,C1=CC=C2C(=C1)C(=CC(=C2N)N=NC3=CC=C(C=C3)C4=CC=C(C=C4)N=NC5=C(C6=CC=CC=C6C(=C5)S(=O)(=O)[O-])N)S(=O)(=O)[O-].[Na+].[Na+]
+*   Chitosan-Functionalized HAP-Cerium Oxide: Chitosan,hydroxyapatite,cerium oxide,,,,,
+chitosan,methylene blue,5.8,20,11,,,
+*   **Polymers/Adsorbents:** Calcium acetate ($\text{Ca(Ac)}_2$),Nano zero-valent iron Biochar ($\text{nZVI-BC}$),CES-modified Biochar ($\text{CES-BC}$).,,,,,
+Alginate,Methylene blue,7,55,6.7,,,
+*   **Polymers/Materials:** Rice straw,*Phanerochate chrysosporium*,Mango stones,Iron oxide,Alginate,Barley straw,,
+*   **ST-AA/AC:** Starch,acrylic acid,and activated carbon,,,,,
+*   **Polymers:** GLU_TTE,GLU_BDE,GLU_NGDE,,,,,
